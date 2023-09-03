@@ -1,0 +1,44 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Barlow&family=Bodoni+Moda:opsz@6..96&family=Cinzel&family=Lato:wght@100;400&family=Londrina+Solid&family=Marcellus&family=Poiret+One&family=Yeseva+One&display=swap');
+/* font-family: 'Abril Fatface', cursive;
+font-family: 'Barlow', sans-serif;
+font-family: 'Bodoni Moda', serif;
+font-family: 'Cinzel', serif;
+font-family: 'Lato', sans-serif;
+font-family: 'Londrina Solid', cursive;
+font-family: 'Marcellus', serif;
+font-family: 'Poiret One', cursive;
+font-family: 'Yeseva One', cursive; 
+
+*/
+/* CSS HEX
+--licorice: #230610ff;
+--platinum: #e8e8e8ff;
+--cerulean: #086788ff;
+--indian-red: #c1666bff;
+--selective-yellow: #ffbc1fff
+ */
+
+body {
+    background-color: #230610;
+}
+.body{
+    
+}
+.intro-text{
+    color: #E8E8E8;
+}
+.intro-text h4{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.intro-text h2{
+    font-family: 'Poiret One', cursive;
+}
+img {
+    max-width: 100%;
+}
+
+.profile-div{
+    padding: 50px;
+    background-color: #230610;
+}
