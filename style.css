@@ -19,12 +19,29 @@ font-family: 'Yeseva One', cursive;
 --selective-yellow: #ffbc1fff
  */
 
-body {
+.body{
     background-color: #230610;
 }
-.body{
-    
+
+
+
+/* Style for the links inside the navbar */
+.navbar{
+    background-color: #230610;
 }
+.navbar a{
+    align-items: right;
+    color: white;
+    padding: 14px 16px;
+
+}
+
+/* On hover, change the background color of the links */
+/* .navbar a:hover {
+    background-color: #ddd;
+    color: black;
+    border-radius: 5%;
+} */
 .intro-text{
     color: #E8E8E8;
 }
