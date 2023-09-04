@@ -18,9 +18,13 @@ font-family: 'Yeseva One', cursive;
 --indian-red: #c1666bff;
 --selective-yellow: #ffbc1fff;
  */
-
+html{
+    scroll-behavior: smooth
+}
 .body{
-    background-color: #230610;
+    /* background: linear-gradient(to bottom, #3a1c71, #d76d77, #ffaf7b); */
+    background-image: linear-gradient(to bottom, #5d4157, #626481, #66889e, #7daaae, #a8caba);
+    /* background: linear-gradient(to bottom, #5d4157, #a8caba); */
 }
 
 hr {
@@ -34,7 +38,7 @@ hr {
 
 /* Style for the links inside the navbar */
 .navbar{
-    background-color: #230610;
+    background: #5d415779;
 }
 .navbar a{
     align-items: right;
@@ -51,7 +55,7 @@ hr {
     border-radius: 5%;
 } */
 .intro-text{
-    color: #E8E8E8;
+    color: whitesmoke;
 }
 .intro-text h4{
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -59,13 +63,22 @@ hr {
 .intro-text h2{
     font-family: 'Poiret One', cursive;
 }
-img {
+img{
     max-width: 100%;
+}
+.profile {
+    max-width: 100%;
+    filter: drop-shadow(0px 0px 50px black);
+    
+}
+span{
+    filter: drop-shadow(3px 3px 5px black);
+    color: antiquewhite;
 }
 
 .profile-div{
     padding: 50px;
-    background-color: #230610;
+    /* background-color: #230610; */
 }
 
 .cert-div{
@@ -76,7 +89,8 @@ img {
 
 .cert-div h1{
     font-family: 'Abril Fatface', cursive;
-    color: rgb(32, 173, 221);
+    color: whitesmoke;
+    filter: drop-shadow(3px 3px 5px black);
     text-align: center;
 }
 
