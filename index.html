@@ -6,6 +6,7 @@
     <title>Ram Bikkina - Profile</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body class="container-fluid">
@@ -82,11 +83,101 @@
                 <div class="flip-card-back">
                   <a href="https://www.hackerrank.com/certificates/0ea755356fca" target="_blank"><img src="https://assets.datacamp.com/production/course_7319/shields/original/shield_image_course_7319_20200114-1-e57sax?1579024236" style="width: 200px;height: 200px;margin-top: 25px;"></img>
                     <p style="color: brown;">Click here to view the Certification</p></a>
+                </div>
               </div>
-            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <!-- Skills Div starts here -->
+    <div class="skills-div" id="skills-div">
+      <h1>My Skills</h1>
+      <div class="row" style="text-align: center;">
+        <div class="col-sm-4">
+          <img src="https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-30-905_512.gif" alt="" style="max-height: 50%; margin-top: 100px;">
+          <p class="skills-dropdown">Programming</p>
+          <div class="dropdown" >
+            <center>
+            <div id="Programming" style="color: beige; max-height: 20%;border-radius: 20px;"></div>
+          </div></center>
+        </div>
+        <div class="col-sm-4">
+          <img src="https://bwnyasse.github.io/slides-presentations/slides-understanding-the-cloud-yaounde-february-2020-v1/img/cloud-gif-2.gif" alt="" style="max-height: 50%; margin-top: 100px;">
+          <p class="skills-dropdown">Cloud Services</p>
+          <div class="dropdown">
+            <p>Content for dropdown 1</p>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <img src="https://cdn.freebiesupply.com/logos/large/2x/amazon-database-logo-png-transparent.png" alt="" style="max-height: 50%; margin-top: 100px;">
+          <p class="skills-dropdown">Databases</p>
+          <div class="dropdown" id="container">
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+
+
+  <script>
+    $(document).ready(function() {
+        $('.dropdown').hide()
+            // When a text element is clicked
+            $('.skills-dropdown').click(function() {
+                // Find the associated dropdown
+                var dropdown = $(this).next('.dropdown');
+                
+                // Toggle its visibility
+                dropdown.slideToggle();
+                
+                // Hide other open dropdowns
+                $('.dropdown').not(dropdown).slideUp();
+            });
+        });
+
+
+        var chart = new ej.charts.Chart({
+          tooltip: {enable: true},
+            //Initializing Primary X Axis
+            primaryXAxis: {
+                valueType: 'Category',
+                title: 'Programming Language',
+            },
+            //Initializing Primary Y Axis
+             primaryYAxis: {
+                minimum: 0, maximum: 5,
+                title: 'Rating: On the Scale of 1-5'
+            },
+ 
+            //Initializing Chart Series
+            series: [
+                {
+                  marker:{
+                    visible:true,
+                    dataLabel: { visible: true },
+                  },
+                    type: 'Column',
+                    pointColorMapping: "color",
+                    dataSource: [
+                        { Language: "Python", medal: 5,color:"#3776AB" },
+                        { Language: "JavaScript", medal: 5, color:"#F0DB4F"},
+                        { Language: "SQL", medal: 4, color:"#FFA500"},
+                        { Language: "Java", medal: 3.5,color:"#D00000" },
+                    ],
+                    xName: 'Language',
+                    yName: 'medal',
+                    animation: { enable: false },
+                    cornerRadius: {
+                    topLeft: 10, topRight: 10}
+                }
+            ],
+            palettes: ["#3776AB"],
+    //Customizing Chart background
+    background: '#c1666a00',
+        });
+        chart.appendTo('#Programming');
+  </script>
 </body>
 </html>

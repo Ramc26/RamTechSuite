@@ -18,7 +18,11 @@ font-family: 'Yeseva One', cursive;
 --indian-red: #c1666bff;
 --selective-yellow: #ffbc1fff;
  */
-
+ .container-fluid{
+    padding-left: 0;
+    padding-right: 0rem;
+    overflow: hidden;
+  }
  html  {
     width: auto;
     height: auto;
@@ -28,6 +32,7 @@ font-family: 'Yeseva One', cursive;
     overflow-y: auto;
     scroll-behavior: smooth; 
 }
+.col-md-6{padding-right: 0; padding-left: 0;}
 .body{
     margin: 0;
     padding: 0;
@@ -87,17 +92,17 @@ span{
 
 .profile-div{
     padding: 50px;
-    /* background-color: #230610; */
+    /* background-color: #2a4166; */
 }
 
-.cert-div{
+.cert-div, .skills-div{
     padding-top: 50px;
     text-align: center;
     padding-bottom: 50px;
     /* background-color: #086788; */
 }
 
-.cert-div h1{
+.cert-div h1, .skills-div h1{
     font-family: 'Abril Fatface', cursive;
     color: whitesmoke;
     filter: drop-shadow(3px 3px 5px black);
@@ -154,4 +159,10 @@ span{
     background-color: white;
     color: white;
     transform: rotateY(180deg);
+  }
+
+  .skills-div p{
+    color: #263243;
+    font-size: 30px;
+    font-family: 'Marcellus', serif;
   }
