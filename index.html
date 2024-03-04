@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ram Bikkina - Profile</title>
@@ -11,18 +12,27 @@
 </head>
 <body class="container-fluid">
   <div class="body">
-    <div class="navbar sticky-top">
+    <!-- <div class="navbar sticky-top">
       <a href="#cert-div">Certifications</a>
       <a href="#">About</a>
       <a href="#">Contact</a>
       <a href="#">About</a>
+    </div> -->
+    <div class="topnav" id="myTopnav">
+      <a href="#profile-div" class="active">Home</a>
+      <a href="#cert-div">Certifications</a>
+      <a href="#skills-div">Skills</a>
+      <a href="#about">About</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
     </div>
     <div class="profile-div">
       <div class="row">
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <img src="./elements/profilepic.JPG" class="profile">
-          </div>
-          <div class="col-md-6 intro-text">
+          </div> -->
+          <div class="col-md-12 intro-text">
             <br><br>
             <h4>Hello,</h4>
             <h2>I'm a recent MS graduate and <span style="font-family: 'Yeseva One', cursive;">AWS Certified Developer (Associate)</span> based in Hammond, IN. <br><br> With a strong background in <span style="font-family: 'Yeseva One', cursive;">Python development</span>, I'm now seeking exciting career opportunities to make a meaningful impact. <br><br> Let's connect and explore new horizons together!</h2>
@@ -36,12 +46,38 @@
     <!-- ------ Certifications Starts Here ------- -->
     <div class="cert-div" id="cert-div">
       <h1>Certifications</h1>
-      <div class="row" >
-        <div class="col-md-6 badge">
-          <div class="flip-card" style="display: block;margin: auto;">
+      <div class="slideshow-container">
+          <div class="mySlides fade">
+            <img src="./elements/cert/aws.png" style="width:300px;height:300px;">
+          </div>
+          
+          <div class="mySlides fade">
+            <img src="./elements/cert/mta.png" style="width:300px;height:300px;">
+          </div>
+          
+          <div class="mySlides fade">
+            <img src="./elements/cert/HackerRank.png" style="width:300px;height:300px;">
+          </div>
+
+          <div class="mySlides fade">
+            <img src="./elements/cert/vmware.png" style="width:300px;height:300px;">
+          </div>
+        </div>
+        <br>
+        
+        <div style="text-align:center">
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+
+        </div>
+      <!-- <div class="row" >
+        <div class="col-md-4 badge">
+          <div class="flip-card" style="display: block; margin: auto;">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="https://ih1.redbubble.net/image.3917587429.0371/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="Avatar" style="width:300px;height:300px;">
+                <img src="./elements/cert/aws.jpg" alt="Avatar" style="width:300px;height:300px;">
               </div>
               <div class="flip-card-back">
                 <div data-iframe-width="200" data-iframe-height="350" data-share-badge-id="ecc9b095-42e4-4b0e-9e7b-b293d7c9ecdb" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
@@ -49,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 badge">
+        <div class="col-md-4 badge">
             <div class="flip-card" style="display: block;margin: auto;">
               <div class="flip-card-inner">
                 <div class="flip-card-front" style="padding-top: 50px;">
@@ -60,10 +96,23 @@
               </div>
             </div>
         </div>
-      </div>
+        <div class="col-md-4 badge">
+          <div class="flip-card" style="display: block;margin: auto;">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="https://logos-world.net/wp-content/uploads/2022/03/VMware-Emblem.png" alt="Avatar" style="margin-top: 60px;">
+              </div>
+              <div class="flip-card-back">
+                <div data-iframe-width="200" data-iframe-height="350" data-share-badge-id="70b931c0-add4-4e3e-a626-463e4191c104" data-share-badge-host="https://www.credly.com"></div>
+                <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
       
-      <div class="row">
-        <div class="col-md-6 badge">
+      <!-- <div class="row">
+        <div class="col-md-4 badge">
           <div class="flip-card" style="display: block;margin: auto;">
             <div class="flip-card-inner">
               <div class="flip-card-front">
@@ -87,7 +136,7 @@
               </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <hr>
     <!-- Skills Div starts here -->
@@ -98,9 +147,8 @@
           <img src="https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-30-905_512.gif" alt="" style="max-height: 50%; margin-top: 100px;">
           <p class="skills-dropdown">Programming</p>
           <div class="dropdown" >
-            <center>
             <div id="Programming" style="color: beige; max-height: 20%;border-radius: 20px;"></div>
-          </div></center>
+          </div>
         </div>
         <div class="col-sm-4">
           <img src="https://bwnyasse.github.io/slides-presentations/slides-understanding-the-cloud-yaounde-february-2020-v1/img/cloud-gif-2.gif" alt="" style="max-height: 50%; margin-top: 100px;">
@@ -118,10 +166,37 @@
       </div>
     </div>
   </div>
-
-
+  
 
   <script>
+
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}    
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+      setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
     $(document).ready(function() {
         $('.dropdown').hide()
             // When a text element is clicked
