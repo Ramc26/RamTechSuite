@@ -81,7 +81,7 @@ hr {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 2vw;
+  font-size: 4vmin
 }
 
 .topnav a:hover {
@@ -133,7 +133,7 @@ hr {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .intro-text p{
-    font-size: 2vw;
+    font-size: 4vmin;
     font-family: 'Poiret One', cursive;
     /* font-family: 'SpaceGrotesk', regular; */
 }
@@ -151,7 +151,7 @@ img{
 } */
 
 .profile-div{
-    padding: 5vw;
+    padding: 4vmin;
     /* background-color: #2a4166; */
     background-image: url(./elements/IMG_8354.JPG);
     background-size: cover;
@@ -160,7 +160,7 @@ img{
 }
 
 .cert-div, .skills-div{
-    padding: 1vw 1vw;
+    padding: 1vmin 1vmin;
     text-align: center;
     /* background-color: #086788; */
 }
@@ -226,7 +226,7 @@ img{
 
   .skills-div p{
     color: #263243;
-    font-size: 2vw;
+    font-size: 4vmin;
   }
   /* .skills-collapseible{
     padding: 50px 50px;
@@ -238,7 +238,7 @@ img{
   }
 
   .fa {
-    font-size: 2vw;
+    font-size: 4vmin;
   }
 
   .collapsible {
@@ -246,8 +246,8 @@ img{
     color: white;
     cursor: pointer;
     margin: 5px;
-    padding: 18px;
-    width: 50%;
+    padding: 2vmin;
+    width: 100vmin;
     border: none;
     border-radius: 10px;
     text-align: center;
@@ -261,7 +261,7 @@ img{
   
   .content {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 2vw;
+    font-size: 4vmin;
     padding: 0 18px;
     display: none;
     overflow: hidden;
