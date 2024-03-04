@@ -34,8 +34,8 @@
           </div> -->
           <div class="col-md-12 intro-text">
             <br><br>
-            <h4>Hello,</h4>
-            <h2>I'm a recent MS graduate and <span style="font-family: 'Yeseva One', cursive;">AWS Certified Developer (Associate)</span> based in Hammond, IN. <br><br> With a strong background in <span style="font-family: 'Yeseva One', cursive;">Python development</span>, I'm now seeking exciting career opportunities to make a meaningful impact. <br><br> Let's connect and explore new horizons together!</h2>
+            <h4 style="font-size: 3vw;">Hello,</h4>
+            <p>I'm a recent MS graduate and <span style="font-family: 'Yeseva One', cursive;">AWS Certified Developer (Associate)</span> based in Hammond, IN. <br><br> With a strong background in <span style="font-family: 'Yeseva One', cursive;">Python development</span>, I'm now seeking exciting career opportunities to make a meaningful impact. <br><br> Let's connect and explore new horizons together!</p>
                
               <div style="margin-top:10%; text-align: center;">
               <img src="./elements/down_arrow.gif" height="64" width="64">
@@ -46,22 +46,22 @@
     <hr>
     <!-- ------ Certifications Starts Here ------- -->
     <div class="cert-div" id="cert-div">
-      <h1>Certifications</h1>
+      <h1 style="font-size: 4vw;">Certifications</h1>
       <div class="slideshow-container">
           <div class="mySlides fade">
-            <a href="https://www.credly.com/badges/ecc9b095-42e4-4b0e-9e7b-b293d7c9ecdb/" target="_blank"><img src="./elements/cert/aws.png" style="width:300px;height:300px;"></a>
+            <a href="https://www.credly.com/badges/ecc9b095-42e4-4b0e-9e7b-b293d7c9ecdb/" target="_blank"><img src="./elements/cert/aws.png" style="width:20vw;height:20vw;"></a>
           </div>
           
           <div class="mySlides fade">
-            <a href="https://www.credly.com/badges/c7aa11c7-1787-409b-8f60-40d42e115dad/" target="_blank"><img src="./elements/cert/mta.png" style="width:300px;height:300px;"></a>
+            <a href="https://www.credly.com/badges/c7aa11c7-1787-409b-8f60-40d42e115dad/" target="_blank"><img src="./elements/cert/mta.png" style="width:20vw;height:20vw;"></a>
           </div>
           
           <div class="mySlides fade">
-            <a href="https://www.hackerrank.com/certificates/0ea755356fca/" target="_blank"><img src="./elements/cert/HackerRank.png" style="width:300px;height:300px;"></a>
+            <a href="https://www.hackerrank.com/certificates/0ea755356fca/" target="_blank"><img src="./elements/cert/HackerRank.png" style="width:20vw;height:20vw;"></a>
           </div>
 
           <div class="mySlides fade">
-            <a href="https://www.credly.com/badges/70b931c0-add4-4e3e-a626-463e4191c104/" target="_blank"><img src="./elements/cert/vmware.png" style="width:300px;height:300px;"></a>
+            <a href="https://www.credly.com/badges/70b931c0-add4-4e3e-a626-463e4191c104/" target="_blank"><img src="./elements/cert/vmware.png" style="width:20vw;height:20vw;"></a>
           </div>
         </div>
         <br>
@@ -142,34 +142,49 @@
     <hr>
     <!-- Skills Div starts here -->
     <div class="skills-div" id="skills-div">
-      <h1>My Skills</h1>
-      <div class="row" style="text-align: center;">
-        <div class="col-sm-4">
-          <img src="https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-30-905_512.gif" alt="" style="max-height: 50%; margin-top: 100px;">
-          <p class="skills-dropdown">Programming</p>
-          <div class="dropdown" >
-            <div id="Programming" style="color: beige; max-height: 20%;border-radius: 20px;"></div>
-          </div>
+      <h1 style="font-size: 4vw;">My Skills</h1>
+      <div class="skills-collapseible">
+      <button type="button" class="collapsible">Open Section 1</button>
+      <div class="content">
+        <div>
+          <span>HTML</span>
+          <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
         </div>
-        <div class="col-sm-4">
-          <img src="https://bwnyasse.github.io/slides-presentations/slides-understanding-the-cloud-yaounde-february-2020-v1/img/cloud-gif-2.gif" alt="" style="max-height: 50%; margin-top: 100px;">
-          <p class="skills-dropdown">Cloud Services</p>
-          <div class="dropdown">
-            <p>Content for dropdown 1</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <img src="https://cdn.freebiesupply.com/logos/large/2x/amazon-database-logo-png-transparent.png" alt="" style="max-height: 50%; margin-top: 100px;">
-          <p class="skills-dropdown">Databases</p>
-          <div class="dropdown" id="container">
-          </div>
-        </div>
+        
       </div>
+      <button type="button" class="collapsible">Open Section 2</button>
+      <div class="content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+      <button type="button" class="collapsible">Open Section 3</button>
+      <div class="content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+    </div>
     </div>
   </div>
   
 
   <script>
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
 
     let slideIndex = 0;
     showSlides();
@@ -198,20 +213,6 @@
         x.className = "topnav";
       }
     }
-    $(document).ready(function() {
-        $('.dropdown').hide()
-            // When a text element is clicked
-            $('.skills-dropdown').click(function() {
-                // Find the associated dropdown
-                var dropdown = $(this).next('.dropdown');
-                
-                // Toggle its visibility
-                dropdown.slideToggle();
-                
-                // Hide other open dropdowns
-                $('.dropdown').not(dropdown).slideUp();
-            });
-        });
 
 
         var chart = new ej.charts.Chart({
