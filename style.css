@@ -123,7 +123,11 @@ hr {
     border-radius: 5%;
 } */
 .intro-text{
-    color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0); 
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+
+    color: rgb(255, 255, 255);
 }
 .intro-text h4{
     font-family: Georgia, 'Times New Roman', Times, serif;
