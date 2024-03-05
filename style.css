@@ -38,7 +38,7 @@ font-family: 'Yeseva One', cursive;
     overflow-y: auto;
     scroll-behavior: smooth; 
 }
-.col-md-6{padding-right: 0; padding-left: 0;}
+.col-md-6 {padding-right: 0; padding-left: 0;}
 .body{
     margin: 0;
     padding: 0;
@@ -135,6 +135,7 @@ hr {
 .intro-text p{
     font-size: 5vmin;
     font-family: 'Poiret One', cursive;
+    filter: drop-shadow(0.2vmin 0.2vmin 0vmin black);
     /* font-family: 'SpaceGrotesk', regular; */
 }
 img{
@@ -228,10 +229,35 @@ img{
     color: #263243;
     font-size: 4vmin;
   }
-  /* .skills-collapseible{
-    padding: 50px 50px;
-  } */
+  
+  div.gallery {
+    margin-top: 3vmin;
+    font-family: 'SpaceGrotesk';
+    /* margin: 5px; */
+    /* border: 1px solid #ccc; */
+    float: left;
+    /* width: 180px; */
+    filter: drop-shadow(2vmin 2vmin 5vmin black);
+    margin-bottom: 3vmin;
 
+  }
+  
+  /* div.gallery:hover {
+    border: 1px solid #777;
+  } */
+  
+  div.desc {
+    padding: 1vmin;
+    text-align: center;
+  }
+  /* #techdiv:hover{
+    transition: all .4s ease;
+    width: 50%;
+    height: auto;
+    -webkit-transition: all .4s ease;
+    box-shadow: 5vmin 5vmin 5vmin 2vmin rgb(0 0 0 / 20%);
+
+  } */
   .checked {
     color: orange;
   }
@@ -241,7 +267,10 @@ img{
   }
   
 
-  .mySlides {display: none;}
+  .mySlides {display: none;
+    filter: drop-shadow(5vmin 5vmin 10vmin rgb(0, 0, 0));
+
+  }
 img {vertical-align: middle;}
 
 /* Slideshow container */
