@@ -129,13 +129,19 @@ hr {
 
     color: rgb(255, 255, 255);
 }
-.intro-text h4{
-    font-family: Georgia, 'Times New Roman', Times, serif;
+.intro-text h6{
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    font-family: 'SpaceGrotesk';
+    font-weight:bold;
+    margin-bottom: 5x vmin;
+    filter: drop-shadow(0.5vmin 0.5vmin 0.5vmin black);
+
 }
 .intro-text p{
-    font-size: 5vmin;
+    font-size: 4.5vmin;
     font-family: 'Poiret One', cursive;
-    filter: drop-shadow(0.2vmin 0.2vmin 0vmin black);
+    filter: drop-shadow(0.5vmin 0.5vmin 0.5vmin black);
+    font-weight: bolder;
     /* font-family: 'SpaceGrotesk', regular; */
 }
 img{
@@ -172,59 +178,6 @@ img{
     filter: drop-shadow(3px 3px 5px black);
     text-align: center;
 }
-
-/* .badge{
-    text-align: center;
-    margin-top: 50px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-.flip-card {
-    background-color: transparent;
-    width: 300px;
-    height: 300px;
-    perspective: 1000px;
-    border-radius: 200px;
-    text-align: center;
-  }
-  
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  }
-  
-  .flip-card:hover, .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-  
-  .flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  
-  .flip-card-front {
-    background-color: white;
-    color: black;
-  }
-  
-  .flip-card-back {
-    padding-top: 25px;
-    background-color: white;
-    color: white;
-    transform: rotateY(180deg);
-  } */
-
   .skills-div p{
     color: #263243;
     font-size: 4vmin;
@@ -268,6 +221,7 @@ img{
   
 
   .mySlides {display: none;
+    margin-top: 3vmin;
     filter: drop-shadow(5vmin 5vmin 10vmin rgb(0, 0, 0));
 
   }
@@ -300,11 +254,11 @@ img {vertical-align: middle;}
 /* Fading animation */
 .fade {
   animation-name: fade;
-  animation-duration: 1.5s;
+  animation-duration: 2s;
 }
 
 @keyframes fade {
-  from {opacity: .4} 
+  from {opacity: 0} 
   to {opacity: 1}
 }
 
