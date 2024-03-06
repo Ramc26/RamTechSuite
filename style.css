@@ -81,7 +81,7 @@ hr {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 4vmin
+  font-size: 1em;
 }
 
 .topnav a:hover {
@@ -166,13 +166,13 @@ img{
     background-repeat: no-repeat;
 }
 
-.cert-div, .skills-div{
+.cert-div, .skills-div, .edu-div{
     padding: 1vmin 1vmin;
     text-align: center;
     /* background-color: #086788; */
 }
 
-.cert-div h1, .skills-div h1{
+.cert-div h1, .skills-div h1, .edu-div h1{
     font-family: 'Abril Fatface', cursive;
     color: whitesmoke;
     filter: drop-shadow(3px 3px 5px black);
@@ -190,7 +190,7 @@ img{
     /* border: 1px solid #ccc; */
     float: left;
     /* width: 180px; */
-    filter: drop-shadow(2vmin 2vmin 5vmin black);
+    filter: drop-shadow(1.5vmin 1.5vmin 3.5vmin black);
     margin-bottom: 3vmin;
 
   }
