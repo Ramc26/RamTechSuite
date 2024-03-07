@@ -24,6 +24,11 @@ font-family: 'Yeseva One', cursive;
   font-family: SpaceGrotesk ;
   src: url(./fonts/SpaceGrotesk.ttf);
  }
+
+ .swal2-popup {
+  font-size: 2vmin !important;
+  font-family: 'Barlow', sans-serif !important;
+}
  .container-fluid{
     padding-left: 0;
     padding-right: 0rem;
@@ -133,7 +138,7 @@ hr {
     /* font-family: Georgia, 'Times New Roman', Times, serif; */
     font-family: 'SpaceGrotesk';
     font-weight:bold;
-    margin-bottom: 5x vmin;
+    margin-bottom: 5vmin;
     filter: drop-shadow(0.5vmin 0.5vmin 0.5vmin black);
 
 }
@@ -234,6 +239,9 @@ img {vertical-align: middle;}
   margin: auto;
 }
 
+.row{
+  margin: auto;
+}
 /* Caption text */
 
 /* The dots/bullets/indicators */
@@ -266,3 +274,98 @@ img {vertical-align: middle;}
 @media only screen and (max-width: 300px) {
   .text {font-size: 11px}
 }
+
+
+
+/***************
+
+Education Styling
+ 
+ *************/ 
+ #timeline {
+  display: flex;
+  margin-top: 5vmin;
+  background-color: #031625;
+}
+
+.tl-item {
+  transform: translate3d(0, 0, 0);
+  position: relative;
+  height: auto;
+  color: #fff;
+  overflow: hidden;
+  transition: width 0.5s ease;
+}
+
+.tl-item:before,
+.tl-item:after {
+  content: '';
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.tl-item:after {
+  background: transparentize(#03162500, 0.15);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.tl-item:before {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 75%);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.tl-item:hover:before {
+  opacity: 1;
+  transition: opacity 1s ease, transform 1s ease 0.25s;
+}
+
+.tl-content {
+  color: #fdfa72;
+  text-align: center;
+  opacity: 0; /* Hide content initially */
+  transform: translateY(25px); /* Move content down initially */
+  transition: all 0.25s ease 0.25s;
+}
+
+.tl-content h1 {
+  text-transform: uppercase;
+  color: #1779cf;
+  font-size: 2vmin;
+  font-weight: normal;
+}
+
+.tl-year p {
+  padding-top: 1.5vmax;
+  font-family: 'SpaceGrotesk';
+  font-size: 3vmax;
+}
+
+.tl-year h3 {
+  font-family: 'SpaceGrotesk';
+  font-size: 2vmax;
+  color: #f1cda3;
+  text-transform: uppercase;
+}
+
+/* Apply hover effect only for large screens and non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .tl-item:hover .tl-content {
+    opacity: 1; /* Show content on hover */
+    transform: translateY(0); /* Move content up on hover */
+  }
+}
+
+/* Directly show content for small screens and touch devices */
+@media (hover: none), (pointer: coarse) {
+  .tl-content {
+    opacity: 1; /* Show content without hover */
+    transform: translateY(0); /* Keep content at default position */
+  }
+}
+
+
