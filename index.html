@@ -26,6 +26,7 @@
       <a href="#profile-div">Intro</a>
       <a href="#cert-div">Certifications</a>
       <a href="#skills-div">Skills</a>
+      <a href="#edu-div">Education & Experience</a>
       <a href="#about">About</a>
       <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
@@ -38,7 +39,7 @@
           </div> -->
           <div class="col-md-12 intro-text">
             <br><br>
-            <h6 style="font-size: 4vmax;">Hello, I'm Ram! 👋 </h6>
+            <h6 style="font-size: 4vmax;">Hello, I'm <span class="text"></span> 👋 </h6>
             <p>Fresh out of Grad school with 3.6 GPA and
               <span style="font-family: 'Yeseva One', cursive;">proudly holding my AWS Developer (Associate) certification</span> , I call Hammond, IN my home base.<br><br> Armed with a knack for <span style="font-family: 'Yeseva One', cursive;">Python 🐍 and AWS ☁️</span>, I'm on the lookout for thrilling job prospects where I can truly make waves.<br><br> Let's link up and venture into uncharted territories together 🤝🚀 !</p>
               <div style="margin-top:10vmin; text-align: center;">
@@ -202,6 +203,7 @@
     <hr style="background-color:black;">
     <div class="edu-div" id="edu-div">
       <h1 style="font-size: 6vmin;">Education & Experience</h1>
+      <p style="color: ivory; font-size: 2vmin;">Tap each to know More !!</p>
       <section id="timeline">
         <div class="row" style="margin: auto;">
         <div class="tl-item col-md-3">
@@ -229,7 +231,7 @@
             <p class="f2 heading--sanSerif">2020 to 2021</p>
             <h3>Jukshio, India</h3>
           </div>
-          
+
       
           <div class="tl-content">
             <p>As an R&D Engineer II from Aug 2020 to Sept 2021, I specialized in Python scripting for automated tasks and backend API development. Collaborating with DevOps teams, I ensured seamless application deployment and scalability. Throughout, I maintained a focus on optimizing system performance and enhancing security measures.</p>
@@ -339,9 +341,7 @@ for (i = 0; i < coll.length; i++) {
     icon: "info",
     text: "Grab your trusty laptop, 'cause this site's best enjoyed on the big screen! 💻",
     position: "center",
-    // backdrop: "linear-gradient(yellow, orange)",
-    background: "#DDE6ED",
-    // color:"white",
+    color: "#716add",
     showCancelButton: false,
     focusConfirm: false,
     confirmButtonText: `
@@ -353,6 +353,90 @@ for (i = 0; i < coll.length; i++) {
     // Swal.fire("Grab your trusty laptop, 'cause this site's best enjoyed on the big screen! 💻");
     
     
+
+    // ——————————————————————————————————————————————————
+// TextScramble
+// ——————————————————————————————————————————————————
+
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.chars = "!.<>-ABExv10_\\/[]{}—=+*^?#________";
+    this.update = this.update.bind(this);
+  }
+  setText(newText) {
+    const oldText = this.el.innerText;
+    const length = Math.max(oldText.length, newText.length);
+    const promise = new Promise(resolve => this.resolve = resolve);
+    this.queue = [];
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i] || '';
+      const to = newText[i] || '';
+      const start = Math.floor(Math.random() * 40);
+      const end = start + Math.floor(Math.random() * 40);
+      this.queue.push({ from, to, start, end });
+    }
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+    return promise;
+  }
+  update() {
+    let output = "";
+    let complete = 0;
+    for (let i = 0, n = this.queue.length; i < n; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.2) {
+          char = this.randomChar();
+          this.queue[i].char = char;
+        }
+        output += `<span class="dud">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+    this.el.innerHTML = output;
+    if (complete === this.queue.length) {
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
+    }
+  }
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  }}
+
+
+// ——————————————————————————————————————————————————
+// Example
+// ——————————————————————————————————————————————————
+
+const phrases = [
+"Ram",
+"Ramarao",
+"Veera",
+"Bikkina",
+"itsmeramc",
+];
+
+
+const el = document.querySelector(".text");
+const fx = new TextScramble(el);
+
+let counter = 0;
+const next = () => {
+  fx.setText(phrases[counter]).then(() => {
+    setTimeout(next, 1000);
+  });
+  counter = (counter + 1) % phrases.length;
+};
+
+next();
 
   </script>
 </body>

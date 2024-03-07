@@ -28,6 +28,7 @@ font-family: 'Yeseva One', cursive;
  .swal2-popup {
   font-size: 2vmin !important;
   font-family: 'Barlow', sans-serif !important;
+  font-size: 2.5vmin !important;
 }
  .container-fluid{
     padding-left: 0;
@@ -136,8 +137,10 @@ hr {
 }
 .intro-text h6{
     /* font-family: Georgia, 'Times New Roman', Times, serif; */
-    font-family: 'SpaceGrotesk';
-    font-weight:bold;
+    /* font-family: 'SpaceGrotesk'; */
+    font-family: 'Londrina Solid', cursive;
+    /* font-weight:bold; */
+    color: #EAB2A0;
     margin-bottom: 5vmin;
     filter: drop-shadow(0.5vmin 0.5vmin 0.5vmin black);
 
@@ -367,5 +370,10 @@ Education Styling
     transform: translateY(0); /* Keep content at default position */
   }
 }
+
+
+
+
+
 
 
