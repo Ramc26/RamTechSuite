@@ -24,6 +24,10 @@ font-family: 'Yeseva One', cursive;
   font-family: SpaceGrotesk ;
   src: url(./fonts/SpaceGrotesk.ttf);
  }
+ @font-face {
+  font-family: Hacked;
+  src:url(./fonts/Hacked.ttf);
+ }
 
  .swal2-popup {
   font-size: 2vmin !important;
@@ -49,7 +53,8 @@ font-family: 'Yeseva One', cursive;
     margin: 0;
     padding: 0;
     /* background: linear-gradient(to bottom, #3a1c71, #d76d77, #ffaf7b); */
-    background-image: linear-gradient(to bottom, #5d4157, #626481, #66889e, #7daaae, #a8caba);
+    /* background-image: linear-gradient(to bottom, #5d4157, #626481, #66889e, #7daaae, #a8caba); */
+    background-image: linear-gradient(to bottom, #124076, #607274, #B2A59B, #DED0B6, #FAEED1);
     /* background: linear-gradient(to bottom, #5d4157, #a8caba); */
 }
 
@@ -139,8 +144,7 @@ hr {
     /* font-family: Georgia, 'Times New Roman', Times, serif; */
     /* font-family: 'SpaceGrotesk'; */
     font-family: 'Londrina Solid', cursive;
-    /* font-weight:bold; */
-    color: #EAB2A0;
+    color: #F8F4EA;
     margin-bottom: 5vmin;
     filter: drop-shadow(0.5vmin 0.5vmin 0.5vmin black);
 
