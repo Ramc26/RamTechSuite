@@ -175,19 +175,46 @@ img{
 .profile-div{
     padding: 4vmin;
     /* background-color: #2a4166; */
+    /* background: linear-gradient(to bottom,  #2D3250 0%,#2D3250 0%,#F6B17A 0%,#F6B17A 100%); */
     background-image: url(./elements/IMG_8354.JPG);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
+  }
 
-.cert-div, .skills-div, .edu-div{
+.cert-div, .skills-div, .edu-div, .connect-div{
     padding: 1vmin 1vmin;
     text-align: center;
     /* background-color: #086788; */
 }
+.cert-div{
+  background: linear-gradient(to bottom,  #F7E987 0%,#F7E987 3%,#252B48 3%,#252B48 100%);
+  padding: 5vmax 3vmax;
+}
+.skills-div{
+  border-top-style: groove ;
+  border-color: gray;
+  background: linear-gradient(to bottom,  #252B48 0%,#252B48 36%,#F7E987 36%,#F7E987 100%);
+  padding: 3vmax 3vmax;
 
-.cert-div h1, .skills-div h1, .edu-div h1{
+}
+
+.edu-div{
+  border-top-style: groove ;
+  border-color: rgba(128, 128, 128, 0.193);
+  background: linear-gradient(to bottom,  #F7E987 0%,#F7E987 60%,#635985 60%,#635985 100%);
+  padding: 3vmax 3vmax;
+}
+
+.connect-div{
+  border-top-style: groove ;
+  border-color: rgba(128, 128, 128, 0.798);
+  background: linear-gradient(to bottom,  #F7E987 0%,#F7E987 0%,#635985 0%,#635985 100%);
+  padding: 3vmax 3vmax;
+}
+
+
+.cert-div h1, .skills-div h1, .edu-div h1, .connect-div h1{
     font-family: 'Abril Fatface', cursive;
     color: whitesmoke;
     filter: drop-shadow(3px 3px 5px black);
@@ -511,7 +538,32 @@ a {
 
 
 /* remove the below if you don't want smooth scrolling */
+.foot-text{
+  font-family: 'Europa Regular';
+}
 
+.foot-image{
+  margin-top: 2vmax;
+  width: 15vmax; 
+  height: auto; 
+  border-radius: 100vmax; 
+  filter: drop-shadow(0.5vmin 0.5vmin 1.5vmin black)
+}
+.foot-image:hover{
+  width: 17vmax;
+  height: auto;
+  filter: drop-shadow(2vmin 2vmin 5vmin black);
+  transition: all 0.5s, transform 0.5s ease;;
+  -webkit-transition: all .4s ease;
+}
+.social{
+  font-size: 1rem;
+  color: ivory;
+  margin: 0.2rem 0.2rem;
+  border: 1px solid white;
+  padding: 0.4rem 0.4rem;
+  border-radius: 100vmax;
+}
 
 
 
