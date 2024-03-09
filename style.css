@@ -199,7 +199,7 @@ img{
     filter: drop-shadow(1.5vmin 1.5vmin 3.5vmin black);
   }
   .skills-icons{
-    width: 8vmax;
+    width: 5rem;
     height: auto;
   }
   .skill-desc{
@@ -209,7 +209,7 @@ img{
   }
 
 .skill-type{
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: 'SpaceGrotesk';
 }
   
@@ -317,6 +317,8 @@ img {vertical-align: middle;}
 Education Styling
  
  *************/ 
+
+ /*******
  #timeline {
   display: flex;
   margin-top: 5vmin;
@@ -362,8 +364,8 @@ Education Styling
 .tl-content {
   color: #fdfa72;
   text-align: center;
-  opacity: 0; /* Hide content initially */
-  transform: translateY(25px); /* Move content down initially */
+  opacity: 0; 
+  transform: translateY(25px);
   transition: all 0.25s ease 0.25s;
 }
 
@@ -387,22 +389,87 @@ Education Styling
   text-transform: uppercase;
 }
 
-/* Apply hover effect only for large screens and non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .tl-item:hover .tl-content {
-    opacity: 1; /* Show content on hover */
-    transform: translateY(0); /* Move content up on hover */
+    opacity: 1;
+    transform: translateY(0); 
   }
 }
 
-/* Directly show content for small screens and touch devices */
+//Directly show content for small screens and touch devices
 @media (hover: none), (pointer: coarse) {
   .tl-content {
-    opacity: 1; /* Show content without hover */
-    transform: translateY(0); /* Keep content at default position */
+    opacity: 1; //Show content without hover
+    transform: translateY(0); // Keep content at default position 
   }
 }
+*****/
+#timeline {
+  display: flex;
+  margin-top: 5vmin;
+  background-color: #031625;
+  border-radius: 2vmin;
+  padding-bottom: 1rem;
+}
+.tl-content {
+  color: #fdfa72;
+  text-align: center;
+}
 
+.tl-content h1 {
+  text-transform: uppercase;
+  color: #1779cf;
+  font-size: 2vmin;
+  font-weight: normal;
+}
+.vl {
+  border-left: 0.5vmax solid #FFFDCB;
+  border-radius: 2rem;
+  height: 4rem;
+  position: absolute;
+  /* left: 50%; */
+  margin-top: 2rem;
+  z-index: 1;
+}
+.tl-year p {
+  padding-top: 1.5vmax;
+  font-family: 'SpaceGrotesk';
+  font-size: 3vmax;
+}
+
+.tl-year h3 {
+  font-family: 'SpaceGrotesk';
+  font-size: 2vmax;
+  color: #f1cda3;
+  text-transform: uppercase;
+}
+
+.tl-item {
+  /* transform: translate3d(0, 0, 0); */
+  /* position: relative; */
+  border-left: #EFE1D1;
+  height: auto;
+  border-left: #EFE1D1;
+  color: #fff;
+  overflow: hidden;
+  perspective: 1px;
+  transition: width 0.5s ease;
+}
+.tl-content {
+  color: #fdfa72;
+  text-align: center;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 10s ease 0s;
+}
+
+.tl-item:hover .tl-content {
+  opacity: 1;
+  height: auto;
+  overflow: visible;
+  transition: all 0.25s ease 0.25s;
+}
 .top {
   --offset: 5vmin;
   position: sticky;
