@@ -199,17 +199,17 @@ img{
     filter: drop-shadow(1.5vmin 1.5vmin 3.5vmin black);
   }
   .skills-icons{
-    width: 10vmin;
+    width: 8vmax;
     height: auto;
   }
   .skill-desc{
-    font-size: 5vmin;
+    /* font-size: 3vmax; */
     color: ivory;
     font-family: 'Europa Regular';
   }
 
 .skill-type{
-  font-size: 3vmin;
+  font-size: 2vmax;
   font-family: 'SpaceGrotesk';
 }
   
