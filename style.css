@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Barlow&family=Bodoni+Moda:opsz@6..96&family=Cinzel&family=Lato:wght@100;400&family=Londrina+Solid&family=Marcellus&family=Poiret+One&family=Yeseva+One&display=swap');
+@import url('https://db.onlinewebfonts.com/c/23c0fcab84d99da0de762de7e220a6e1?family=Europa+Regular');
 /* font-family: 'Abril Fatface', cursive;
 font-family: 'Barlow', sans-serif;
 font-family: 'Bodoni Moda', serif;
@@ -54,7 +55,9 @@ font-family: 'Yeseva One', cursive;
     padding: 0;
     /* background: linear-gradient(to bottom, #3a1c71, #d76d77, #ffaf7b); */
     /* background-image: linear-gradient(to bottom, #5d4157, #626481, #66889e, #7daaae, #a8caba); */
-    background-image: linear-gradient(to bottom, #124076, #607274, #B2A59B, #DED0B6, #FAEED1);
+    /* background-image: linear-gradient(to bottom, #124076, #607274, #B2A59B, #DED0B6, #FAEED1); */
+    background-image: linear-gradient(to bottom, #35374B, #344955,#50727B,#78A083);
+    /* background-color: #2d3548; */
     /* background: linear-gradient(to bottom, #5d4157, #a8caba); */
 }
 
@@ -193,8 +196,32 @@ img{
   .skills-div p{
     color: #263243;
     font-size: 4vmin;
+    filter: drop-shadow(1.5vmin 1.5vmin 3.5vmin black);
   }
+  .skills-icons{
+    width: 10vmin;
+    height: auto;
+  }
+  .skill-desc{
+    font-size: 5vmin;
+    color: ivory;
+    font-family: 'Europa Regular';
+  }
+
+.skill-type{
+  font-size: 3vmin;
+  font-family: 'SpaceGrotesk';
+}
   
+  div.tech-row{
+    margin-top: 5vmin;
+    /* border-radius: 15px; */
+    overflow: hidden;
+    filter: drop-shadow(1vmin 1vmin 1.5vmin rgba(0, 0, 0, 0.642));
+    border-radius: 1.5vmin;
+    perspective: 1px;
+
+  }
   div.gallery {
     margin-top: 3vmin;
     font-family: 'SpaceGrotesk';
@@ -204,6 +231,7 @@ img{
     /* width: 180px; */
     filter: drop-shadow(1.5vmin 1.5vmin 3.5vmin black);
     margin-bottom: 3vmin;
+    border-radius: 1.5vmin
 
   }
   
@@ -375,7 +403,33 @@ Education Styling
   }
 }
 
+.top {
+  --offset: 5vmin;
+  position: sticky;
+  bottom: 5vmin;      
+  margin-left:10vmin; 
+  place-self: end;
+  margin-top: calc(110vmin + var(--offset));
+  
+  /* visual styling */
+  text-decoration: none;
+  padding: 1.8vmin;
+  font-family: 'SpaceGrotesk';
+  font-weight: bold;
+  /* color: #fff; */
+  color: wheat;
+  background: #0C2D57;
+  border-radius: 100px;
+  z-index: 1;
+  filter: drop-shadow(0.5vmin 0.5vmin 3vmin  black);
+  /* white-space: nowrap; */
+}
+a {
+  text-decoration: none;
+}
 
+
+/* remove the below if you don't want smooth scrolling */
 
 
 
