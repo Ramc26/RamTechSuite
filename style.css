@@ -513,8 +513,8 @@ Education Styling
 }
 .top {
   --offset: 5vmin;
-  position: sticky;
-  bottom: 5vmin;      
+  position: fixed;
+  bottom: 10vmin;      
   margin-left:10vmin; 
   place-self: end;
   margin-top: calc(110vmin + var(--offset));
@@ -524,7 +524,6 @@ Education Styling
   padding: 1.8vmin;
   font-family: 'SpaceGrotesk';
   font-weight: bold;
-  /* color: #fff; */
   color: wheat;
   background: #0C2D57;
   border-radius: 100px;
@@ -539,9 +538,17 @@ a {
 
 /* remove the below if you don't want smooth scrolling */
 .foot-text{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 5rem;
   font-family: 'Europa Regular';
+  color: ivory;
+  /* margin-bottom: -1rem; */
 }
 
+.contact-div{
+  /* margin: 2vmax 15vmax; */
+}
 .foot-image{
   margin-top: 2vmax;
   width: 15vmax; 
