@@ -288,14 +288,7 @@ img{
     padding: 1vmin;
     text-align: center;
   }
-  /* #techdiv:hover{
-    transition: all .4s ease;
-    width: 50%;
-    height: auto;
-    -webkit-transition: all .4s ease;
-    box-shadow: 5vmin 5vmin 5vmin 2vmin rgb(0 0 0 / 20%);
 
-  } */
   .checked {
     color: orange;
   }

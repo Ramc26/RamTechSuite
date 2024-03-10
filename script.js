@@ -4,8 +4,6 @@
       publicKey: "0BTonjp4iBF33pc3Q",
     });
 })();
-// var sample = document.getElementById("foobar");
-// sample.play();
 
 window.onload = function() {
     document.getElementById('contact-form').addEventListener('submit', function(event) {
