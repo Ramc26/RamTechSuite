@@ -234,9 +234,29 @@
       <h1 style="font-size: 6vmin;">How to Connect ?</h1>
       <div class="row" style="margin: auto;">
         <div class="col-md-12" style="align-items: center; margin-top: 3rem;">
-          <div class="contact-div">
+
+          <div class="container">
           <form id="contact-form">
-            <!-- To simplify the tutorial, the value is static. -->
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="user_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="user_email" required>
+                </div>
+                                    <label for="message">Message:</label>
+
+                <div class="form-group grow-wrap">
+                    <textarea id="message" name="message" onInput="this.parentNode.dataset.replicatedValue = this.value" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Send Mail <i class="fa-solid fa-paper-plane fa-shake"></i></button>
+            </div></form>
+                </div>
+          <!-- <div class="contact-div">
+          <form id="contact-form">
+            To simplify the tutorial, the value is static.
             <div class="form-row">
               <div class="col">
                 <input type="text" name="user_name" class="form-control" placeholder="Your Name">
@@ -247,16 +267,19 @@
             </div><br><br>
             <div class="input-group mb-3">
               <textarea type="text" class="form-control" placeholder="Message for me" name="message"></textarea>
-              <button class="btn btn-outline-secondary" type="submit" style="color: #071952; background-color: #A0E9FF; font-size: 2rem; padding-left: 5rem; padding-right: 5rem;"><i class="fa-solid fa-paper-plane"></i></button>
+              <button class="btn btn-outline-secondary" type="submit" style="color: #071952; background-color: #A0E9FF; font-size: 2rem;"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </form>
-      </div><br>
+      </div><br> -->
+      <!-- <h1 style="font-size: 7rem; font-family: SpaceGrotesk;">RTS</h1>
+      <h3 style="font-size: 2rem;">RamTechSuite</h3> -->
+          <!-- <img src="./elements/logo.png" class=" foot-image"> &nbsp; &nbsp; &nbsp; -->
           <img src="./elements/IMG_83541.JPG" class=" foot-image">
           <br><br><br>
           <h4 style="color: ivory; font-family: Europa Regular;">Unleashing Creativity, One Line of Code at a Time</h4>
           <br>
           <a href="https://www.linkedin.com/in/rambikkina26/" target="_blank" class="social"><i class="bi bi-linkedin"></i></a>
-          <a href="https://www.linkedin.com/in/rambikkina26/" target="_blank" class="social"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://twitter.com/itsmeramc/" target="_blank" class="social"><i class="bi bi-twitter-x"></i></a>
           <a href="https://www.github.com/ramc26" target="_blank" class="social"><i class="bi bi-github"></i></a>
           <a href="https://instagram.com/itsmeramc" target="_blank" class="social"><i class="bi bi-instagram"></i></a>
           <a href="https://www.hackerrank.com/profile/Rakeshchowdary" target="_blank" class="social"><i class="fa-brands fa-hackerrank"></i></a>
@@ -265,15 +288,15 @@
 
         </div>
       </div>
-      <div style="text-align: center;">
+      <footer style="text-align: center;">
         <div  class="foot-text">
           <p>Copyright © Ram Bikkina 2024. All rights reversed... just kidding! But seriously, don't mess with my code, it's already got a lot of bugs to deal with. Special thanks to all the code wizards out there whose snippets made this website possible. Remember, sharing is caring... unless it's my code!"</p>
           <p><u>Handcoded by me &#169; TwentyTwentyFour</u></p>
         </div>
-      </div>
+      </footer>
     </div>
   </div>
-  <a href="#" class="top" style="text-decoration: none; color: #331D2C; background-color: #FFF3C7; margin-bottom: -5vmin;">&#8593;</a>
+  <a href="#" class="top" style="text-decoration: none; color: #331D2C; background-color: #FFF3C7; margin-bottom: -5vmin; align-items: center;"><i class="fa-solid fa-hand-point-up fa-bounce" alt="TOP"></i></a>
 
   <script>!function(){var e,t,n,a;window.MyAliceWebChat||((t=document.createElement("div")).id="myAliceWebChat",(n=document.createElement("script")).type="text/javascript",n.async=!0,n.src="https://widget.myalice.ai/index.js",(a=(e=document.body.getElementsByTagName("script"))[e.length-1]).parentNode.insertBefore(n,a),a.parentNode.insertBefore(t,a),n.addEventListener("load",(function(){MyAliceWebChat.init({selector:"myAliceWebChat",number:"2196991621",message:"Hey Ram! I'd like to connect with you to know your Availability.",color:"#008170",channel:"wa",boxShadow:"high",text:"Let's Chat!",theme:"light",position:"right",mb:"1rem",mx:"1rem",radius:"5vmin"})})))}();</script>
   <script src="./script.js" type="text/javascript"></script>
@@ -315,21 +338,21 @@
         x.className = "topnav";
       }
     }
+  
 
-
-  //   Swal.fire({
-  //   icon: "info",
-  //   text: "Grab your trusty laptop, 'cause this site's best enjoyed on the big screen! 💻",
-  //   position: "center",
-  //   color: "#716add",
-  //   showCancelButton: false,
-  //   focusConfirm: false,
-  //   confirmButtonText: `
-  //     <i class="fa fa-thumbs-up"></i> Great!
-  //   `,
-  //   confirmButtonAriaLabel: "Thumbs up, great!",
-  //   timer: 5000
-  // });
+    Swal.fire({
+    icon: "info",
+    text: "Grab your trusty laptop, 'cause this site's best enjoyed on the big screen! 💻",
+    position: "center",
+    color: "#716add",
+    showCancelButton: false,
+    focusConfirm: false,
+    confirmButtonText: `
+      <i class="fa fa-thumbs-up"></i> Great!
+    `,
+    confirmButtonAriaLabel: "Thumbs up, great!",
+    timer: 5000
+  });
   //   Swal.fire("Grab your trusty laptop, 'cause this site's best enjoyed on the big screen! 💻");
     
     

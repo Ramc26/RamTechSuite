@@ -4,6 +4,8 @@
       publicKey: "0BTonjp4iBF33pc3Q",
     });
 })();
+// var sample = document.getElementById("foobar");
+// sample.play();
 
 window.onload = function() {
     document.getElementById('contact-form').addEventListener('submit', function(event) {
@@ -11,9 +13,35 @@ window.onload = function() {
         // these IDs from the previous steps
         emailjs.sendForm('contact_service', 'contact_form', this)
         .then(() => {
-                console.log('SUCCESS!');
+          console.log('Success !!')
+          Swal.fire({
+            title: "Whoosh!!",
+            text: "Message delivered like a pro! 🚀 Keep an eye on your inbox!",
+            imageUrl: "https://cdn.dribbble.com/users/1525393/screenshots/5419988/dfsd.gif",
+            imageWidth: 300,
+            imageAlt: "message sent",
+            timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+          });
+
             }, (error) => {
-                console.log('FAILED...', error);
+              Swal.fire({
+                title: "Uh-Oh!!",
+                text: "Message delivery failed! 😅 No worries, just hit that send button one more time! 🚀",
+                imageUrl: "https://cdn.dribbble.com/users/1088653/screenshots/9331108/untitled_artwork.gif",
+                imageWidth: 300,
+                imageAlt: "message sent",
+                timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                    }
+              });
             });
     });
 }
@@ -24,22 +52,6 @@ window.onload = function() {
 //     $(".intro-text").slideDown(1000);
 //   });  
 //   });
-$(document).ready(function() {
-  $(window).scroll(function() {
-    var windowScroll = $(this).scrollTop();
-    var windowHeight = $(this).height();
-
-    $(".tl-item").each(function() {
-      var offsetTop = $(this).offset().top;
-
-      if (windowScroll + windowHeight > offsetTop) {
-        $(this).find(".tl-content").addClass("show-content");
-      }
-    });
-  });
-});
-
-
 
 
 //  let slideIndex = 0;

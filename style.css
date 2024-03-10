@@ -20,7 +20,7 @@ font-family: 'Yeseva One', cursive;
 --selective-yellow: #ffbc1fff;
  */
 
-
+ /* #foobar { display: none } */
  @font-face {
   font-family: SpaceGrotesk ;
   src: url(./fonts/SpaceGrotesk.ttf);
@@ -265,6 +265,24 @@ img{
   /* div.gallery:hover {
     border: 1px solid #777;
   } */
+
+  .grow-wrap {
+    /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+    display:grid;
+    margin-left: 1.5rem;
+    margin-right: -1.5rem;
+  }
+  .grow-wrap::after {
+    content: attr(data-replicated-value) " ";
+    white-space: pre-wrap;
+    visibility: hidden;
+  }
+  .grow-wrap > textarea,
+  .grow-wrap::after {
+    font: inherit;
+    grid-area: 1 / 1 / 2 / 2;
+  }
+  
   
   div.desc {
     padding: 1vmin;
@@ -524,6 +542,7 @@ Education Styling
   padding: 1.8vmin;
   font-family: 'SpaceGrotesk';
   font-weight: bold;
+  font-size: 1.5rem;
   color: wheat;
   background: #0C2D57;
   border-radius: 100px;
@@ -538,17 +557,18 @@ a {
 
 /* remove the below if you don't want smooth scrolling */
 .foot-text{
-  margin-left: 2rem;
-  margin-right: 2rem;
+  /* margin-left: 1rem;
+  margin-right: 1rem; */
+  font-size: 0.8rem;
   margin-top: 5rem;
+  /* background-color: #1A120B; */
+  background-image: linear-gradient(to right,  #635985 0%,#5D3587 50%,#635985 100%);
+  width: 100%;
   font-family: 'Europa Regular';
   color: ivory;
   /* margin-bottom: -1rem; */
 }
 
-.contact-div{
-  /* margin: 2vmax 15vmax; */
-}
 .foot-image{
   margin-top: 2vmax;
   width: 15vmax; 
@@ -570,6 +590,70 @@ a {
   border: 1px solid white;
   padding: 0.4rem 0.4rem;
   border-radius: 100vmax;
+}
+
+
+.container {
+  font-family: 'SpaceGrotesk';
+  /* background-color: rgba(255, 255, 255, 0.9); */
+  background-color: #0B2447;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  /* max-width: 600px; */
+  /* width: 100%; */
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #F4EEE0;
+}
+
+input,
+textarea {
+  width: calc(100% - 3rem);
+  padding: 0.7rem;
+  color: ivory;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-image: linear-gradient(to right, #2069cf 0%,#1d60be 15%,#1d60be 25%,#1d60be 35%, #16468b 45%,#103569 55%,#0e2d58 65%,#0b2447 100%);
+  /* box-shadow: 0.2rem 0.2rem 0.5rem rgba(215, 187, 187, 0.454); */
+}
+
+input:focus,
+textarea:focus {
+  outline:#7e2558 solid 2px;
+  background-color: #e0e0e0;
+  box-shadow: 0rem 0rem 2rem #7E2553;
+  transition: all 0.5s ease;
+
+}
+
+button {
+  background-color: #ff5a5f;
+  color: white;
+  padding: 12px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5rem;
+  cursor: pointer;
+  transition: background 0.6s ease;
+}
+
+button:hover {
+  background-color: #7E2553;
+  transition: all 0.6s ease;
+
+
 }
 
 
