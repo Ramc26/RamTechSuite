@@ -139,7 +139,7 @@ hr {
 .intro-text{
   background-color: rgba(0, 0, 0, 0); 
   backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(2px);
 
     color: rgb(255, 255, 255);
 }
