@@ -27,6 +27,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+
 // Navbar & Back-to-Top Button on Scroll
 function handleScroll() {
     const navbar = document.querySelector('.navbar');

@@ -481,6 +481,10 @@
   position: static;
   transform: none;
 }
+[data-v]:after {
+  content: '';
+  display: none;
+}
 .carousel-button:hover {
   background: var(--gradient-text)
 }
