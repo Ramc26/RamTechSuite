@@ -6,7 +6,7 @@
   <!-- Open Graph Meta -->
   <meta property="og:title" content="RamTechSuite" />
   <meta property="og:description" content="Who, What and How ?" />
-  <meta property="og:image" content="./elements/logo.png" />
+  <meta property="og:image" content="./elements/logo1.png" />
   <meta property="og:url" content="URL_of_your_website" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
@@ -16,6 +16,7 @@
   <!-- Font Imports -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Barlow&family=Bodoni+Moda:opsz@6..96&family=Cinzel&family=Lato:wght@100;400&family=Londrina+Solid&family=Marcellus&family=Poiret+One&family=Yeseva+One&display=swap">
   <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/23c0fcab84d99da0de762de7e220a6e1?family=Europa+Regular">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&display=swap" rel="stylesheet">
 
   <!-- External CSS Dependencies -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -24,39 +25,34 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="./elements/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="./elements/logo1.png">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="./style.css">
 </head>
 <body class="loading">
   <!-- Loader -->
-  <div class="loader">
-    <div class="loader-content">
-      <svg viewBox="0 0 100 100" width="100" height="100">
-        <path d="M10,50 A40,40 0 1,1 90,50 A40,40 0 1,1 10,50" fill="none" stroke="#FDAC55" stroke-width="5"></path>
-        <text x="50" y="55" text-anchor="middle" fill="#FDAC55" font-family="SpaceGrotesk">RTS</text>
-      </svg>
-    </div>
-  </div>
+<!-- Preloader -->
+<div id="preloader">
+  <div id="progress-bar"></div>
+  <div id="emoji-scramble">💻</div>
+</div>
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#home">
-      <img src="./elements/logo.png" alt="RTS Logo" class="nav-logo">
-      RamTechSuite
-    </a>
-    <button class="navbar-toggler" type="button" 
-            data-toggle="collapse" 
-            data-target="#navbarNav" 
-            aria-controls="navbarNav" 
-            aria-expanded="false" 
+      <!-- <img src="./elements/logo1.png" alt="RTS Logo" class="nav-logo"> -->
+      <h1 class="rubik-80s-fade-regular">RamTechSuite</h1>
+      <button class="navbar-toggler" type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
             aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
         <li class="nav-item"><a class="nav-link" href="#certifications">Certifications</a></li>
@@ -77,13 +73,16 @@
         <span class="gradient-text scramble-text">Ram</span>
       </h1>
       <p>
-        With a Master's degree from Purdue University 🎓, I'm currently working as
-        <span style="font-family: 'Yeseva One', cursive;"> a GoLang Developer - Backend 👨🏻‍💻 at Jukshio </span>
-        with 3 years of experience. I call Hyderabad, TG my home base.
-        <br><br>
-        With a strong foundation in <span style="font-family: 'Yeseva One', cursive;">Python 🐍 and AWS ☁️ (Certified).</span>
-        <br><br>
-        Let's link up and venture into uncharted territories together 🤝🚀 !
+        I’m a
+        <span style="font-family:'Yeseva One',cursive;">
+          Python Developer – Backend & ML Model Integration 👨🏻‍💻💾⚙️
+        </span>
+        specializing in deploying LLM agents 🤖, integrating machine-learning models 🧠, and building scalable cloud pipelines ☁️🚀🔗.</p><br>
+      
+      <p>
+        Since July 2020, I’ve amassed
+        <span class="exp-counter" id="exp-counter">-- Years, -- Months, -- Days</span>
+        of hands-on experience 💪—growing stronger every day 🌱🔥🎉!
       </p>
       <div class="hero-cta">
         <a href="#contact" class="btn btn-primary">Let's Connect</a>
