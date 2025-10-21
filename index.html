@@ -29,6 +29,12 @@
   <div id="preloader">
   <div id="progress-bar"></div>
   <div id="emoji-scramble">💻</div>
+  <div id="preloader-hint" style="position: absolute; bottom: 15%; text-align: center; color: ivory; padding: 0 20px; max-width: 90%; font-size: clamp(0.8rem, 2.5vw, 0.95rem); opacity: 0; animation: fadeInHint 1s ease-in 2s forwards;">
+    <p style="margin: 10px 0; font-weight: bold; color: var(--secondary-color); font-size: clamp(1rem, 3vw, 1.2rem);">🎮 Pro Tip!</p>
+    <p style="margin: 8px 0; line-height: 1.5;">You're not just here for my skills... there are <strong>10 hidden Easter Eggs</strong> scattered throughout! 🥚✨</p>
+    <p style="margin: 8px 0; font-size: clamp(0.75rem, 2vw, 0.85rem); opacity: 0.9; line-height: 1.4;">Hints will reveal randomly as you explore. Find all 10 and email me for a <strong style="color: var(--secondary-color);">special surprise</strong>! 🏆</p>
+    <p style="margin: 8px 0; font-size: clamp(0.7rem, 2vw, 0.8rem); opacity: 0.8; font-style: italic;">Remember: Use your keyboard, mouse, and curiosity! 🔍</p>
+  </div>
 </div>
 
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -56,6 +62,7 @@
 </nav>
 
   <section id="home" class="hero" data-aos="fade">
+    <canvas id="particles-canvas"></canvas>
     <div class="container">
       <h1>
         <span class="hero-title">Hello, I'm</span>
@@ -433,19 +440,20 @@
               <a href="https://www.github.com/ramc26" target="_blank" aria-label="GitHub"><i class="bi bi-github"></i></a>
               <a href="https://www.hackerrank.com/profile/Rakeshchowdary" target="_blank" aria-label="HackerRank"><i class="fa-brands fa-hackerrank"></i></a>
               <a href="https://wa.me/7095838715" target="_blank" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+              <a href="mailto:rambikkina@zohomail.in" target="_blank" aria-label="WhatsApp"><i class="bi bi-envelope-at"></i></a>
             </div>
           </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left">
           <form id="contact-form" class="contact-form">
             <div class="form-group">
-              <input type="text" id="name" name="user_name" required placeholder="Your Name">
+              <input type="text" id="name" name="user_name" required placeholder="Baddam Bhaskar">
             </div>
             <div class="form-group">
-              <input type="email" id="email" name="user_email" required placeholder="Your Email">
+              <input type="email" id="email" name="user_email" required placeholder="MemeGodBrahmi@Memail.com">
             </div>
             <div class="form-group">
-              <textarea id="message" name="message" rows="5" required placeholder="Your Message"></textarea>
+              <textarea id="message" name="message" rows="5" required placeholder="My name is Maximus Decimus Meridius, Father to a murdered son, husband to a murdered wife. And I will have my vengeance, in this life or the next."></textarea>
             </div>
             <button type="submit" class="btn btn-primary">
               Send Message <i class="fas fa-paper-plane"></i>
@@ -460,12 +468,43 @@
     <div class="foot-text">
       <p>Copyright © Ram Bikkina 2024. All rights reserved... just kidding! But seriously, don't mess with my code, it's already got a lot of bugs to deal with. Remember, sharing is caring... unless it's my code!"</p>
       <p><u>Handcoded by me &#169; TwentyTwentyFour</u></p>
+      <p class="secret-hint" style="font-size: 0.75rem; opacity: 0.6; margin-top: 0.5rem; font-style: italic;">
+        🎮 Psst... gamers know: ↑↑↓↓←→←→🅱🅰 unlocks something special... | 
+        🔍 Try clicking the logo 10 times | 
+        🎯 Double-click sections for surprises
+      </p>
     </div>
   </footer>
 
   <button id="back-to-top" class="back-to-top" aria-label="Back to Top">
     <i class="fas fa-arrow-up"></i>
   </button>
+
+  <div id="scroll-progress"></div>
+  <div class="cursor-trail"></div>
+  <div id="secret-message" style="display: none;"></div>
+  <div id="click-counter" style="position: fixed; bottom: 80px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px 15px; border-radius: 20px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; z-index: 1001; pointer-events: none;"></div>
+  
+  <!-- Mobile Easter Egg Controls
+  <button id="mobile-shortcuts" style="position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(45deg, #0e6e88, #FDAC55); color: white; border: none; font-size: 1.8rem; box-shadow: 0 4px 20px rgba(0,0,0,0.4); z-index: 1000; display: none; cursor: pointer; transition: all 0.3s ease; animation: pulse 2s ease-in-out infinite;" aria-label="Easter Eggs Menu">
+    🎮
+  </button>
+  
+  <div id="mobile-shortcuts-menu" style="position: fixed; bottom: 85px; left: 20px; background: rgba(0,0,0,0.95); color: white; border-radius: 15px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); z-index: 1001; display: none; min-width: 280px; backdrop-filter: blur(10px); border: 2px solid rgba(253,172,85,0.3);">
+    <div style="font-weight: bold; margin-bottom: 15px; color: var(--secondary-color); font-size: 1.2rem; text-align: center;">🎮 Easter Egg Shortcuts</div>
+    <button class="mobile-shortcut-btn" data-action="home" style="display: block; width: 100%; padding: 12px; margin: 8px 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 10px; cursor: pointer; text-align: left; font-size: 0.95rem; transition: all 0.3s;">🏠 Jump to Home</button>
+    <button class="mobile-shortcut-btn" data-action="konami" style="display: block; width: 100%; padding: 12px; margin: 8px 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 10px; cursor: pointer; text-align: left; font-size: 0.95rem; transition: all 0.3s;">🕹️ Activate Konami Code</button>
+    <button class="mobile-shortcut-btn" data-action="spin" style="display: block; width: 100%; padding: 12px; margin: 8px 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 10px; cursor: pointer; text-align: left; font-size: 0.95rem; transition: all 0.3s;">🌀 Spin Page</button>
+    <button class="mobile-shortcut-btn" data-action="magic" style="display: block; width: 100%; padding: 12px; margin: 8px 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 10px; cursor: pointer; text-align: left; font-size: 0.95rem; transition: all 0.3s;">🪄 Magic Mode</button>
+    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.75rem; opacity: 0.7; text-align: center;">Tap any button to activate</div>
+  </div> -->
+  
+  <!-- Dynamic Hint Display -->
+  <div id="dynamic-hint" style="position: fixed; top: 80px; right: 20px; background: linear-gradient(135deg, rgba(14,110,136,0.95), rgba(253,172,85,0.95)); color: white; padding: 18px 22px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); z-index: 1000; display: none; max-width: 320px; backdrop-filter: blur(10px); animation: slideInRight 0.5s ease-out; border: 2px solid rgba(255,255,255,0.2);">
+    <div style="font-weight: bold; margin-bottom: 10px; font-size: 1.1rem;">💡 Easter Egg Hint</div>
+    <div id="hint-content" style="font-size: 0.95rem; line-height: 1.5;"></div>
+    <button id="close-hint" style="position: absolute; top: 8px; right: 12px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.8; transition: all 0.2s;">×</button>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.bundle.min.js"></script>
