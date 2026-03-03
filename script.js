@@ -665,9 +665,9 @@ function processCommand(cmd) {
                 ['run projects.ts', 'View projects (modal)'],
                 ['run articles.md', 'View articles (modal)'],
                 ['run stack.yaml', 'View tech stack'],
+                ['run experience.json', 'View career timeline'],
                 ['run contact.sh', 'Contact form'],
-                ['whoami', 'About me'],
-                ['python about.py', 'Execute about.py'],
+                ['whoami / python about.py', 'About me (modal)'],
                 ['git log --oneline', 'Commit history'],
                 ['pwd', 'Print working directory'],
                 ['date', 'Current date/time'],
@@ -710,30 +710,19 @@ function processCommand(cmd) {
             else if (arg.toLowerCase() === 'articles.md') { openArticlesModal(); }
             else if (arg.toLowerCase() === 'contact.sh') { runContactScript(); }
             else if (arg.toLowerCase() === 'stack.yaml') { openStackModal(); }
-            else printLine('t-err-line', `error: cannot run "${arg}". Try: run projects.ts | run articles.md | run stack.yaml | run contact.sh`);
+            else if (arg.toLowerCase() === 'experience.json') { openExperienceModal(); }
+            else if (arg.toLowerCase() === 'about.py') { openAboutModal(); }
+            else printLine('t-err-line', `error: cannot run "${arg}". Try: run projects.ts | articles.md | stack.yaml | experience.json | about.py | contact.sh`);
             break;
 
         case 'python':
             if (arg.toLowerCase() === 'about.py') {
-                printLine('t-out-line', `Engineer('Ram Bikkina', 'R&D Engineer I')`);
-                printLine('t-out-line', `Focus: ['Multi-Agent AI Systems (CrewAI, LangGraph)',`);
-                printLine('t-out-line', `        'MCP Tool Ecosystems & LLM Orchestration',`);
-                printLine('t-out-line', `        'High-Performance APIs (FastAPI, Flask)',`);
-                printLine('t-out-line', `        'Containerized Microservices (Docker, K8s)',`);
-                printLine('t-out-line', `        'Cloud Infrastructure (AWS, GCP, Azure)']`);
+                openAboutModal();
             } else printLine('t-err-line', `python: can't open file '${arg}'`);
             break;
 
         case 'whoami':
-            printLine('t-ok-line', '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-            printLine('t-ok-line', '  Ram Bikkina');
-            printLine('t-out-line', '  R&D Engineer I @ Jukshio Technologies');
-            printLine('t-out-line', '  Hyderabad, TG, India');
-            printLine('t-out-line', '  MS, CIT — Purdue University');
-            printLine('t-info-line', '  📧 itsrambikkina@gmail.com');
-            printLine('t-info-line', '  🐙 github.com/Ramc26');
-            printLine('t-info-line', '  📞 +91 70958 38715');
-            printLine('t-ok-line', '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            openAboutModal();
             break;
 
         case 'pwd':
@@ -945,6 +934,205 @@ function openStackModal() {
                                 <span class="stack-badge-name">${item.name}</span>
                             </div>
                         `).join('')}
+                    </div>
+                </div>
+            `).join('')}
+        </div>`;
+    modalOverlay.classList.add('open');
+}
+
+async function openAboutModal() {
+    printLine('t-ok-line', '✓ Executing about.py ...');
+    printLine('t-info-line', '  Loading profile → Opening output ...\n');
+    renderFile('about');
+
+    // Fetch dynamic stats
+    const projects = await loadProjectsData();
+    const articles = await loadArticlesData();
+
+    // Calculate experience — full-time roles
+    const now = new Date();
+    const roles = [
+        { start: new Date('2024-06-01'), end: now, type: 'fulltime' },         // Jukshio current
+        { start: new Date('2020-07-01'), end: new Date('2021-08-31'), type: 'fulltime' }, // Jukshio first stint
+        { start: new Date('2023-02-01'), end: new Date('2023-08-31'), type: 'intern' },   // Rubistone intern
+    ];
+    function calcExpMonths(includeIntern) {
+        return roles
+            .filter(r => includeIntern || r.type === 'fulltime')
+            .reduce((total, r) => {
+                const months = (r.end.getFullYear() - r.start.getFullYear()) * 12 + (r.end.getMonth() - r.start.getMonth());
+                return total + months;
+            }, 0);
+    }
+    const expMonths = calcExpMonths(false);
+    const expYears = Math.floor(expMonths / 12);
+    const expRemain = expMonths % 12;
+    const expLabel = expRemain > 0 ? `${expYears}y ${expRemain}m` : `${expYears}y`;
+
+    // Fetch exact GitHub commit count since 2024
+    let commitCount = '…';
+    try {
+        const ghRes = await fetch('https://api.github.com/search/commits?q=author:Ramc26+committer-date:>2024-01-01', {
+            headers: { 'Accept': 'application/vnd.github.cloak-preview+json' }
+        });
+        if (ghRes.ok) {
+            const data = await ghRes.json();
+            commitCount = data.total_count || 0;
+        } else { commitCount = '—'; }
+    } catch { commitCount = '—'; }
+
+    modalTitle.textContent = 'Output — about.py';
+    modalBody.innerHTML = `
+        <div class="modal-output-header"><span>$</span> python about.py → <strong>Profile loaded</strong></div>
+        <div class="about-output">
+            <div class="about-hero">
+                <div class="about-avatar">
+                    <span class="about-avatar-text">RB</span>
+                    <span class="about-avatar-ring"></span>
+                </div>
+                <div class="about-hero-info">
+                    <h2 class="about-name">Ram Bikkina</h2>
+                    <p class="about-role"><i class="fa-solid fa-briefcase"></i> R&D Engineer I @ Jukshio Technologies</p>
+                    <p class="about-loc"><i class="fa-solid fa-location-dot"></i> Hyderabad, TG, India</p>
+                </div>
+            </div>
+
+            <div class="about-stats">
+                <div class="about-stat" id="aboutExpStat">
+                    <span class="about-stat-num" id="aboutExpNum">${expLabel}</span>
+                    <span class="about-stat-label">Experience</span>
+                    <button class="about-exp-toggle" id="aboutExpToggle" title="Toggle intern experience">
+                        <i class="fa-solid fa-briefcase"></i> <span id="aboutExpToggleText">+ Intern</span>
+                    </button>
+                </div>
+                <div class="about-stat"><span class="about-stat-num">${articles.length}</span><span class="about-stat-label">Articles</span></div>
+                <div class="about-stat"><span class="about-stat-num">${projects.length}</span><span class="about-stat-label">Projects</span></div>
+                <div class="about-stat"><span class="about-stat-num">${commitCount}</span><span class="about-stat-label">Commits (2024+)</span></div>
+            </div>
+
+            <div class="about-section">
+                <h3 class="about-section-title"><i class="fa-solid fa-crosshairs"></i> Focus Areas</h3>
+                <div class="about-focus-grid">
+                    <div class="about-focus-item"><i class="fa-solid fa-robot"></i> Multi-Agent AI Systems</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-wrench"></i> MCP Tool Ecosystems</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-bolt"></i> High-Performance APIs</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-cloud"></i> Cloud Infrastructure</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-cubes"></i> Containerized Microservices</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-brain"></i> LLM Orchestration</div>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h3 class="about-section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+                <div class="about-edu">
+                    <div class="about-edu-card">
+                        <span class="about-edu-degree">MS, Computer & Information Technology</span>
+                        <span class="about-edu-school">Purdue University, Hammond IN</span>
+                        <span class="about-edu-year">2022 — 2023</span>
+                    </div>
+                    <div class="about-edu-card">
+                        <span class="about-edu-degree">B.Tech, Electronics & Communication</span>
+                        <span class="about-edu-school">Aditya College of Engineering, India</span>
+                        <span class="about-edu-year">2016 — 2020</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-links">
+                <a href="https://github.com/Ramc26" target="_blank" class="about-link-btn"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="mailto:itsrambikkina@gmail.com" class="about-link-btn"><i class="fa-solid fa-envelope"></i> Email</a>
+                <a href="tel:+917095838715" class="about-link-btn"><i class="fa-solid fa-phone"></i> Call</a>
+            </div>
+        </div>`;
+    modalOverlay.classList.add('open');
+
+    // Wire up intern toggle
+    let includeIntern = false;
+    const expToggle = document.getElementById('aboutExpToggle');
+    if (expToggle) {
+        expToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            includeIntern = !includeIntern;
+            const m = calcExpMonths(includeIntern);
+            const y = Math.floor(m / 12);
+            const r = m % 12;
+            document.getElementById('aboutExpNum').textContent = r > 0 ? `${y}y ${r}m` : `${y}y`;
+            document.getElementById('aboutExpToggleText').textContent = includeIntern ? '− Intern' : '+ Intern';
+            expToggle.classList.toggle('active', includeIntern);
+        });
+    }
+}
+
+function openExperienceModal() {
+    printLine('t-ok-line', '✓ Parsing experience.json ...');
+    printLine('t-info-line', '  Loading career timeline → Opening output ...\n');
+    renderFile('experience');
+
+    const experiences = [
+        {
+            role: 'R&D Engineer I',
+            company: 'Jukshio Technologies',
+            location: 'Hyderabad, India',
+            period: 'Jun 2024 — Present',
+            type: 'current',
+            highlights: [
+                'Architected CrewAI-driven multi-agent orchestration layer',
+                'Built 15+ FastAPI MCP tools with zero-hallucination calls',
+                'Designed LangGraph stateful execution graphs',
+                'Deployed containerized microservices via Docker & K8s',
+                'Integrated OpenAI Whisper for real-time transcription',
+            ]
+        },
+        {
+            role: 'Python Developer (Intern)',
+            company: 'Rubistone Technologies',
+            location: 'Chicago, IL',
+            period: 'Feb 2023 — Aug 2023',
+            type: 'past',
+            highlights: [
+                'Processed 500K+ daily articles with multi-language support',
+                'Built PySpark analytics pipeline on AWS Lambda + S3',
+                'Developed LLM-based content automation system',
+                'Maintained 99.5% uptime across production services',
+            ]
+        },
+        {
+            role: 'R&D Engineer I',
+            company: 'Jukshio Technologies',
+            location: 'Hyderabad, India',
+            period: 'Jul 2020 — Aug 2021',
+            type: 'past',
+            highlights: [
+                'Built Python automation & backend REST APIs',
+                'Improved database performance by 40% via SQL optimization',
+                'Developed internal tools reducing manual workflows',
+            ]
+        },
+    ];
+
+    modalTitle.textContent = 'Output — experience.json';
+    modalBody.innerHTML = `
+        <div class="modal-output-header"><span>$</span> jq '.experience[]' experience.json → <strong>${experiences.length} roles</strong></div>
+        <div class="exp-timeline">
+            ${experiences.map((exp, i) => `
+                <div class="exp-card ${exp.type}" style="animation-delay: ${i * 0.15}s">
+                    <div class="exp-card-marker">
+                        <span class="exp-dot ${exp.type}"></span>
+                        ${i < experiences.length - 1 ? '<span class="exp-line"></span>' : ''}
+                    </div>
+                    <div class="exp-card-body">
+                        <div class="exp-card-header">
+                            <div>
+                                <h3 class="exp-role">${exp.role}</h3>
+                                <p class="exp-company"><i class="fa-solid fa-building"></i> ${exp.company}</p>
+                                <p class="exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</p>
+                            </div>
+                            <span class="exp-period ${exp.type}">${exp.period}</span>
+                        </div>
+                        <ul class="exp-highlights">
+                            ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
+                        </ul>
                     </div>
                 </div>
             `).join('')}
