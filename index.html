@@ -46,6 +46,9 @@
       </div>
       <div class="title-right">
         <span class="title-user">ram@portfolio</span>
+        <button class="mobile-hamburger" id="mobileHamburger" title="Toggle Sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
     </header>
 
@@ -357,145 +360,28 @@
   </div>
 
   <!-- ============================================================
-     MOBILE UI
+     ONBOARDING HINTS OVERLAY
      ============================================================ -->
-  <div class="mobile-ui" id="mobileUI">
-    <header class="mob-header">
-      <div class="mob-logo"><i class="fa-solid fa-terminal"></i> ram.dev</div>
-      <button class="mob-menu-btn" id="mobMenuBtn"><i class="fa-solid fa-bars"></i></button>
-    </header>
-    <nav class="mob-nav" id="mobNav">
-      <button class="mob-nav-btn active" data-mob-section="mob-about"><i class="fa-solid fa-user"></i> About</button>
-      <button class="mob-nav-btn" data-mob-section="mob-stack"><i class="fa-solid fa-layer-group"></i> Stack</button>
-      <button class="mob-nav-btn" data-mob-section="mob-exp"><i class="fa-solid fa-briefcase"></i> Experience</button>
-      <button class="mob-nav-btn" data-mob-section="mob-projects"><i class="fa-solid fa-rocket"></i> Projects</button>
-      <button class="mob-nav-btn" data-mob-section="mob-contact"><i class="fa-solid fa-envelope"></i> Contact</button>
-    </nav>
-    <main class="mob-content">
-      <!-- About -->
-      <section class="mob-section active" id="mob-about">
-        <h1 class="mob-name">Ram Bikkina</h1>
-        <p class="mob-role">R&D Engineer I @ Jukshio Technologies</p>
-        <p class="mob-loc"><i class="fa-solid fa-location-dot"></i> Hyderabad, TG, India</p>
-        <div class="mob-bio">
-          <p>4+ years building AI-powered backend systems. MS in CIT from Purdue University. Currently focused on
-            multi-agent AI systems, MCP tool ecosystems, and high-performance APIs.</p>
-        </div>
-        <div class="mob-links">
-          <a href="https://github.com/Ramc26" target="_blank" class="mob-link-btn"><i class="fa-brands fa-github"></i>
-            GitHub</a>
-          <a href="mailto:itsrambikkina@gmail.com" class="mob-link-btn"><i class="fa-solid fa-envelope"></i> Email</a>
-          <a href="tel:+917095838715" class="mob-link-btn"><i class="fa-solid fa-phone"></i> Call</a>
-        </div>
-      </section>
-      <!-- Stack -->
-      <section class="mob-section" id="mob-stack">
-        <h2 class="mob-section-title">Tech Stack</h2>
-        <div class="mob-tag-group">
-          <h3 class="mob-tag-cat">AI / ML</h3>
-          <div class="mob-tags"><span>CrewAI</span><span>LangGraph</span><span>LangChain</span><span>MCP
-              Tools</span><span>Whisper</span><span>Ollama</span><span>Vertex AI</span></div>
-        </div>
-        <div class="mob-tag-group">
-          <h3 class="mob-tag-cat">Backend</h3>
-          <div class="mob-tags">
-            <span>Python</span><span>FastAPI</span><span>Flask</span><span>Django</span><span>GoLang</span><span>REST
-              APIs</span>
-          </div>
-        </div>
-        <div class="mob-tag-group">
-          <h3 class="mob-tag-cat">Cloud & DevOps</h3>
-          <div class="mob-tags">
-            <span>AWS</span><span>GCP</span><span>Azure</span><span>Docker</span><span>Kubernetes</span><span>Terraform</span><span>CI/CD</span>
-          </div>
-        </div>
-        <div class="mob-tag-group">
-          <h3 class="mob-tag-cat">Databases</h3>
-          <div class="mob-tags"><span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Milvus</span></div>
-        </div>
-      </section>
-      <!-- Experience -->
-      <section class="mob-section" id="mob-exp">
-        <h2 class="mob-section-title">Experience</h2>
-        <div class="mob-exp-card">
-          <div class="mob-exp-date">Jun 2024 – Present</div>
-          <div class="mob-exp-role">R&D Engineer I</div>
-          <div class="mob-exp-co">Jukshio Technologies, Hyderabad</div>
-          <p>CrewAI multi-agent orchestration, LangGraph agent framework, 15+ MCP tools, FastAPI + Vertex AI APIs,
-            Docker/K8s deployment.</p>
-        </div>
-        <div class="mob-exp-card">
-          <div class="mob-exp-date">Feb 2023 – Aug 2023</div>
-          <div class="mob-exp-role">Python Developer (Intern)</div>
-          <div class="mob-exp-co">Rubistone Technologies, Chicago IL</div>
-          <p>AI article aggregation (500K+ daily), PySpark analytics, LLM automation, Flask/Django microservices.</p>
-        </div>
-        <div class="mob-exp-card">
-          <div class="mob-exp-date">Jul 2020 – Aug 2021</div>
-          <div class="mob-exp-role">R&D Engineer I</div>
-          <div class="mob-exp-co">Jukshio, Hyderabad</div>
-          <p>Python automation, backend APIs, 40% DB performance improvement, SQL optimization.</p>
-        </div>
-      </section>
-      <!-- Projects -->
-      <section class="mob-section" id="mob-projects">
-        <h2 class="mob-section-title">Projects</h2>
-        <div class="mob-proj-card">
-          <h3>Multi-Agent CrewAI Orchestration</h3>
-          <p>Hierarchical multi-agent system via MCP tools — 40% reliability boost.</p>
-          <div class="mob-tags"><span>CrewAI</span><span>MCP</span><span>FastAPI</span></div>
-        </div>
-        <div class="mob-proj-card">
-          <h3>LangGraph Agent Framework</h3>
-          <p>Stateful execution graphs for supervisor-specialist delegation.</p>
-          <div class="mob-tags"><span>LangGraph</span><span>Python</span><span>LLM</span></div>
-        </div>
-        <div class="mob-proj-card">
-          <h3>MCP Tool Ecosystem (15+)</h3>
-          <p>Zero-hallucination LLM tool calls with JSON Schema.</p>
-          <div class="mob-tags"><span>FastAPI</span><span>JSON Schema</span><span>MCP</span></div>
-        </div>
-        <div class="mob-proj-card">
-          <h3>Whisper Transcription API</h3>
-          <p>Real-time audio transcription via OpenAI Whisper.</p>
-          <div class="mob-tags"><span>Whisper</span><span>Flask</span><span>Python</span></div>
-        </div>
-        <div class="mob-proj-card">
-          <h3>AI Article Aggregation</h3>
-          <p>500K+ daily articles, 99.5% uptime.</p>
-          <div class="mob-tags"><span>AWS Lambda</span><span>S3</span><span>PySpark</span></div>
-        </div>
-        <div class="mob-proj-card">
-          <h3>Vertex AI Data Gen API</h3>
-          <p>FastAPI + Vertex AI LLMs, PostgreSQL persistence.</p>
-          <div class="mob-tags"><span>FastAPI</span><span>Vertex AI</span><span>PostgreSQL</span></div>
-        </div>
-      </section>
-      <!-- Contact -->
-      <section class="mob-section" id="mob-contact">
-        <h2 class="mob-section-title">Contact</h2>
-        <div class="mob-contact-links">
-          <a href="mailto:itsrambikkina@gmail.com" class="mob-contact-card"><i
-              class="fa-solid fa-envelope"></i><span>itsrambikkina@gmail.com</span></a>
-          <a href="https://github.com/Ramc26" target="_blank" class="mob-contact-card"><i
-              class="fa-brands fa-github"></i><span>github.com/Ramc26</span></a>
-          <a href="tel:+917095838715" class="mob-contact-card"><i class="fa-solid fa-phone"></i><span>+91 70958
-              38715</span></a>
-        </div>
-        <form id="mobile-contact-form" class="mob-form">
-          <input type="text" name="user_name" placeholder="Your name" required>
-          <input type="email" name="user_email" placeholder="your@email.com" required>
-          <textarea name="message" rows="3" placeholder="Message..." required></textarea>
-          <button type="submit" class="mob-send-btn" id="mobSendBtn"><i class="fa-solid fa-paper-plane"></i>
-            Send</button>
-          <span class="mob-form-status" id="mobFormStatus"></span>
-        </form>
-      </section>
-    </main>
-    <footer class="mob-footer">
-      <span>&lt;ram.dev/&gt;</span>
-      <span>© 2025</span>
-    </footer>
+  <div class="onboarding-overlay" id="onboardingOverlay">
+    <div class="ob-hint ob-hint-explorer">
+      <i class="fa-regular fa-folder-open"></i> Browse files
+    </div>
+    <div class="ob-hint ob-hint-search">
+      <i class="fa-solid fa-magnifying-glass"></i> Search
+    </div>
+    <div class="ob-hint ob-hint-settings">
+      <i class="fa-solid fa-gear"></i> Theme & Font
+    </div>
+    <div class="ob-hint ob-hint-terminal">
+      <i class="fa-solid fa-terminal"></i> Type "help" here
+    </div>
+    <div class="ob-hint ob-hint-github">
+      <i class="fa-brands fa-github"></i> GitHub
+    </div>
+    <div class="ob-hint ob-hint-shortcuts">
+      <kbd>Ctrl+`</kbd> Terminal &nbsp;·&nbsp; <kbd>Ctrl+B</kbd> Sidebar
+    </div>
+    <div class="ob-dismiss">Click anywhere to dismiss</div>
   </div>
 
   <script src="script.js"></script>
