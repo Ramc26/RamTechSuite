@@ -3,6 +3,34 @@
    Full IDE engine: files, tabs, terminal, modals
    ============================================================ */
 
+// ===== JSON DATA CACHE =====
+        let _projectsData = null;
+        let _articlesData = null;
+
+        async function loadProjectsData() {
+            if (_projectsData) return _projectsData;
+            try {
+                const resp = await fetch('./data/projects.json');
+                _projectsData = await resp.json();
+            } catch (e) {
+                console.warn('Could not load projects.json, using fallback');
+                _projectsData = [];
+            }
+            return _projectsData;
+        }
+
+        async function loadArticlesData() {
+            if (_articlesData) return _articlesData;
+            try {
+                const resp = await fetch('./data/articles.json');
+                _articlesData = await resp.json();
+            } catch (e) {
+                console.warn('Could not load articles.json, using fallback');
+                _articlesData = [];
+            }
+            return _articlesData;
+        }
+
 // ===== FILE CONTENT DEFINITIONS =====
         const FILES = {
             readme: {
@@ -197,6 +225,7 @@ R&D Engineer | AI Agent Architect
             projects: {
                 name: 'projects.ts', lang: 'TypeScript', dot: 'dot-ts',
                 content: `<span class="cmt">// projects.ts — Key Projects</span>
+<span class="cmt">// Data loaded from ./data/projects.json</span>
 <span class="cmt">// Execute: run projects.ts</span>
 
 <span class="kw">interface</span> <span class="type">Project</span> <span class="punc">{</span>
@@ -793,35 +822,24 @@ R&D Engineer | AI Agent Architect
         function closeModal() { modalOverlay.classList.remove('open'); }
         function closeContactModal() { contactOverlay.classList.remove('open'); }
 
-        function openProjectsModal() {
+        async function openProjectsModal() {
             printLine('t-ok-line', '✓ Executing projects.ts ...');
             printLine('t-info-line', '  Compiling TypeScript → Opening output ...\n');
 
-            const projects = [
-                { id: 1, name: 'Multi-Agent CrewAI Orchestration', desc: 'Hierarchical multi-agent system with manager delegating to specialists via MCP tools for IDV, OCR, face-match workflows.', impact: '40% reliability boost', tech: ['CrewAI', 'MCP', 'FastAPI', 'SSE'] },
-                { id: 2, name: 'LangGraph Agent Framework', desc: 'Stateful execution graphs with add_nodes/add_edges for single-agent loops and supervisor-to-specialist delegation.', impact: 'Fully automated workflows', tech: ['LangGraph', 'Python', 'LLM'] },
-                { id: 3, name: 'MCP Tool Ecosystem (15+)', desc: 'FastAPI MCP tools with JSON Schema & protocol annotations ensuring zero-hallucination LLM calls.', impact: 'Zero-hallucination calls', tech: ['FastAPI', 'JSON Schema', 'MCP'] },
-                { id: 4, name: 'Whisper Transcription API', desc: 'OpenAI Whisper via Flask for accurate real-time audio transcription in production.', impact: 'Optimized latency', tech: ['Whisper', 'Flask', 'Python'] },
-                { id: 5, name: 'AI Article Aggregation', desc: '500K+ daily articles, multi-language processing, 99.5% uptime via AWS Lambda + S3.', impact: '99.5% uptime', tech: ['AWS Lambda', 'S3', 'PySpark'] },
-                { id: 6, name: 'Vertex AI Data Gen API', desc: 'High-perf FastAPI + Google Vertex AI LLMs, PostgreSQL persistence via SQLAlchemy + Alembic.', impact: 'Full migration lifecycle', tech: ['FastAPI', 'Vertex AI', 'PostgreSQL'] },
-            ];
+            const projects = await loadProjectsData();
 
             modalTitle.textContent = 'Output — projects.ts';
-            modalBody.innerHTML = `<div class="modal-output-header"><span>$</span> ts-node projects.ts → <strong>${projects.length} projects</strong> loaded</div><div class="projects-output-grid">${projects.map(p => `<div class="proj-output-card"><div class="poc-id"># ${p.id}</div><div class="poc-name">${p.name}</div><div class="poc-desc">${p.desc}</div><div class="poc-impact">↗ ${p.impact}</div><div class="poc-tech">${p.tech.map(t => `<span class="poc-tag">${t}</span>`).join('')}</div><a href="https://github.com/Ramc26" target="_blank" class="poc-link"><i class="bi bi-github"></i> View on GitHub</a></div>`).join('')}</div>`;
+            modalBody.innerHTML = `<div class="modal-output-header"><span>$</span> ts-node projects.ts → <strong>${projects.length} projects</strong> loaded</div><div class="projects-output-grid">${projects.map((p, i) => `<div class="proj-output-card"><div class="poc-id"># ${i + 1}</div><div class="poc-name">${p.name}</div><div class="poc-desc">${p.desc}</div><div class="poc-impact">↗ ${p.impact}</div><div class="poc-tech">${p.tech.map(t => `<span class="poc-tag">${t}</span>`).join('')}</div><a href="${p.github || 'https://github.com/Ramc26'}" target="_blank" class="poc-link"><i class="bi bi-github"></i> View on GitHub</a></div>`).join('')}</div>`;
             modalOverlay.classList.add('open');
         }
 
-        function openArticlesModal() {
+        async function openArticlesModal() {
             printLine('t-ok-line', '✓ Rendering articles.md ...\n');
 
-            const articles = [
-                { tag: 'CrewAI', title: 'Building Hierarchical Multi-Agent Systems with CrewAI', desc: 'How to architect manager-specialist agent patterns for automated enterprise workflows using MCP tools.' },
-                { tag: 'LangGraph', title: 'Stateful Agent Loops with LangGraph Execution Graphs', desc: 'Deep dive into constructing explicit execution graphs with add_nodes and add_edges for reliable LLM agent behavior.' },
-                { tag: 'MCP', title: 'Zero-Hallucination LLM Tool Calls via Model Context Protocol', desc: 'Registering MCP tools with JSON Schema and protocol annotations to enforce reliable agent invocations.' },
-            ];
+            const articles = await loadArticlesData();
 
             modalTitle.textContent = 'Output — articles.md';
-            modalBody.innerHTML = `<div class="modal-output-header"><span>$</span> marked articles.md → <strong>${articles.length} articles</strong></div><div class="articles-output-list">${articles.map(a => `<a href="https://github.com/Ramc26" target="_blank" class="art-output-card"><span class="art-tag">${a.tag}</span><div class="art-title">${a.title}</div><div class="art-desc">${a.desc}</div><span class="art-read">Read more →</span></a>`).join('')}</div>`;
+            modalBody.innerHTML = `<div class="modal-output-header"><span>$</span> marked articles.md → <strong>${articles.length} articles</strong></div><div class="articles-output-list">${articles.map(a => `<a href="${a.url || 'https://github.com/Ramc26'}" target="_blank" class="art-output-card"><span class="art-tag">${a.tag}</span><div class="art-title">${a.title}</div><div class="art-desc">${a.desc}</div><span class="art-read">Read more →</span></a>`).join('')}</div>`;
             modalOverlay.classList.add('open');
         }
 
@@ -950,6 +968,29 @@ function setupSettings() {
 }
 
 // ========================================
+// POPULATE MOBILE UI FROM JSON
+// ========================================
+async function populateMobileFromJSON() {
+    // Populate mobile projects
+    const projects = await loadProjectsData();
+    const mobProjects = document.getElementById('mob-projects');
+    if (mobProjects && projects.length > 0) {
+        const title = mobProjects.querySelector('.mob-section-title');
+        const html = projects.map(p => `<div class="mob-proj-card">
+          <h3>${p.name}</h3>
+          <p>${p.desc}</p>
+          <div class="mob-tags">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
+        </div>`).join('');
+        mobProjects.innerHTML = '';
+        if (title) mobProjects.innerHTML = '<h2 class="mob-section-title">Projects</h2>';
+        mobProjects.innerHTML += html;
+    }
+
+    // Populate mobile articles (add to projects section or create separate)
+    // Articles are shown in the contact section or could be a new section
+}
+
+// ========================================
 // MOBILE UI
 // ========================================
 function setupMobile() {
@@ -969,6 +1010,9 @@ function setupMobile() {
             if (target) target.classList.add('active');
         });
     });
+
+    // Populate from JSON
+    populateMobileFromJSON();
 
     // Menu button toggle (scroll nav into view)
     if (mobMenuBtn) {
