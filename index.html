@@ -4,298 +4,589 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ram Bikkina | GoLang Developer & AI Engineer</title>
-  <!-- Fonts -->
+  <title>Ram Bikkina | R&D Engineer</title>
+  <meta name="description"
+    content="Ram Bikkina – R&D Engineer specializing in AI Agents, LLM Orchestration, and Backend Systems.">
+  <meta property="og:title" content="Ram Bikkina | R&D Engineer">
+  <meta property="og:description" content="Building intelligent systems with CrewAI, LangGraph, FastAPI & MCP tools.">
+  <meta property="og:type" content="website">
+  <link rel="shortcut icon" type="image/x-icon" href="./elements/favicon.ico" />
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+
   <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Dynamic Background Elements -->
-  <div class="glow-orb orb-1"></div>
-  <div class="glow-orb orb-2"></div>
-  <div class="glow-orb orb-3"></div>
-
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <span class="brand-bracket">{</span>
-      <span class="brand-text">Ram.B</span>
-      <span class="brand-bracket">}</span>
+  <!-- ===== NAV ===== -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo">
+      <span class="nav-logo-bracket">&lt;</span>Ram<span class="nav-logo-bracket">/&gt;</span>
     </div>
-    <ul class="nav-links">
-      <li><a href="#about" class="active">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
+    <div class="nav-links" id="navLinks">
+      <a href="#hero" class="nav-link">~/home</a>
+      <a href="#about" class="nav-link">~/about</a>
+      <a href="#stack" class="nav-link">~/stack</a>
+      <a href="#projects" class="nav-link">~/projects</a>
+      <a href="#articles" class="nav-link">~/articles</a>
+      <a href="#contact" class="nav-link">~/contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <!-- Main Content -->
-  <main class="container">
-
-    <!-- SECTION: HERO/ABOUT -->
-    <section id="about" class="hero-section fade-in">
-      <div class="hero-content">
-        <div class="hero-badge">Available for new opportunities</div>
-        <h1 class="hero-title">
-          Hi, I'm <span class="neon-text">Ram Bikkina</span>
-        </h1>
-        <h2 class="sub-title">GoLang Developer & AI Engineer</h2>
-
-        <p class="hero-desc">
-          With a Master's degree from Purdue University, I specialize in building robust backend APIs, multi-agent
-          orchestration via CrewAI/LangGraph, and scalable microservices. I thrive on connecting the dots between
-          complex LLMs and high-performance automated workflows.
-        </p>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>Hyderabad, TG</span>
-          </div>
-          <div class="stat-item">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span>MS in CIT, Purdue University</span>
-          </div>
-        </div>
-
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Connect with me</a>
-          <a href="https://github.com/Ramc26" target="_blank" class="btn btn-secondary"><i
-              class="fa-brands fa-github"></i> GitHub</a>
-        </div>
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+      <p class="hero-greeting">// Hello, World! I'm</p>
+      <h1 class="hero-name">Ram Bikkina</h1>
+      <div class="hero-role-wrapper">
+        <span class="hero-prompt">$ </span>
+        <span class="hero-role" id="typedRole"></span>
+        <span class="hero-cursor">_</span>
       </div>
-      <div class="hero-visual">
-        <div class="avatar-container">
-          <!-- Placeholder generic tech avatar, can replace with actual image later -->
-          <div class="avatar-glow"></div>
-          <div class="avatar-placeholder">
-            <i class="fa-solid fa-terminal"></i>
-          </div>
-        </div>
+      <p class="hero-desc">
+        R&D Engineer building <span class="highlight">AI agent systems</span>,
+        <span class="highlight">LLM orchestration layers</span>, and
+        <span class="highlight">high-performance APIs</span>.<br>
+        Based in Hyderabad, TG · MS @ Purdue University.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
       </div>
-    </section>
+      <div class="hero-social">
+        <a href="https://github.com/Ramc26" target="_blank" title="GitHub" class="social-icon"><i
+            class="bi bi-github"></i></a>
+        <a href="mailto:itsrambikkina@gmail.com" title="Email" class="social-icon"><i
+            class="bi bi-envelope-fill"></i></a>
+        <a href="tel:+917095838715" title="Phone" class="social-icon"><i class="bi bi-telephone-fill"></i></a>
+      </div>
+    </div>
+    <div class="hero-terminal">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">ram@portfolio:~</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">whoami</span></div>
+        <div class="terminal-line t-out">ram_bikkina</div>
+        <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">cat role.txt</span></div>
+        <div class="terminal-line t-out">R&D Engineer I @ Jukshio Technologies</div>
+        <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">cat speciality.txt</span></div>
+        <div class="terminal-line t-out">AI Agents · LLM Orchestration</div>
+        <div class="terminal-line t-out">MCP Tools · FastAPI · LangGraph</div>
+        <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">cat location.txt</span></div>
+        <div class="terminal-line t-out">Hyderabad, India 🇮🇳</div>
+        <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">echo $STATUS</span></div>
+        <div class="terminal-line t-green">OPEN TO OPPORTUNITIES ✓</div>
+        <div class="terminal-line t-blink"><span class="t-prompt">$</span> <span class="t-cursor">▋</span></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- SECTION: EXPERIENCE -->
-    <section id="experience" class="card-section fade-in">
-      <h3 class="section-heading"><span class="neon-text">01.</span> Career Highlights</h3>
-
-      <div class="timeline">
-
-        <!-- Role 1 -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="glass-card">
-            <div class="card-header">
-              <h4 class="role-title">R&D Engineer 1 / Backend Developer</h4>
-              <span class="company-badge">Jukshio Technologies</span>
+  <!-- ===== ABOUT ===== -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title"><span class="title-comment">// 01.</span> Who I Am</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm an <span class="highlight">R&D Engineer</span> with 4+ years of experience designing and
+            shipping AI-powered backend systems. I hold a
+            <span class="highlight">Master's in Computer & Information Technology</span> from Purdue University
+            and a Bachelor's in ECE from Aditya College of Engineering.
+          </p>
+          <p>
+            My current focus is on building <span class="highlight">multi-agent AI systems</span> using CrewAI
+            and LangGraph, engineering <span class="highlight">MCP tool ecosystems</span> with FastAPI,
+            and deploying containerized microservices at scale.
+          </p>
+          <p>
+            Previously at Rubistone Technologies (Chicago, IL) — worked on cloud data pipelines,
+            LLM-based automation workflows, and distributed systems at scale.
+          </p>
+        </div>
+        <div class="about-timeline">
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-info">
+              <span class="tl-date">Jun 2024 – Present</span>
+              <strong>R&D Engineer I</strong>
+              <span>Jukshio Technologies, Hyderabad</span>
             </div>
-            <p class="role-desc">Spearheading backend architecture and AI agent orchestration for enterprise solutions.
-            </p>
-            <ul class="role-highlights">
-              <li>Architected a CrewAI‑driven orchestration layer to dynamically route LLM prompts through 20+ custom
-                MCP tools.</li>
-              <li>Engineered a stateful agent framework using LangGraph for hierarchical multi-agent workflows.</li>
-              <li>Built high-performance secure APIs with Python and FastAPI, integrating Google Vertex AI and OAuth.
-              </li>
-              <li>Designed an SSE-based microservice architecture ensuring zero-hallucination real-time tool calls.</li>
-              <li>Containerized and managed deployments via Docker and Kubernetes, boosting performance by 40%.</li>
-            </ul>
           </div>
-        </div>
-
-        <!-- Role 2 -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="glass-card">
-            <div class="card-header">
-              <h4 class="role-title">Python Developer</h4>
-              <span class="company-badge">Rubistone Technologies LLC</span>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-info">
+              <span class="tl-date">Feb 2023 – Aug 2023</span>
+              <strong>Python Developer Intern</strong>
+              <span>Rubistone Technologies, Chicago IL</span>
             </div>
-            <p class="role-desc">Focused on data processing, scalable architectures, and API optimizations across cloud
-              environments.</p>
-            <ul class="role-highlights">
-              <li>Delivered 98% cross-device responsive Flask dashboards with massive latency reductions.</li>
-              <li>Analyzed 1M+ data records using PySpark in AWS Glue, optimizing querying with Apache Parquet.</li>
-              <li>Designed AI-driven article aggregation processing over 500K daily articles in multiple languages.</li>
-              <li>Deployed and managed cloud infrastructures across AWS and Azure using Terraform/ARM.</li>
-              <li>Automated complex financial workflows leveraging LLMs.</li>
-            </ul>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-info">
+              <span class="tl-date">Jan 2022 – May 2023</span>
+              <strong>MS, CIT</strong>
+              <span>Purdue University, Hammond IN</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-info">
+              <span class="tl-date">Jul 2020 – Aug 2021</span>
+              <strong>R&D Engineer I</strong>
+              <span>Jukshio, Hyderabad</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-info">
+              <span class="tl-date">Jul 2016 – Aug 2020</span>
+              <strong>B.Tech, ECE</strong>
+              <span>Aditya College of Engineering, India</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECH STACK ===== -->
+  <section class="section section-alt" id="stack">
+    <div class="container">
+      <h2 class="section-title"><span class="title-comment">// 02.</span> Tech Stack</h2>
+      <div class="stack-grid">
+
+        <div class="stack-card">
+          <div class="stack-card-header">
+            <i class="fa-solid fa-brain stack-icon"></i>
+            <h3>AI / ML</h3>
+          </div>
+          <div class="stack-tags">
+            <span class="tag">CrewAI</span>
+            <span class="tag">LangGraph</span>
+            <span class="tag">LangChain</span>
+            <span class="tag">MCP Tools</span>
+            <span class="tag">OpenAI Whisper</span>
+            <span class="tag">Ollama</span>
+            <span class="tag">Hugging Face</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">Vertex AI</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-card-header">
+            <i class="fa-solid fa-server stack-icon"></i>
+            <h3>Backend</h3>
+          </div>
+          <div class="stack-tags">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Flask</span>
+            <span class="tag">Django</span>
+            <span class="tag">GoLang</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">SQLAlchemy</span>
+            <span class="tag">Alembic</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-card-header">
+            <i class="fa-solid fa-database stack-icon"></i>
+            <h3>Data & DB</h3>
+          </div>
+          <div class="stack-tags">
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">Milvus</span>
+            <span class="tag">PySpark</span>
+            <span class="tag">Apache Parquet</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-card-header">
+            <i class="fa-brands fa-aws stack-icon"></i>
+            <h3>Cloud & DevOps</h3>
+          </div>
+          <div class="stack-tags">
+            <span class="tag">AWS</span>
+            <span class="tag">GCP</span>
+            <span class="tag">Azure</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">Bash</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-card-header">
+            <i class="fa-solid fa-code stack-icon"></i>
+            <h3>Languages</h3>
+          </div>
+          <div class="stack-tags">
+            <span class="tag">Python</span>
+            <span class="tag">GoLang</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Shell Script</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-card-header">
+            <i class="fa-solid fa-certificate stack-icon"></i>
+            <h3>Certifications</h3>
+          </div>
+          <div class="stack-tags">
+            <span class="tag cert-tag"><a href="https://www.credly.com/badges/ecc9b095-42e4-4b0e-9e7b-b293d7c9ecdb/"
+                target="_blank">AWS Developer Associate</a></span>
+            <span class="tag cert-tag"><a href="https://www.credly.com/badges/c7aa11c7-1787-409b-8f60-40d42e115dad/"
+                target="_blank">Microsoft Certified</a></span>
+            <span class="tag cert-tag"><a href="https://www.hackerrank.com/certificates/iframe/0ea755356fca"
+                target="_blank">HackerRank SQL</a></span>
+            <span class="tag cert-tag"><a href="https://www.credly.com/badges/70b931c0-add4-4e3e-a626-463e4191c104/"
+                target="_blank">VMware IT Academy</a></span>
           </div>
         </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- SECTION: SKILLS -->
-    <section id="skills" class="skills-section fade-in">
-      <h3 class="section-heading"><span class="neon-text">02.</span> Tech Stack</h3>
-      <div class="skills-grid">
+  <!-- ===== PROJECTS ===== -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title"><span class="title-comment">// 03.</span> Projects</h2>
+      <div class="projects-grid">
 
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-code"></i> Languages</h4>
-          <div class="badges">
-            <span class="neon-badge">Python</span>
-            <span class="neon-badge">GoLang</span>
-            <span class="neon-badge">SQL</span>
-            <span class="neon-badge">JavaScript</span>
-            <span class="neon-badge">Bash</span>
+        <div class="project-card">
+          <div class="project-card-top">
+            <i class="fa-solid fa-robot project-icon"></i>
+            <div class="project-links">
+              <a href="https://github.com/Ramc26" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">Multi-Agent CrewAI Orchestration</h3>
+          <p class="project-desc">Hierarchical multi-agent system using CrewAI — manager agent dynamically delegates to
+            specialists via MCP tools, enabling automated end-to-end IDV, OCR, and face-match workflows.</p>
+          <div class="project-tech">
+            <span class="ptag">CrewAI</span>
+            <span class="ptag">MCP Tools</span>
+            <span class="ptag">FastAPI</span>
+            <span class="ptag">SSE</span>
           </div>
         </div>
 
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-layer-group"></i> Frameworks</h4>
-          <div class="badges">
-            <span class="neon-badge">FastAPI</span>
-            <span class="neon-badge">Flask</span>
-            <span class="neon-badge">Django</span>
-            <span class="neon-badge">Angular</span>
-            <span class="neon-badge">React</span>
+        <div class="project-card">
+          <div class="project-card-top">
+            <i class="fa-solid fa-diagram-project project-icon"></i>
+            <div class="project-links">
+              <a href="https://github.com/Ramc26" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">LangGraph Stateful Agent Framework</h3>
+          <p class="project-desc">Engineered stateful execution graphs with LangGraph — add_nodes, add_edges — for both
+            single-agent loops and hierarchical supervisor-to-specialist delegation patterns.</p>
+          <div class="project-tech">
+            <span class="ptag">LangGraph</span>
+            <span class="ptag">Python</span>
+            <span class="ptag">LLM</span>
           </div>
         </div>
 
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-database"></i> Databases</h4>
-          <div class="badges">
-            <span class="neon-badge">PostgreSQL</span>
-            <span class="neon-badge">MySQL</span>
-            <span class="neon-badge">MongoDB</span>
-            <span class="neon-badge">Milvus</span>
+        <div class="project-card">
+          <div class="project-card-top">
+            <i class="fa-solid fa-plug project-icon"></i>
+            <div class="project-links">
+              <a href="https://github.com/Ramc26" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">MCP Tool Ecosystem (15+ Tools)</h3>
+          <p class="project-desc">Built 15+ FastAPI-based MCP tools with formal JSON Schema and Model Context Protocol
+            annotations (readOnlyHint, idempotentHint) to ensure zero-hallucination LLM agent calls.</p>
+          <div class="project-tech">
+            <span class="ptag">FastAPI</span>
+            <span class="ptag">JSON Schema</span>
+            <span class="ptag">MCP</span>
+            <span class="ptag">SSE</span>
           </div>
         </div>
 
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-brain"></i> AI / ML</h4>
-          <div class="badges">
-            <span class="neon-badge highlight">LangGraph</span>
-            <span class="neon-badge highlight">CrewAI</span>
-            <span class="neon-badge highlight">MCP Tools</span>
-            <span class="neon-badge">OpenAI</span>
-            <span class="neon-badge">Vertex AI</span>
+        <div class="project-card">
+          <div class="project-card-top">
+            <i class="fa-solid fa-microphone project-icon"></i>
+            <div class="project-links">
+              <a href="https://github.com/Ramc26" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">Whisper Audio Transcription API</h3>
+          <p class="project-desc">Integrated OpenAI Whisper via Flask APIs for accurate real-time audio transcription —
+            optimized inference latency for production-grade user-facing applications.</p>
+          <div class="project-tech">
+            <span class="ptag">OpenAI Whisper</span>
+            <span class="ptag">Flask</span>
+            <span class="ptag">Python</span>
           </div>
         </div>
 
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-cloud"></i> Cloud & DevOps</h4>
-          <div class="badges">
-            <span class="neon-badge">AWS</span>
-            <span class="neon-badge">GCP</span>
-            <span class="neon-badge">Azure</span>
-            <span class="neon-badge">Docker</span>
-            <span class="neon-badge">Kubernetes</span>
-            <span class="neon-badge">Terraform</span>
+        <div class="project-card">
+          <div class="project-card-top">
+            <i class="fa-solid fa-cloud project-icon"></i>
+            <div class="project-links">
+              <a href="https://github.com/Ramc26" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">AI Article Aggregation Pipeline</h3>
+          <p class="project-desc">Designed and implemented AI-driven article aggregation system processing 500K+ daily
+            articles across multiple languages with 99.5% uptime using AWS Lambda and S3.</p>
+          <div class="project-tech">
+            <span class="ptag">AWS Lambda</span>
+            <span class="ptag">S3</span>
+            <span class="ptag">PySpark</span>
+            <span class="ptag">LLM</span>
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- SECTION: PROJECTS & ARTICLES -->
-    <section id="projects" class="grid-section fade-in">
-      <div class="dual-columns">
-
-        <div class="column">
-          <h3 class="section-heading"><span class="neon-text">03.</span> Projects</h3>
-          <div class="project-list">
-
-            <a href="https://github.com/Ramc26" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-brands fa-github"></i></div>
-              <div class="resource-info">
-                <h5>[Project Name 1 Placeholder]</h5>
-                <p>Brief description of the project goes here. Click to view repository.</p>
-              </div>
-            </a>
-
-            <a href="https://github.com/Ramc26" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-brands fa-github"></i></div>
-              <div class="resource-info">
-                <h5>[Project Name 2 Placeholder]</h5>
-                <p>Brief description of the project goes here. Click to view repository.</p>
-              </div>
-            </a>
-
+        <div class="project-card">
+          <div class="project-card-top">
+            <i class="fa-solid fa-chart-bar project-icon"></i>
+            <div class="project-links">
+              <a href="https://github.com/Ramc26" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+            </div>
           </div>
-        </div>
-
-        <div class="column">
-          <h3 class="section-heading"><span class="neon-text">04.</span> Articles</h3>
-          <div class="article-list">
-
-            <a href="#" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-solid fa-pen-nib"></i></div>
-              <div class="resource-info">
-                <h5>[Article Title 1 Placeholder]</h5>
-                <span class="read-more">Read Article ➔</span>
-              </div>
-            </a>
-
-            <a href="#" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-solid fa-pen-nib"></i></div>
-              <div class="resource-info">
-                <h5>[Article Title 2 Placeholder]</h5>
-                <span class="read-more">Read Article ➔</span>
-              </div>
-            </a>
-
-            <a href="#" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-solid fa-pen-nib"></i></div>
-              <div class="resource-info">
-                <h5>[Article Title 3 Placeholder]</h5>
-                <span class="read-more">Read Article ➔</span>
-              </div>
-            </a>
-
+          <h3 class="project-title">Vertex AI Data Generation API</h3>
+          <p class="project-desc">High-performance FastAPI service integrating with Google Vertex AI LLMs via Google
+            OAuth. PostgreSQL persistence layer via SQLAlchemy ORM + Alembic migrations.</p>
+          <div class="project-tech">
+            <span class="ptag">FastAPI</span>
+            <span class="ptag">Vertex AI</span>
+            <span class="ptag">PostgreSQL</span>
+            <span class="ptag">SQLAlchemy</span>
           </div>
         </div>
 
       </div>
-    </section>
+      <div class="projects-more">
+        <a href="https://github.com/Ramc26" target="_blank" class="btn-ghost">
+          <i class="bi bi-github"></i> See all on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <!-- SECTION: CONTACT -->
-    <section id="contact" class="contact-section fade-in">
-      <div class="glass-card contact-card">
-        <h3 class="section-heading"><span class="neon-text">05.</span> Keep in touch</h3>
-        <p class="contact-desc">
-          Whether you have an idea for a project, need a reliable backend engineer, or just want to say hi, my inbox is
-          always open. Let's build something awesome together!
-        </p>
+  <!-- ===== ARTICLES ===== -->
+  <section class="section section-alt" id="articles">
+    <div class="container">
+      <h2 class="section-title"><span class="title-comment">// 04.</span> Articles</h2>
+      <p class="section-sub">Writing about AI systems, agent frameworks, and backend engineering.</p>
+      <div class="articles-grid">
+        <a href="https://github.com/Ramc26" target="_blank" class="article-card">
+          <div class="article-meta"><span class="article-tag">AI Agents</span></div>
+          <h3>Building Hierarchical Multi-Agent Systems with CrewAI</h3>
+          <p>How to architect manager-specialist agent patterns for automated enterprise workflows using MCP tools.</p>
+          <span class="article-cta">Read more <i class="bi bi-arrow-right"></i></span>
+        </a>
+        <a href="https://github.com/Ramc26" target="_blank" class="article-card">
+          <div class="article-meta"><span class="article-tag">LangGraph</span></div>
+          <h3>Stateful Agent Loops with LangGraph Execution Graphs</h3>
+          <p>Deep dive into constructing explicit execution graphs with add_nodes and add_edges for reliable LLM agent
+            behavior.</p>
+          <span class="article-cta">Read more <i class="bi bi-arrow-right"></i></span>
+        </a>
+        <a href="https://github.com/Ramc26" target="_blank" class="article-card">
+          <div class="article-meta"><span class="article-tag">MCP</span></div>
+          <h3>Zero-Hallucination LLM Tool Calls via Model Context Protocol</h3>
+          <p>Registering MCP tools with JSON Schema and protocol annotations to enforce reliable, zero-hallucination
+            agent invocations.</p>
+          <span class="article-cta">Read more <i class="bi bi-arrow-right"></i></span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-        <div class="contact-links">
-          <a href="mailto:itsrambikkina@gmail.com" class="btn btn-primary btn-large">
-            <i class="fa-solid fa-envelope"></i> itsrambikkina@gmail.com
-          </a>
+  <!-- ===== CONTACT ===== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="section-title"><span class="title-comment">// 05.</span> Contact</h2>
+      <div class="contact-grid">
+        <div class="contact-left">
+          <p class="contact-intro">Let's build something together. I'm open to collaborations, roles, and interesting AI
+            challenges.</p>
+          <div class="contact-links">
+            <a href="mailto:itsrambikkina@gmail.com" class="contact-item">
+              <i class="bi bi-envelope-fill"></i>
+              <span>itsrambikkina@gmail.com</span>
+            </a>
+            <a href="https://github.com/Ramc26" target="_blank" class="contact-item">
+              <i class="bi bi-github"></i>
+              <span>github.com/Ramc26</span>
+            </a>
+            <a href="tel:+917095838715" class="contact-item">
+              <i class="bi bi-telephone-fill"></i>
+              <span>+91 70958 38715</span>
+            </a>
+          </div>
         </div>
-
-        <div class="social-row">
-          <a href="tel:+917095838715" class="social-icon" title="Call Me"><i class="fa-solid fa-phone"></i></a>
-          <a href="https://github.com/Ramc26" target="_blank" class="social-icon" title="GitHub"><i
-              class="fa-brands fa-github"></i></a>
-          <a href="https://www.linkedin.com/in/rambikkina26/" target="_blank" class="social-icon" title="LinkedIn"><i
-              class="fa-brands fa-linkedin-in"></i></a>
+        <div class="contact-right">
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="name">// Name</label>
+              <input type="text" id="name" name="user_name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">// Email</label>
+              <input type="email" id="email" name="user_email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="message">// Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="What's on your mind?" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" id="submit-btn">
+              <span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            <p id="form-status" class="form-status"></p>
+          </form>
         </div>
       </div>
+    </div>
+  </section>
 
-      <footer class="footer">
-        <p>Designed and Built by <strong>Ram Bikkina</strong></p>
-        <p class="footer-subtext">Shadow Glow UI • 2024</p>
-      </footer>
-    </section>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-logo"><span class="nav-logo-bracket">&lt;</span>Ram<span
+            class="nav-logo-bracket">/&gt;</span></span>
+        <p class="footer-copy">Handcoded by Ram Bikkina &copy; 2025</p>
+      </div>
+    </div>
+  </footer>
 
-  </main>
-
-  <!-- Script -->
   <script src="script.js"></script>
+  <script>
+    // ===== NAV SCROLL =====
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 50);
+    });
+
+    // ===== NAV TOGGLE (mobile) =====
+    const navToggle = document.getElementById('navToggle');
+    const navLinksCont = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navLinksCont.classList.toggle('open');
+      navToggle.classList.toggle('open');
+    });
+    navLinksCont.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksCont.classList.remove('open');
+        navToggle.classList.remove('open');
+      });
+    });
+
+    // ===== TYPED ROLE EFFECT =====
+    const roles = [
+      "R&D Engineer @ Jukshio",
+      "AI Agent Architect",
+      "LLM Orchestrator",
+      "FastAPI + MCP Builder",
+      "Backend Systems Engineer",
+    ];
+    let roleIndex = 0, charIndex = 0, deleting = false;
+    const typedEl = document.getElementById('typedRole');
+
+    function typeRole() {
+      const current = roles[roleIndex];
+      if (!deleting) {
+        typedEl.textContent = current.slice(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(typeRole, 1800);
+          return;
+        }
+      } else {
+        typedEl.textContent = current.slice(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+        }
+      }
+      setTimeout(typeRole, deleting ? 50 : 80);
+    }
+    typeRole();
+
+    // ===== INTERSECTION OBSERVER (fade-in sections) =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.section, .project-card, .stack-card, .article-card, .timeline-item').forEach(el => {
+      observer.observe(el);
+    });
+
+    // ===== ACTIVE NAV LINK =====
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+      });
+      document.querySelectorAll('.nav-link').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // ===== CONTACT FORM =====
+    (function () { emailjs.init({ publicKey: "0BTonjp4iBF33pc3Q" }); })();
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const status = document.getElementById('form-status');
+      btn.disabled = true;
+      btn.innerHTML = '<span>Sending...</span>';
+      emailjs.sendForm('contact_service', 'contact_form', this)
+        .then(() => {
+          status.textContent = '✓ Message sent! I\'ll get back to you soon.';
+          status.className = 'form-status success';
+          btn.innerHTML = '<span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>';
+          btn.disabled = false;
+          this.reset();
+        }, () => {
+          status.textContent = '✗ Failed to send. Try emailing directly.';
+          status.className = 'form-status error';
+          btn.innerHTML = '<span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>';
+          btn.disabled = false;
+        });
+    });
+  </script>
 </body>
 
 </html>
