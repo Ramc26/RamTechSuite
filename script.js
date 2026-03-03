@@ -586,16 +586,28 @@ function setupTerminal() {
     });
 
     // Terminal panel buttons
+    const toggleTermIcon = document.getElementById('toggleTermIcon');
+
+    function collapseTerminal() {
+        termPanel.classList.add('collapsed');
+        isTermCollapsed = true;
+        if (toggleTermIcon) toggleTermIcon.className = 'fa-solid fa-chevron-up';
+    }
+    function expandTerminal() {
+        termPanel.classList.remove('collapsed');
+        termPanel.classList.remove('mobile-expanded');
+        isTermCollapsed = false;
+        if (toggleTermIcon) toggleTermIcon.className = 'fa-solid fa-chevron-down';
+    }
+
     document.getElementById('clearTermBtn').addEventListener('click', () => { termOutput.innerHTML = ''; });
-    document.getElementById('closeTermBtn').addEventListener('click', () => {
-        termPanel.style.display = 'none'; isTermCollapsed = true;
-    });
+    document.getElementById('closeTermBtn').addEventListener('click', collapseTerminal);
     document.getElementById('toggleTermBtn').addEventListener('click', () => {
-        if (isTermCollapsed) { termPanel.style.display = ''; isTermCollapsed = false; }
-        else { termPanel.style.display = 'none'; isTermCollapsed = true; }
+        if (isTermCollapsed) expandTerminal();
+        else collapseTerminal();
     });
     document.getElementById('newTermBtn').addEventListener('click', () => {
-        if (isTermCollapsed) { termPanel.style.display = ''; isTermCollapsed = false; }
+        expandTerminal();
         termOutput.innerHTML = '';
         printWelcome();
         termInput.focus();
@@ -607,8 +619,8 @@ function setupTerminal() {
 
 function printWelcome() {
     printLine('t-ascii-line', '┌───────────────────────────────────────────┐');
-    printLine('t-ascii-line', '│   ram.dev — Portfolio IDE v2.0       │');
-    printLine('t-ascii-line', '│   Type "help" to get started              │');
+    printLine('t-ascii-line', '│        ram.dev — Portfolio IDE v2.0       │');
+    printLine('t-ascii-line', '│        Type "help" to get started         │');
     printLine('t-ascii-line', '└───────────────────────────────────────────┘');
     printLine('t-muted-line', '');
 }
@@ -971,60 +983,58 @@ function setupSettings() {
 // ========================================
 // MOBILE IDE RESPONSIVE
 // ========================================
-async function populateMobileFromJSON() {
-    // Populate mobile projects
-    const projects = await loadProjectsData();
-    const mobProjects = document.getElementById('mob-projects');
-    if (mobProjects && projects.length > 0) {
-        const title = mobProjects.querySelector('.mob-section-title');
-        const html = projects.map(p => `<div class="mob-proj-card">
-          <h3>${p.name}</h3>
-          <p>${p.desc}</p>
-          <div class="mob-tags">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
-        </div>`).join('');
-        mobProjects.innerHTML = '';
-        if (title) mobProjects.innerHTML = '<h2 class="mob-section-title">Projects</h2>';
-        mobProjects.innerHTML += html;
+function setupMobileIDE() {
+    const hamburger = document.getElementById('mobileHamburger');
+    const sidebar = document.getElementById('sidebar');
+    const activitybar = document.getElementById('activitybar');
+    const terminalHeader = document.querySelector('.terminal-panel-header');
+
+    if (!hamburger) return;
+
+    // Create backdrop for sidebar drawer
+    const backdrop = document.createElement('div');
+    backdrop.className = 'sidebar-backdrop';
+    document.body.appendChild(backdrop);
+
+    function openDrawer() {
+        sidebar.classList.add('mobile-open');
+        activitybar.classList.add('mobile-visible');
+        backdrop.classList.add('active');
+        hamburger.querySelector('i').className = 'fa-solid fa-xmark';
+    }
+    function closeDrawer() {
+        sidebar.classList.remove('mobile-open');
+        activitybar.classList.remove('mobile-visible');
+        backdrop.classList.remove('active');
+        hamburger.querySelector('i').className = 'fa-solid fa-bars';
     }
 
-    // Populate mobile articles (add to projects section or create separate)
-    // Articles are shown in the contact section or could be a new section
-}
+    hamburger.addEventListener('click', () => {
+        sidebar.classList.contains('mobile-open') ? closeDrawer() : openDrawer();
+    });
+    backdrop.addEventListener('click', closeDrawer);
 
-// ========================================
-// MOBILE UI
-// ========================================
-function setupMobile() {
-    const mobNav = document.getElementById('mobNav');
-    const mobMenuBtn = document.getElementById('mobMenuBtn');
-
-    if (!mobNav) return;
-
-    // Terminal collapse/expand on header tap (mobile only)
+    // Terminal header tap expands/collapses on mobile
     if (terminalHeader) {
         terminalHeader.addEventListener('click', (e) => {
             if (window.innerWidth > 768) return;
-            // Don't toggle if clicking action buttons
             if (e.target.closest('.panel-action-btn')) return;
-            termPanel.classList.toggle('mobile-expanded');
-            const icon = document.getElementById('toggleTermIcon');
-            if (icon) {
-                icon.className = termPanel.classList.contains('mobile-expanded')
-                    ? 'fa-solid fa-chevron-down'
-                    : 'fa-solid fa-chevron-up';
+
+            if (termPanel.classList.contains('collapsed')) {
+                // If collapsed, expand it
+                termPanel.classList.remove('collapsed');
+                termPanel.classList.add('mobile-expanded');
+                isTermCollapsed = false;
+            } else {
+                termPanel.classList.toggle('mobile-expanded');
             }
         });
     }
 
-    // Close sidebar when a file is clicked (mobile)
+    // Close drawer when file clicked on mobile
     document.querySelectorAll('.tree-file').forEach(f => {
         f.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('mobile-open');
-                activitybar.classList.remove('mobile-visible');
-                backdrop.classList.remove('active');
-                hamburger.querySelector('i').className = 'fa-solid fa-bars';
-            }
+            if (window.innerWidth <= 768) closeDrawer();
         });
     });
 }
