@@ -1,23 +1,79 @@
 [
     {
         "id": 1,
-        "tag": "CrewAI",
-        "title": "Building Hierarchical Multi-Agent Systems with CrewAI",
-        "desc": "How to architect manager-specialist agent patterns for automated enterprise workflows using MCP tools.",
-        "url": "https://github.com/Ramc26"
+        "tag": "JIOHOTSTAR",
+        "title": "The Epic Engineering Behind JioHotstar’s IPL 2025 Streaming",
+        "desc": "How They Handle 250 Million Cricket Fans Without Crashing \ud83c\udfcf\ud83d\udcbb",
+        "url": "https://medium.com/@itsmeramc/the-epic-engineering-behind-jiohotstars-ipl-2025-streaming-bbe491e646b4"
     },
     {
         "id": 2,
-        "tag": "LangGraph",
-        "title": "Stateful Agent Loops with LangGraph Execution Graphs",
-        "desc": "Deep dive into constructing explicit execution graphs with add_nodes and add_edges for reliable LLM agent behavior.",
-        "url": "https://github.com/Ramc26"
+        "tag": "NINE UNKNOWN MEN",
+        "title": "Guardians of the Unspoken: Emperor Ashoka’s Nine Unknown Men",
+        "desc": "Unveiling the legend of Ashoka’s secret scholars and their hidden trove of forbidden knowledge",
+        "url": "https://medium.com/@itsmeramc/guardians-of-the-unspoken-emperor-ashokas-nine-unknown-men-ffe11110f57a"
     },
     {
         "id": 3,
-        "tag": "MCP",
-        "title": "Zero-Hallucination LLM Tool Calls via Model Context Protocol",
-        "desc": "Registering MCP tools with JSON Schema and protocol annotations to enforce reliable agent invocations.",
-        "url": "https://github.com/Ramc26"
+        "tag": "CHENAB BRIDGE",
+        "title": "At the Edge of the Abyss",
+        "desc": "How Dr. G Madhavi Latha Turned a Near-Catastrophe into the “Design-as-You-Go” Triumph of the Chenab Railway Bridge",
+        "url": "https://medium.com/@itsmeramc/at-the-edge-of-the-abyss-8f15fd9f6753"
+    },
+    {
+        "id": 4,
+        "tag": "BIOMETRICS",
+        "title": "BeHave: Unlocking Your Digital Identity Through How You Type",
+        "desc": "Hey everyone! Ever thought about how your unique typing style could actually be a key to your digital world? Forget complex passwords or…",
+        "url": "https://medium.com/@itsmeramc/behave-unlocking-your-digital-identity-through-how-you-type-374330451793"
+    },
+    {
+        "id": 5,
+        "tag": "CHATGPT",
+        "title": "ChatGPT Agent Is Basically JARVIS for the Rest of Us — And That’s Wild \ud83e\udd2f",
+        "desc": "Ever dreamed of having your own AI assistant like Tony Stark’s JARVIS?",
+        "url": "https://medium.com/@itsmeramc/chatgpt-agent-is-basically-jarvis-for-the-rest-of-us-and-thats-wild-ffa8e6f95ef2"
+    },
+    {
+        "id": 6,
+        "tag": "PYTHON",
+        "title": "My AI Agent Was Too Slow. So I Taught It to Multitask. \u26a1",
+        "desc": "How a simple Python async pattern made my batch processing 5x faster.",
+        "url": "https://medium.com/@itsmeramc/my-ai-agent-was-too-slow-so-i-taught-it-to-multitask-25809478d165"
+    },
+    {
+        "id": 7,
+        "tag": "FINANCE",
+        "title": "\ud83d\uded1 Your Money is Not Charity — 6 Rights Every Indian Forgets to Use",
+        "desc": "We Indians have a toxic relationship with the market.",
+        "url": "https://medium.com/@itsmeramc/your-money-is-not-charity-6-rights-every-indian-forgets-to-use-614e8fcd50ef"
+    },
+    {
+        "id": 8,
+        "tag": "JURASSIC WORLD",
+        "title": "The “Jurassic World” Rule is simple: \u00a0Don’t try to outrun the raptor. Train it.",
+        "desc": "In Jurassic World, there’s that iconic scene where Owen Grady (Chris Pratt) stands in a cage with three Velociraptors. He doesn’t run. He…",
+        "url": "https://medium.com/@itsmeramc/the-jurassic-world-rule-is-simple-dont-try-to-outrun-the-raptor-train-it-acff7ca1e9be"
+    },
+    {
+        "id": 9,
+        "tag": "COMPOSIO",
+        "title": "Composio vs Relay.app",
+        "desc": "The Ultimate Showdown in API Development Tools \ud83e\udd4a",
+        "url": "https://medium.com/@itsmeramc/composio-vs-relay-app-dc31bf78cacf"
+    },
+    {
+        "id": 10,
+        "tag": "RELISAGE",
+        "title": "\ud83d\ude80 ReliSage — Release Notes, Refined",
+        "desc": "The Smart, Simple Release Notes Generator That Saves You Time (and Your Sanity!) \ud83d\udcdd\u2728",
+        "url": "https://medium.com/@itsmeramc/relisage-release-notes-refined-5d0831da89f7"
+    },
+    {
+        "id": 11,
+        "tag": "PYTHON LOGGING",
+        "title": "Streamline Your Python Logging with Pydantic Logfire: A Practical Guide",
+        "desc": "How to implement flexible, powerful logging without the boilerplate",
+        "url": "https://medium.com/@itsmeramc/streamline-your-python-logging-with-pydantic-logfire-a-practical-guide-2b0edf0a674f"
     }
 ]
