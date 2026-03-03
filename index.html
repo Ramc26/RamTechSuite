@@ -4,297 +4,500 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ram Bikkina | GoLang Developer & AI Engineer</title>
-  <!-- Fonts -->
+  <title>ram.dev — Portfolio IDE</title>
+  <meta name="description" content="Ram Bikkina — R&D Engineer. Portfolio as a developer IDE.">
+  <link rel="shortcut icon" type="image/x-icon" href="./elements/RAMDEV_cropped.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
     rel="stylesheet">
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Dynamic Background Elements -->
-  <div class="glow-orb orb-1"></div>
-  <div class="glow-orb orb-2"></div>
-  <div class="glow-orb orb-3"></div>
+  <!-- ============================================================
+     IDE CONTAINER
+     ============================================================ -->
+  <div class="ide" id="ide">
 
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <span class="brand-bracket">{</span>
-      <span class="brand-text">Ram.B</span>
-      <span class="brand-bracket">}</span>
+    <!-- ===== TITLE BAR ===== -->
+    <header class="ide-titlebar" id="titlebar">
+      <div class="win-controls">
+        <span class="wc wc-close" title="Close"></span>
+        <span class="wc wc-min" title="Minimize"></span>
+        <span class="wc wc-max" title="Maximize"></span>
+      </div>
+      <nav class="title-menus">
+        <span class="t-menu">File</span>
+        <span class="t-menu">Edit</span>
+        <span class="t-menu">View</span>
+        <span class="t-menu">Go</span>
+        <span class="t-menu">Terminal</span>
+        <span class="t-menu">Help</span>
+      </nav>
+      <div class="title-center">
+        <i class="fa-solid fa-terminal title-ide-icon"></i>
+        ram.dev &mdash; Portfolio IDE
+      </div>
+      <div class="title-right">
+        <span class="title-user">ram@portfolio</span>
+      </div>
+    </header>
+
+    <!-- ===== ACTIVITY BAR ===== -->
+    <div class="ide-activitybar" id="activitybar">
+      <button class="activity-btn active" id="btnExplorer" data-panel="explorer" title="Explorer">
+        <i class="fa-regular fa-folder-open"></i>
+      </button>
+      <button class="activity-btn" id="btnSearch" data-panel="search" title="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button class="activity-btn" id="btnGit" title="Open GitHub"
+        onclick="window.open('https://github.com/Ramc26','_blank')">
+        <i class="fa-brands fa-github"></i>
+      </button>
+      <div class="activity-spacer"></div>
+      <button class="activity-btn" id="btnSettings" title="Settings">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+      <button class="activity-btn" title="Email" onclick="window.open('mailto:itsrambikkina@gmail.com')">
+        <i class="fa-solid fa-envelope"></i>
+      </button>
     </div>
-    <ul class="nav-links">
-      <li><a href="#about" class="active">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
-  </nav>
 
-  <!-- Main Content -->
-  <main class="container">
-
-    <!-- SECTION: HERO/ABOUT -->
-    <section id="about" class="hero-section fade-in">
-      <div class="hero-content">
-        <div class="hero-badge">Available for new opportunities</div>
-        <h1 class="hero-title">
-          Hi, I'm <span class="neon-text">Ram Bikkina</span>
-        </h1>
-        <h2 class="sub-title">GoLang Developer & AI Engineer</h2>
-
-        <p class="hero-desc">
-          With a Master's degree from Purdue University, I specialize in building robust backend APIs, multi-agent
-          orchestration via CrewAI/LangGraph, and scalable microservices. I thrive on connecting the dots between
-          complex LLMs and high-performance automated workflows.
-        </p>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>Hyderabad, TG</span>
-          </div>
-          <div class="stat-item">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span>MS in CIT, Purdue University</span>
-          </div>
-        </div>
-
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Connect with me</a>
-          <a href="https://github.com/Ramc26" target="_blank" class="btn btn-secondary"><i
-              class="fa-brands fa-github"></i> GitHub</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="avatar-container">
-          <!-- Placeholder generic tech avatar, can replace with actual image later -->
-          <div class="avatar-glow"></div>
-          <div class="avatar-placeholder">
-            <i class="fa-solid fa-terminal"></i>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: EXPERIENCE -->
-    <section id="experience" class="card-section fade-in">
-      <h3 class="section-heading"><span class="neon-text">01.</span> Career Highlights</h3>
-
-      <div class="timeline">
-
-        <!-- Role 1 -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="glass-card">
-            <div class="card-header">
-              <h4 class="role-title">R&D Engineer 1 / Backend Developer</h4>
-              <span class="company-badge">Jukshio Technologies</span>
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="ide-sidebar" id="sidebar">
+      <!-- Explorer Panel -->
+      <div class="sidebar-panel active" id="panel-explorer">
+        <div class="sidebar-section-title">EXPLORER</div>
+        <div class="file-tree" id="fileTree">
+          <div class="tree-folder" id="folderRoot">
+            <div class="tree-folder-header" id="folderToggle">
+              <i class="fa-solid fa-chevron-down tree-chevron"></i>
+              <i class="fa-solid fa-folder-open tree-folder-icon"></i>
+              <span class="tree-folder-name">PORTFOLIO</span>
             </div>
-            <p class="role-desc">Spearheading backend architecture and AI agent orchestration for enterprise solutions.
-            </p>
-            <ul class="role-highlights">
-              <li>Architected a CrewAI‑driven orchestration layer to dynamically route LLM prompts through 20+ custom
-                MCP tools.</li>
-              <li>Engineered a stateful agent framework using LangGraph for hierarchical multi-agent workflows.</li>
-              <li>Built high-performance secure APIs with Python and FastAPI, integrating Google Vertex AI and OAuth.
-              </li>
-              <li>Designed an SSE-based microservice architecture ensuring zero-hallucination real-time tool calls.</li>
-              <li>Containerized and managed deployments via Docker and Kubernetes, boosting performance by 40%.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Role 2 -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="glass-card">
-            <div class="card-header">
-              <h4 class="role-title">Python Developer</h4>
-              <span class="company-badge">Rubistone Technologies LLC</span>
+            <div class="tree-folder-body" id="folderBody">
+              <div class="tree-file" data-file="readme">
+                <span class="file-dot dot-md"></span>
+                <span class="tree-filename">README.md</span>
+              </div>
+              <div class="tree-file" data-file="about">
+                <span class="file-dot dot-py"></span>
+                <span class="tree-filename">about.py</span>
+              </div>
+              <div class="tree-file" data-file="experience">
+                <span class="file-dot dot-json"></span>
+                <span class="tree-filename">experience.json</span>
+              </div>
+              <div class="tree-file" data-file="stack">
+                <span class="file-dot dot-yaml"></span>
+                <span class="tree-filename">stack.yaml</span>
+              </div>
+              <div class="tree-file" data-file="projects">
+                <span class="file-dot dot-ts"></span>
+                <span class="tree-filename">projects.ts</span>
+              </div>
+              <div class="tree-file" data-file="articles">
+                <span class="file-dot dot-md"></span>
+                <span class="tree-filename">articles.md</span>
+              </div>
+              <div class="tree-file" data-file="contact">
+                <span class="file-dot dot-sh"></span>
+                <span class="tree-filename">contact.sh</span>
+              </div>
             </div>
-            <p class="role-desc">Focused on data processing, scalable architectures, and API optimizations across cloud
-              environments.</p>
-            <ul class="role-highlights">
-              <li>Delivered 98% cross-device responsive Flask dashboards with massive latency reductions.</li>
-              <li>Analyzed 1M+ data records using PySpark in AWS Glue, optimizing querying with Apache Parquet.</li>
-              <li>Designed AI-driven article aggregation processing over 500K daily articles in multiple languages.</li>
-              <li>Deployed and managed cloud infrastructures across AWS and Azure using Terraform/ARM.</li>
-              <li>Automated complex financial workflows leveraging LLMs.</li>
-            </ul>
           </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SECTION: SKILLS -->
-    <section id="skills" class="skills-section fade-in">
-      <h3 class="section-heading"><span class="neon-text">02.</span> Tech Stack</h3>
-      <div class="skills-grid">
-
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-code"></i> Languages</h4>
-          <div class="badges">
-            <span class="neon-badge">Python</span>
-            <span class="neon-badge">GoLang</span>
-            <span class="neon-badge">SQL</span>
-            <span class="neon-badge">JavaScript</span>
-            <span class="neon-badge">Bash</span>
-          </div>
-        </div>
-
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-layer-group"></i> Frameworks</h4>
-          <div class="badges">
-            <span class="neon-badge">FastAPI</span>
-            <span class="neon-badge">Flask</span>
-            <span class="neon-badge">Django</span>
-            <span class="neon-badge">Angular</span>
-            <span class="neon-badge">React</span>
-          </div>
-        </div>
-
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-database"></i> Databases</h4>
-          <div class="badges">
-            <span class="neon-badge">PostgreSQL</span>
-            <span class="neon-badge">MySQL</span>
-            <span class="neon-badge">MongoDB</span>
-            <span class="neon-badge">Milvus</span>
-          </div>
-        </div>
-
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-brain"></i> AI / ML</h4>
-          <div class="badges">
-            <span class="neon-badge highlight">LangGraph</span>
-            <span class="neon-badge highlight">CrewAI</span>
-            <span class="neon-badge highlight">MCP Tools</span>
-            <span class="neon-badge">OpenAI</span>
-            <span class="neon-badge">Vertex AI</span>
-          </div>
-        </div>
-
-        <div class="skill-category glass-card">
-          <h4><i class="fa-solid fa-cloud"></i> Cloud & DevOps</h4>
-          <div class="badges">
-            <span class="neon-badge">AWS</span>
-            <span class="neon-badge">GCP</span>
-            <span class="neon-badge">Azure</span>
-            <span class="neon-badge">Docker</span>
-            <span class="neon-badge">Kubernetes</span>
-            <span class="neon-badge">Terraform</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SECTION: PROJECTS & ARTICLES -->
-    <section id="projects" class="grid-section fade-in">
-      <div class="dual-columns">
-
-        <div class="column">
-          <h3 class="section-heading"><span class="neon-text">03.</span> Projects</h3>
-          <div class="project-list">
-
-            <a href="https://github.com/Ramc26" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-brands fa-github"></i></div>
-              <div class="resource-info">
-                <h5>[Project Name 1 Placeholder]</h5>
-                <p>Brief description of the project goes here. Click to view repository.</p>
-              </div>
-            </a>
-
-            <a href="https://github.com/Ramc26" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-brands fa-github"></i></div>
-              <div class="resource-info">
-                <h5>[Project Name 2 Placeholder]</h5>
-                <p>Brief description of the project goes here. Click to view repository.</p>
-              </div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="column">
-          <h3 class="section-heading"><span class="neon-text">04.</span> Articles</h3>
-          <div class="article-list">
-
-            <a href="#" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-solid fa-pen-nib"></i></div>
-              <div class="resource-info">
-                <h5>[Article Title 1 Placeholder]</h5>
-                <span class="read-more">Read Article ➔</span>
-              </div>
-            </a>
-
-            <a href="#" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-solid fa-pen-nib"></i></div>
-              <div class="resource-info">
-                <h5>[Article Title 2 Placeholder]</h5>
-                <span class="read-more">Read Article ➔</span>
-              </div>
-            </a>
-
-            <a href="#" target="_blank" class="resource-card glass-card">
-              <div class="resource-icon"><i class="fa-solid fa-pen-nib"></i></div>
-              <div class="resource-info">
-                <h5>[Article Title 3 Placeholder]</h5>
-                <span class="read-more">Read Article ➔</span>
-              </div>
-            </a>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SECTION: CONTACT -->
-    <section id="contact" class="contact-section fade-in">
-      <div class="glass-card contact-card">
-        <h3 class="section-heading"><span class="neon-text">05.</span> Keep in touch</h3>
-        <p class="contact-desc">
-          Whether you have an idea for a project, need a reliable backend engineer, or just want to say hi, my inbox is
-          always open. Let's build something awesome together!
-        </p>
-
-        <div class="contact-links">
-          <a href="mailto:itsrambikkina@gmail.com" class="btn btn-primary btn-large">
-            <i class="fa-solid fa-envelope"></i> itsrambikkina@gmail.com
-          </a>
-        </div>
-
-        <div class="social-row">
-          <a href="tel:+917095838715" class="social-icon" title="Call Me"><i class="fa-solid fa-phone"></i></a>
-          <a href="https://github.com/Ramc26" target="_blank" class="social-icon" title="GitHub"><i
-              class="fa-brands fa-github"></i></a>
-          <a href="https://www.linkedin.com/in/rambikkina26/" target="_blank" class="social-icon" title="LinkedIn"><i
-              class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
 
-      <footer class="footer">
-        <p>Designed and Built by <strong>Ram Bikkina</strong></p>
-        <p class="footer-subtext">Shadow Glow UI • 2024</p>
-      </footer>
-    </section>
+      <!-- Search Panel -->
+      <div class="sidebar-panel" id="panel-search">
+        <div class="sidebar-section-title">SEARCH</div>
+        <div class="search-box">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search portfolio...">
+        </div>
+        <div class="search-results" id="searchResults">
+          <p class="search-hint">Type to search across all files.</p>
+        </div>
+      </div>
+    </aside>
 
-  </main>
+    <!-- ===== MAIN EDITOR AREA ===== -->
+    <main class="ide-main" id="ideMain">
 
-  <!-- Script -->
+      <!-- Tab Bar -->
+      <div class="ide-tabbar" id="tabbar">
+        <!-- Tabs injected by JS -->
+        <div class="tabbar-overflow"></div>
+      </div>
+
+      <!-- Breadcrumbs -->
+      <div class="ide-breadcrumbs" id="breadcrumbs">
+        <span class="bc-item">PORTFOLIO</span>
+        <i class="fa-solid fa-chevron-right bc-sep"></i>
+        <span class="bc-item bc-active" id="bcFile">README.md</span>
+      </div>
+
+      <!-- Editor (gutter + code + minimap) -->
+      <div class="editor-wrapper" id="editorWrapper">
+        <div class="editor-gutter" id="editorGutter"></div>
+        <div class="editor-code" id="editorCode">
+          <!-- Syntax-highlighted content injected by JS -->
+        </div>
+        <div class="editor-minimap" id="minimap">
+          <canvas id="minimapCanvas"></canvas>
+        </div>
+      </div>
+
+      <!-- Resize Handle -->
+      <div class="resize-handle" id="resizeHandle">
+        <div class="resize-line"></div>
+      </div>
+
+      <!-- Terminal Panel -->
+      <div class="terminal-panel" id="termPanel">
+        <div class="terminal-panel-header">
+          <div class="panel-tabs">
+            <button class="panel-tab active" id="tabTerminal">TERMINAL</button>
+            <button class="panel-tab" id="tabProblems">PROBLEMS</button>
+            <button class="panel-tab" id="tabOutput">OUTPUT</button>
+          </div>
+          <div class="panel-actions">
+            <button class="panel-action-btn" id="newTermBtn" title="New Terminal">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+            <button class="panel-action-btn" id="clearTermBtn" title="Clear Terminal">
+              <i class="fa-solid fa-ban"></i>
+            </button>
+            <button class="panel-action-btn" id="toggleTermBtn" title="Toggle Panel">
+              <i class="fa-solid fa-chevron-down" id="toggleTermIcon"></i>
+            </button>
+            <button class="panel-action-btn" id="closeTermBtn" title="Close Panel">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+        <div class="terminal-output" id="termOutput">
+          <!-- Terminal lines injected by JS -->
+        </div>
+        <div class="terminal-inputline" id="termInputLine">
+          <span class="term-prompt-text">
+            <span class="tp-user">ram</span><span class="tp-at">@</span><span class="tp-host">portfolio</span><span
+              class="tp-colon">:</span><span class="tp-path">~/Portfolio</span><span class="tp-dollar"> $</span>
+          </span>
+          <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false"
+            aria-label="Terminal input">
+        </div>
+      </div>
+
+    </main><!-- /.ide-main -->
+
+    <!-- ===== STATUS BAR ===== -->
+    <footer class="ide-statusbar" id="statusbar">
+      <div class="status-left">
+        <span class="status-item status-git">
+          <i class="fa-solid fa-code-branch"></i> main
+        </span>
+        <span class="status-item status-ok">
+          <i class="fa-solid fa-circle-check"></i> 0 errors
+        </span>
+      </div>
+      <div class="status-right">
+        <span class="status-item" id="statusSync">
+          <i class="fa-solid fa-arrows-rotate"></i>
+        </span>
+        <span class="status-item" id="statusLang">Markdown</span>
+        <span class="status-item">UTF-8</span>
+        <span class="status-item" id="statusCursor">Ln 1, Col 1</span>
+        <span class="status-item status-name">
+          <i class="fa-solid fa-circle-dot" style="color:#39FF14;font-size:8px;"></i>
+          Ram Bikkina
+        </span>
+      </div>
+    </footer>
+
+  </div><!-- /.ide -->
+
+  <!-- ============================================================
+     MODAL — Projects / Articles
+     ============================================================ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-window" id="modalWindow">
+      <div class="modal-titlebar">
+        <div class="modal-win-controls">
+          <span class="wc wc-close" id="modalClose"></span>
+          <span class="wc wc-min"></span>
+          <span class="wc wc-max"></span>
+        </div>
+        <span class="modal-title" id="modalTitle">Output</span>
+        <div class="modal-header-actions">
+          <button class="modal-close-btn" id="modalCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+     MODAL — Contact (contact.sh execution)
+     ============================================================ -->
+  <div class="modal-overlay" id="contactOverlay">
+    <div class="modal-window modal-contact-window" id="contactWindow">
+      <div class="modal-titlebar">
+        <div class="modal-win-controls">
+          <span class="wc wc-close" id="contactClose"></span>
+          <span class="wc wc-min"></span>
+          <span class="wc wc-max"></span>
+        </div>
+        <span class="modal-title">bash — contact.sh</span>
+        <div class="modal-header-actions">
+          <button class="modal-close-btn" id="contactCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="modal-body contact-modal-body">
+        <div class="contact-script-output" id="contactScriptOutput"></div>
+        <div class="contact-form-area" id="contactFormArea" style="display:none;">
+          <div class="contact-left-info">
+            <p class="contact-cmd-line"><span class="tp-dollar">$</span> ./open_channels.sh</p>
+            <div class="contact-channel">
+              <a href="mailto:itsrambikkina@gmail.com" class="channel-link">
+                <i class="fa-solid fa-envelope"></i>
+                <span>itsrambikkina@gmail.com</span>
+              </a>
+            </div>
+            <div class="contact-channel">
+              <a href="https://github.com/Ramc26" target="_blank" class="channel-link">
+                <i class="fa-brands fa-github"></i>
+                <span>github.com/Ramc26</span>
+              </a>
+            </div>
+            <div class="contact-channel">
+              <a href="tel:+917095838715" class="channel-link">
+                <i class="fa-solid fa-phone"></i>
+                <span>+91 70958 38715</span>
+              </a>
+            </div>
+          </div>
+          <div class="contact-form-container">
+            <p class="contact-cmd-line"><span class="tp-dollar">$</span> ./send_message.sh</p>
+            <form id="contact-form" class="ide-contact-form">
+              <div class="ide-form-group">
+                <label class="ide-label"><span class="tp-dollar">#</span> name=</label>
+                <input type="text" id="contact-name" name="user_name" placeholder='"Your Name"' required>
+              </div>
+              <div class="ide-form-group">
+                <label class="ide-label"><span class="tp-dollar">#</span> email=</label>
+                <input type="email" id="contact-email" name="user_email" placeholder='"your@email.com"' required>
+              </div>
+              <div class="ide-form-group">
+                <label class="ide-label"><span class="tp-dollar">#</span> message=</label>
+                <textarea id="contact-message" name="message" rows="4" placeholder='"Hello Ram..."' required></textarea>
+              </div>
+              <div class="ide-form-actions">
+                <button type="submit" class="ide-submit-btn" id="contactSubmitBtn">
+                  <i class="fa-solid fa-paper-plane"></i> send_message()
+                </button>
+                <span class="form-status-msg" id="formStatusMsg"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+     SETTINGS PANEL
+     ============================================================ -->
+  <div class="settings-overlay" id="settingsOverlay">
+    <div class="settings-panel" id="settingsPanel">
+      <div class="settings-header">
+        <span class="settings-title"><i class="fa-solid fa-gear"></i> Settings</span>
+        <button class="settings-close" id="settingsClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-group">
+          <label class="setting-label">Theme</label>
+          <div class="theme-toggle-wrap">
+            <span class="theme-label-text"><i class="fa-solid fa-moon"></i> Dark</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="themeToggle">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="theme-label-text"><i class="fa-solid fa-sun"></i> Light</span>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Font Size <span id="fontSizeValue" class="font-size-val">13px</span></label>
+          <input type="range" id="fontSizeSlider" min="10" max="20" step="1" value="13" class="font-slider">
+          <div class="slider-marks"><span>10</span><span>13</span><span>16</span><span>20</span></div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Keyboard Shortcuts</label>
+          <div class="shortcut-list">
+            <div class="shortcut-row"><span class="sc-key">Ctrl + `</span><span class="sc-desc">Focus Terminal</span>
+            </div>
+            <div class="shortcut-row"><span class="sc-key">Ctrl + B</span><span class="sc-desc">Toggle Sidebar</span>
+            </div>
+            <div class="shortcut-row"><span class="sc-key">↑ / ↓</span><span class="sc-desc">Command History</span>
+            </div>
+            <div class="shortcut-row"><span class="sc-key">Tab</span><span class="sc-desc">Autocomplete</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+     MOBILE UI
+     ============================================================ -->
+  <div class="mobile-ui" id="mobileUI">
+    <header class="mob-header">
+      <div class="mob-logo"><i class="fa-solid fa-terminal"></i> ram.dev</div>
+      <button class="mob-menu-btn" id="mobMenuBtn"><i class="fa-solid fa-bars"></i></button>
+    </header>
+    <nav class="mob-nav" id="mobNav">
+      <button class="mob-nav-btn active" data-mob-section="mob-about"><i class="fa-solid fa-user"></i> About</button>
+      <button class="mob-nav-btn" data-mob-section="mob-stack"><i class="fa-solid fa-layer-group"></i> Stack</button>
+      <button class="mob-nav-btn" data-mob-section="mob-exp"><i class="fa-solid fa-briefcase"></i> Experience</button>
+      <button class="mob-nav-btn" data-mob-section="mob-projects"><i class="fa-solid fa-rocket"></i> Projects</button>
+      <button class="mob-nav-btn" data-mob-section="mob-contact"><i class="fa-solid fa-envelope"></i> Contact</button>
+    </nav>
+    <main class="mob-content">
+      <!-- About -->
+      <section class="mob-section active" id="mob-about">
+        <h1 class="mob-name">Ram Bikkina</h1>
+        <p class="mob-role">R&D Engineer I @ Jukshio Technologies</p>
+        <p class="mob-loc"><i class="fa-solid fa-location-dot"></i> Hyderabad, TG, India</p>
+        <div class="mob-bio">
+          <p>4+ years building AI-powered backend systems. MS in CIT from Purdue University. Currently focused on
+            multi-agent AI systems, MCP tool ecosystems, and high-performance APIs.</p>
+        </div>
+        <div class="mob-links">
+          <a href="https://github.com/Ramc26" target="_blank" class="mob-link-btn"><i class="fa-brands fa-github"></i>
+            GitHub</a>
+          <a href="mailto:itsrambikkina@gmail.com" class="mob-link-btn"><i class="fa-solid fa-envelope"></i> Email</a>
+          <a href="tel:+917095838715" class="mob-link-btn"><i class="fa-solid fa-phone"></i> Call</a>
+        </div>
+      </section>
+      <!-- Stack -->
+      <section class="mob-section" id="mob-stack">
+        <h2 class="mob-section-title">Tech Stack</h2>
+        <div class="mob-tag-group">
+          <h3 class="mob-tag-cat">AI / ML</h3>
+          <div class="mob-tags"><span>CrewAI</span><span>LangGraph</span><span>LangChain</span><span>MCP
+              Tools</span><span>Whisper</span><span>Ollama</span><span>Vertex AI</span></div>
+        </div>
+        <div class="mob-tag-group">
+          <h3 class="mob-tag-cat">Backend</h3>
+          <div class="mob-tags">
+            <span>Python</span><span>FastAPI</span><span>Flask</span><span>Django</span><span>GoLang</span><span>REST
+              APIs</span>
+          </div>
+        </div>
+        <div class="mob-tag-group">
+          <h3 class="mob-tag-cat">Cloud & DevOps</h3>
+          <div class="mob-tags">
+            <span>AWS</span><span>GCP</span><span>Azure</span><span>Docker</span><span>Kubernetes</span><span>Terraform</span><span>CI/CD</span>
+          </div>
+        </div>
+        <div class="mob-tag-group">
+          <h3 class="mob-tag-cat">Databases</h3>
+          <div class="mob-tags"><span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Milvus</span></div>
+        </div>
+      </section>
+      <!-- Experience -->
+      <section class="mob-section" id="mob-exp">
+        <h2 class="mob-section-title">Experience</h2>
+        <div class="mob-exp-card">
+          <div class="mob-exp-date">Jun 2024 – Present</div>
+          <div class="mob-exp-role">R&D Engineer I</div>
+          <div class="mob-exp-co">Jukshio Technologies, Hyderabad</div>
+          <p>CrewAI multi-agent orchestration, LangGraph agent framework, 15+ MCP tools, FastAPI + Vertex AI APIs,
+            Docker/K8s deployment.</p>
+        </div>
+        <div class="mob-exp-card">
+          <div class="mob-exp-date">Feb 2023 – Aug 2023</div>
+          <div class="mob-exp-role">Python Developer (Intern)</div>
+          <div class="mob-exp-co">Rubistone Technologies, Chicago IL</div>
+          <p>AI article aggregation (500K+ daily), PySpark analytics, LLM automation, Flask/Django microservices.</p>
+        </div>
+        <div class="mob-exp-card">
+          <div class="mob-exp-date">Jul 2020 – Aug 2021</div>
+          <div class="mob-exp-role">R&D Engineer I</div>
+          <div class="mob-exp-co">Jukshio, Hyderabad</div>
+          <p>Python automation, backend APIs, 40% DB performance improvement, SQL optimization.</p>
+        </div>
+      </section>
+      <!-- Projects -->
+      <section class="mob-section" id="mob-projects">
+        <h2 class="mob-section-title">Projects</h2>
+        <div class="mob-proj-card">
+          <h3>Multi-Agent CrewAI Orchestration</h3>
+          <p>Hierarchical multi-agent system via MCP tools — 40% reliability boost.</p>
+          <div class="mob-tags"><span>CrewAI</span><span>MCP</span><span>FastAPI</span></div>
+        </div>
+        <div class="mob-proj-card">
+          <h3>LangGraph Agent Framework</h3>
+          <p>Stateful execution graphs for supervisor-specialist delegation.</p>
+          <div class="mob-tags"><span>LangGraph</span><span>Python</span><span>LLM</span></div>
+        </div>
+        <div class="mob-proj-card">
+          <h3>MCP Tool Ecosystem (15+)</h3>
+          <p>Zero-hallucination LLM tool calls with JSON Schema.</p>
+          <div class="mob-tags"><span>FastAPI</span><span>JSON Schema</span><span>MCP</span></div>
+        </div>
+        <div class="mob-proj-card">
+          <h3>Whisper Transcription API</h3>
+          <p>Real-time audio transcription via OpenAI Whisper.</p>
+          <div class="mob-tags"><span>Whisper</span><span>Flask</span><span>Python</span></div>
+        </div>
+        <div class="mob-proj-card">
+          <h3>AI Article Aggregation</h3>
+          <p>500K+ daily articles, 99.5% uptime.</p>
+          <div class="mob-tags"><span>AWS Lambda</span><span>S3</span><span>PySpark</span></div>
+        </div>
+        <div class="mob-proj-card">
+          <h3>Vertex AI Data Gen API</h3>
+          <p>FastAPI + Vertex AI LLMs, PostgreSQL persistence.</p>
+          <div class="mob-tags"><span>FastAPI</span><span>Vertex AI</span><span>PostgreSQL</span></div>
+        </div>
+      </section>
+      <!-- Contact -->
+      <section class="mob-section" id="mob-contact">
+        <h2 class="mob-section-title">Contact</h2>
+        <div class="mob-contact-links">
+          <a href="mailto:itsrambikkina@gmail.com" class="mob-contact-card"><i
+              class="fa-solid fa-envelope"></i><span>itsrambikkina@gmail.com</span></a>
+          <a href="https://github.com/Ramc26" target="_blank" class="mob-contact-card"><i
+              class="fa-brands fa-github"></i><span>github.com/Ramc26</span></a>
+          <a href="tel:+917095838715" class="mob-contact-card"><i class="fa-solid fa-phone"></i><span>+91 70958
+              38715</span></a>
+        </div>
+        <form id="mobile-contact-form" class="mob-form">
+          <input type="text" name="user_name" placeholder="Your name" required>
+          <input type="email" name="user_email" placeholder="your@email.com" required>
+          <textarea name="message" rows="3" placeholder="Message..." required></textarea>
+          <button type="submit" class="mob-send-btn" id="mobSendBtn"><i class="fa-solid fa-paper-plane"></i>
+            Send</button>
+          <span class="mob-form-status" id="mobFormStatus"></span>
+        </form>
+      </section>
+    </main>
+    <footer class="mob-footer">
+      <span>&lt;ram.dev/&gt;</span>
+      <span>© 2025</span>
+    </footer>
+  </div>
+
   <script src="script.js"></script>
 </body>
 

@@ -1,0 +1,75 @@
+[
+    {
+        "id": 1,
+        "name": "Multi-Agent CrewAI Orchestration",
+        "desc": "Hierarchical multi-agent system with manager delegating to specialists via MCP tools for IDV, OCR, face-match workflows.",
+        "impact": "40% reliability boost",
+        "tech": [
+            "CrewAI",
+            "MCP",
+            "FastAPI",
+            "SSE"
+        ],
+        "github": "https://github.com/Ramc26"
+    },
+    {
+        "id": 2,
+        "name": "LangGraph Agent Framework",
+        "desc": "Stateful execution graphs with add_nodes/add_edges for single-agent loops and supervisor-to-specialist delegation.",
+        "impact": "Fully automated workflows",
+        "tech": [
+            "LangGraph",
+            "Python",
+            "LLM"
+        ],
+        "github": "https://github.com/Ramc26"
+    },
+    {
+        "id": 3,
+        "name": "MCP Tool Ecosystem (15+)",
+        "desc": "FastAPI MCP tools with JSON Schema & protocol annotations ensuring zero-hallucination LLM calls.",
+        "impact": "Zero-hallucination calls",
+        "tech": [
+            "FastAPI",
+            "JSON Schema",
+            "MCP"
+        ],
+        "github": "https://github.com/Ramc26"
+    },
+    {
+        "id": 4,
+        "name": "Whisper Transcription API",
+        "desc": "OpenAI Whisper via Flask for accurate real-time audio transcription in production.",
+        "impact": "Optimized latency",
+        "tech": [
+            "Whisper",
+            "Flask",
+            "Python"
+        ],
+        "github": "https://github.com/Ramc26"
+    },
+    {
+        "id": 5,
+        "name": "AI Article Aggregation",
+        "desc": "500K+ daily articles, multi-language processing, 99.5% uptime via AWS Lambda + S3.",
+        "impact": "99.5% uptime",
+        "tech": [
+            "AWS Lambda",
+            "S3",
+            "PySpark"
+        ],
+        "github": "https://github.com/Ramc26"
+    },
+    {
+        "id": 6,
+        "name": "Vertex AI Data Gen API",
+        "desc": "High-perf FastAPI + Google Vertex AI LLMs, PostgreSQL persistence via SQLAlchemy + Alembic.",
+        "impact": "Full migration lifecycle",
+        "tech": [
+            "FastAPI",
+            "Vertex AI",
+            "PostgreSQL"
+        ],
+        "github": "https://github.com/Ramc26"
+    }
+]

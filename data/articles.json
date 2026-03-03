@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "tag": "CrewAI",
+        "title": "Building Hierarchical Multi-Agent Systems with CrewAI",
+        "desc": "How to architect manager-specialist agent patterns for automated enterprise workflows using MCP tools.",
+        "url": "https://github.com/Ramc26"
+    },
+    {
+        "id": 2,
+        "tag": "LangGraph",
+        "title": "Stateful Agent Loops with LangGraph Execution Graphs",
+        "desc": "Deep dive into constructing explicit execution graphs with add_nodes and add_edges for reliable LLM agent behavior.",
+        "url": "https://github.com/Ramc26"
+    },
+    {
+        "id": 3,
+        "tag": "MCP",
+        "title": "Zero-Hallucination LLM Tool Calls via Model Context Protocol",
+        "desc": "Registering MCP tools with JSON Schema and protocol annotations to enforce reliable agent invocations.",
+        "url": "https://github.com/Ramc26"
+    }
+]
