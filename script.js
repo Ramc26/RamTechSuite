@@ -976,7 +976,7 @@ async function populateMobileFromJSON() {
     const mobProjects = document.getElementById('mob-projects');
     if (mobProjects && projects.length > 0) {
         const title = mobProjects.querySelector('.mob-section-title');
-        const html = projects.map(p => `<div class="mob-proj-card">
+        const html = projects.map((p, i) => `<div class="mob-proj-card">
           <h3>${p.name}</h3>
           <p>${p.desc}</p>
           <div class="mob-tags">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
