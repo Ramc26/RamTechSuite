@@ -664,6 +664,7 @@ function processCommand(cmd) {
                 ['cat <file>', 'Print file to terminal'],
                 ['run projects.ts', 'View projects (modal)'],
                 ['run articles.md', 'View articles (modal)'],
+                ['run stack.yaml', 'View tech stack'],
                 ['run contact.sh', 'Contact form'],
                 ['whoami', 'About me'],
                 ['python about.py', 'Execute about.py'],
@@ -708,7 +709,8 @@ function processCommand(cmd) {
             if (arg.toLowerCase() === 'projects.ts') { openProjectsModal(); }
             else if (arg.toLowerCase() === 'articles.md') { openArticlesModal(); }
             else if (arg.toLowerCase() === 'contact.sh') { runContactScript(); }
-            else printLine('t-err-line', `error: cannot run "${arg}". Try: run projects.ts | run articles.md | run contact.sh`);
+            else if (arg.toLowerCase() === 'stack.yaml') { openStackModal(); }
+            else printLine('t-err-line', `error: cannot run "${arg}". Try: run projects.ts | run articles.md | run stack.yaml | run contact.sh`);
             break;
 
         case 'python':
@@ -853,6 +855,100 @@ async function openArticlesModal() {
 
     modalTitle.textContent = 'Output — articles.md';
     modalBody.innerHTML = `<div class="modal-output-header"><span>$</span> marked articles.md → <strong>${articles.length} articles</strong></div><div class="articles-output-list">${articles.map(a => `<a href="${a.url || 'https://github.com/Ramc26'}" target="_blank" class="art-output-card"><span class="art-tag">${a.tag}</span><div class="art-title">${a.title}</div><div class="art-desc">${a.desc}</div><span class="art-read">Read more →</span></a>`).join('')}</div>`;
+    modalOverlay.classList.add('open');
+}
+
+function openStackModal() {
+    printLine('t-ok-line', '✓ Parsing stack.yaml ...');
+    printLine('t-info-line', '  Loading tech stack → Opening output ...\n');
+    renderFile('stack');
+
+    const stackData = [
+        {
+            category: 'AI / ML', color: '#39FF14', items: [
+                { name: 'CrewAI', icon: 'devicon-python-plain' },
+                { name: 'LangGraph', icon: 'devicon-python-plain' },
+                { name: 'LangChain', icon: 'devicon-python-plain' },
+                { name: 'MCP Tools', icon: 'fa-solid fa-wrench' },
+                { name: 'Whisper', icon: 'fa-solid fa-microphone' },
+                { name: 'Ollama', icon: 'fa-solid fa-robot' },
+                { name: 'HuggingFace', icon: 'fa-solid fa-face-smile' },
+                { name: 'OpenCV', icon: 'devicon-opencv-plain' },
+                { name: 'Vertex AI', icon: 'devicon-googlecloud-plain' },
+            ]
+        },
+        {
+            category: 'Backend', color: '#1F51FF', items: [
+                { name: 'Python', icon: 'devicon-python-plain' },
+                { name: 'FastAPI', icon: 'devicon-fastapi-plain' },
+                { name: 'Flask', icon: 'devicon-flask-original' },
+                { name: 'Django', icon: 'devicon-django-plain' },
+                { name: 'GoLang', icon: 'devicon-go-original-wordmark' },
+                { name: 'REST APIs', icon: 'fa-solid fa-plug' },
+                { name: 'SQLAlchemy', icon: 'devicon-sqlalchemy-plain' },
+            ]
+        },
+        {
+            category: 'Databases', color: '#FF6B35', items: [
+                { name: 'PostgreSQL', icon: 'devicon-postgresql-plain' },
+                { name: 'MySQL', icon: 'devicon-mysql-plain' },
+                { name: 'MongoDB', icon: 'devicon-mongodb-plain' },
+                { name: 'Milvus', icon: 'fa-solid fa-database' },
+            ]
+        },
+        {
+            category: 'Cloud & DevOps', color: '#FF2D55', items: [
+                { name: 'AWS', icon: 'devicon-amazonwebservices-plain-wordmark' },
+                { name: 'GCP', icon: 'devicon-googlecloud-plain' },
+                { name: 'Azure', icon: 'devicon-azure-plain' },
+                { name: 'Docker', icon: 'devicon-docker-plain' },
+                { name: 'Kubernetes', icon: 'devicon-kubernetes-plain' },
+                { name: 'Terraform', icon: 'devicon-terraform-plain' },
+                { name: 'CI/CD', icon: 'fa-solid fa-rotate' },
+            ]
+        },
+        {
+            category: 'Languages', color: '#BF5AF2', items: [
+                { name: 'Python', icon: 'devicon-python-plain' },
+                { name: 'GoLang', icon: 'devicon-go-original-wordmark' },
+                { name: 'SQL', icon: 'fa-solid fa-database' },
+                { name: 'Bash', icon: 'devicon-bash-plain' },
+                { name: 'JavaScript', icon: 'devicon-javascript-plain' },
+            ]
+        },
+        {
+            category: 'Certifications', color: '#FFD60A', items: [
+                { name: 'AWS Dev Assoc', icon: 'devicon-amazonwebservices-plain-wordmark' },
+                { name: 'MS Python', icon: 'fa-solid fa-certificate' },
+                { name: 'VMware IT', icon: 'fa-solid fa-certificate' },
+                { name: 'HackerRank SQL', icon: 'fa-solid fa-award' },
+            ]
+        },
+    ];
+
+    const total = stackData.reduce((s, c) => s + c.items.length, 0);
+    modalTitle.textContent = 'Output — stack.yaml';
+    modalBody.innerHTML = `
+        <div class="modal-output-header"><span>$</span> yaml parse stack.yaml → <strong>${total} technologies</strong> across <strong>${stackData.length} categories</strong></div>
+        <div class="stack-output">
+            ${stackData.map(cat => `
+                <div class="stack-category">
+                    <h3 class="stack-cat-title" style="--cat-color: ${cat.color}">
+                        <span class="stack-cat-dot" style="background: ${cat.color}"></span>
+                        ${cat.category}
+                        <span class="stack-cat-count">${cat.items.length}</span>
+                    </h3>
+                    <div class="stack-grid">
+                        ${cat.items.map(item => `
+                            <div class="stack-badge" style="--badge-color: ${cat.color}">
+                                <i class="${item.icon} stack-badge-icon"></i>
+                                <span class="stack-badge-name">${item.name}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('')}
+        </div>`;
     modalOverlay.classList.add('open');
 }
 

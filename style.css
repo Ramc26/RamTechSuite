@@ -119,6 +119,153 @@ button {
     color: #fff;
 }
 
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* End of flexible card fix */
+.card-front h3 {
+    font-size: 1.8rem;
+    color: var(--light-bg);
+    font-weight: bold;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-front p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 1rem 0;
+    color: var(--ivory-color);
+}
+
+.project-image {
+    width: 250px;
+    height: auto;
+    border-radius: 15px;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.project-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(253, 172, 85, 0.5);
+}
+
+.card-back h4 {
+    font-size: 1.8rem;
+    color: var(--light-bg);
+    font-weight: bold;
+}
+
+.card-back ul {
+    list-style: none;
+    padding: 0 1rem;
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.card-back li {
+    font-size: 1.1rem;
+    margin: 0.8rem 0;
+    color: var(--ivory-color);
+}
+
+.project-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.project-links a {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    background: var(--gradient);
+    color: var(--text-light);
+    text-decoration: none;
+    font-family: 'SpaceGrotesk', sans-serif;
+    font-size: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-links a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.carousel-button {
+    border: none;
+    color: white;
+    padding: 1vmin 2vmin;
+    cursor: pointer;
+    border-radius: 20%;
+    transition: all 0.3s ease;
+    margin: 0 1rem;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 1vmin;
+    margin-top: 2vmin;
+}
+
+.carousel-indicators .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+
+.carousel-indicators .dot.active {
+    background: var(--secondary-color);
+}
+
+.github-stats-section {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+.collaboration-note {
+    color: var(--ivory-color);
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.github-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.github-cards img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.github-cards img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -1348,6 +1495,131 @@ button {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+}
+
+/* ============================================================
+   STACK MODAL — NEON BADGES
+   ============================================================ */
+.stack-output {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.stack-cat-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cat-color, var(--text-bright));
+    margin: 0 0 10px 0;
+    font-family: var(--font);
+    letter-spacing: 0.3px;
+}
+
+.stack-cat-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.stack-cat-count {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: auto;
+    background: var(--ide-bg3);
+    padding: 1px 7px;
+    border-radius: 8px;
+}
+
+.stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+}
+
+.stack-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px 8px;
+    border-radius: 8px;
+    background: var(--ide-bg3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: default;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stack-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    border: 1px solid var(--badge-color, var(--accent));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.stack-badge:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--badge-color) 30%, transparent),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.stack-badge:hover::before {
+    opacity: 1;
+}
+
+.stack-badge-icon {
+    font-size: 22px;
+    color: var(--badge-color, var(--accent));
+    transition: color 0.25s, text-shadow 0.25s;
+}
+
+.stack-badge:hover .stack-badge-icon {
+    text-shadow: 0 0 10px var(--badge-color);
+}
+
+.stack-badge-name {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+}
+
+.stack-badge:hover .stack-badge-name {
+    color: var(--text-bright);
+}
+
+@media (max-width: 768px) {
+    .stack-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 6px;
+    }
+
+    .stack-badge {
+        padding: 10px 6px;
+    }
+
+    .stack-badge-icon {
+        font-size: 18px;
+    }
+
+    .stack-badge-name {
+        font-size: 9px;
+    }
 }
 
 /* ============================================================
