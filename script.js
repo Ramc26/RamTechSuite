@@ -988,7 +988,7 @@ async function openAboutModal() {
         <div class="about-output">
             <div class="about-hero">
                 <div class="about-avatar">
-                    <span class="about-avatar-text">RB</span>
+                    <span class="about-avatar-text"><img src="./elements/pdp.jpg" alt="Ram Bikkina" style="width: 100%; height: 100%; object-fit: cover;"></span>
                     <span class="about-avatar-ring"></span>
                 </div>
                 <div class="about-hero-info">

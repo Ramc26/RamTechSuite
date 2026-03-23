@@ -2,8 +2,8 @@
     {
         "id": 1,
         "name": "Multi-Agent CrewAI Orchestration",
-        "desc": "Hierarchical multi-agent system with manager delegating to specialists via MCP tools for IDV, OCR, face-match workflows.",
-        "impact": "40% reliability boost",
+        "desc": "Architected a hierarchical system where a manager agent dynamically delegates IDV, OCR, and face-match tasks to specialists via custom MCP tools.",
+        "impact": "40% boost in tool-call reliability",
         "tech": [
             "CrewAI",
             "MCP",
@@ -14,62 +14,65 @@
     },
     {
         "id": 2,
-        "name": "LangGraph Agent Framework",
-        "desc": "Stateful execution graphs with add_nodes/add_edges for single-agent loops and supervisor-to-specialist delegation.",
-        "impact": "Fully automated workflows",
+        "name": "Sleuth: AI Forensic Accounting",
+        "desc": "Built a 'RAG-lite' investigator that explains ledger discrepancies by matching structured data with unstructured context like emails and Slack logs.",
+        "impact": "Automates manual auditing & reconciliation",
         "tech": [
-            "LangGraph",
             "Python",
-            "LLM"
+            "OpenAI (GPT-4o)",
+            "Pandas",
+            "Streamlit"
         ],
-        "github": "https://github.com/Ramc26"
+        "github": "https://github.com/Ramc26/Sleuth"
     },
     {
         "id": 3,
-        "name": "MCP Tool Ecosystem (15+)",
-        "desc": "FastAPI MCP tools with JSON Schema & protocol annotations ensuring zero-hallucination LLM calls.",
-        "impact": "Zero-hallucination calls",
+        "name": "Kueri: Text-to-SQL Engine",
+        "desc": "A modular interface using LangGraph and MCP servers to let non-technical users query databases via natural language.",
+        "impact": "Zero SQL knowledge required for data insights",
         "tech": [
+            "LangGraph",
+            "MCP",
             "FastAPI",
-            "JSON Schema",
-            "MCP"
+            "Streamlit"
         ],
-        "github": "https://github.com/Ramc26"
+        "github": "https://github.com/Ramc26/Kueri"
     },
     {
         "id": 4,
-        "name": "Whisper Transcription API",
-        "desc": "OpenAI Whisper via Flask for accurate real-time audio transcription in production.",
-        "impact": "Optimized latency",
+        "name": "LangGraph Agent Framework",
+        "desc": "Engineered stateful execution graphs for complex, multi-turn AI reasoning loops and supervisor-led delegation patterns.",
+        "impact": "Fully automated end-to-end R&D workflows",
         "tech": [
-            "Whisper",
-            "Flask",
-            "Python"
+            "LangGraph",
+            "Python",
+            "State Management"
         ],
         "github": "https://github.com/Ramc26"
     },
     {
         "id": 5,
-        "name": "AI Article Aggregation",
-        "desc": "500K+ daily articles, multi-language processing, 99.5% uptime via AWS Lambda + S3.",
-        "impact": "99.5% uptime",
+        "name": "Multi-Doc RAG Agents",
+        "desc": "Orchestrated CrewAI agents that intelligently select between specialized FAISS-backed RAG tools for policy and protocol analysis.",
+        "impact": "Context-aware organizational intelligence",
         "tech": [
-            "AWS Lambda",
-            "S3",
-            "PySpark"
+            "CrewAI",
+            "FAISS",
+            "LangChain",
+            "uv"
         ],
-        "github": "https://github.com/Ramc26"
+        "github": "https://github.com/Ramc26/RAG-Agents"
     },
     {
         "id": 6,
-        "name": "Vertex AI Data Gen API",
-        "desc": "High-perf FastAPI + Google Vertex AI LLMs, PostgreSQL persistence via SQLAlchemy + Alembic.",
-        "impact": "Full migration lifecycle",
+        "name": "Loopify: Batch API Automation",
+        "desc": "A high-speed batch testing tool that processes CSV-based API requests with configurable delays and real-time result tracking.",
+        "impact": "Reduced testing time from 15 mins to 15 seconds",
         "tech": [
-            "FastAPI",
-            "Vertex AI",
-            "PostgreSQL"
+            "Python",
+            "REST APIs",
+            "Streamlit"
         ],
-        "github": "https://github.com/Ramc26"
+        "github": "https://github.com/Ramc26/Loopify"
     }
 ]
