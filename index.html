@@ -229,6 +229,83 @@
   </div><!-- /.ide -->
 
   <!-- ============================================================
+     RECRUITER VIEW (typical portfolio layout)
+     ============================================================ -->
+  <div id="recruiterView" class="recruiter-view" aria-label="Portfolio">
+    <div class="recruiter-shell">
+      <header class="recruiter-topbar">
+        <div class="recruiter-brand">
+          <i class="fa-solid fa-terminal"></i>
+          <span class="recruiter-brand-name">ram.dev</span>
+          <span class="recruiter-brand-sub">Portfolio</span>
+        </div>
+        <div class="recruiter-top-actions">
+          <button class="recruiter-mode-btn" id="recruiterSwitchTechBtn" type="button" title="Switch to Tech View">
+            <i class="fa-solid fa-code"></i> Tech View
+          </button>
+        </div>
+      </header>
+
+      <section class="recruiter-section">
+        <div class="recruiter-section-header">
+          <i class="fa-solid fa-id-badge"></i>
+          <span>About</span>
+        </div>
+        <div id="recruiterAboutContent"></div>
+        <div class="recruiter-hero-cta-row">
+          <button class="recruiter-cta-btn" id="recruiterContactBtn" type="button">
+            <i class="fa-solid fa-paper-plane"></i> Contact Ram
+          </button>
+          <a class="recruiter-ghost-btn" href="#recruiterProjects">
+            See Projects <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </section>
+
+      <section class="recruiter-section" id="recruiterProjects">
+        <div class="recruiter-section-header">
+          <i class="fa-solid fa-diagram-project"></i>
+          <span>Projects</span>
+        </div>
+        <div id="recruiterProjectsGrid" class="projects-output-grid"></div>
+      </section>
+
+      <section class="recruiter-section" id="recruiterExperience">
+        <div class="recruiter-section-header">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Experience</span>
+        </div>
+        <div id="recruiterExperienceTimeline" class="exp-timeline"></div>
+      </section>
+
+      <section class="recruiter-section" id="recruiterStack">
+        <div class="recruiter-section-header">
+          <i class="fa-solid fa-layer-group"></i>
+          <span>Stack</span>
+        </div>
+        <div id="recruiterStackOutput" class="stack-output"></div>
+      </section>
+
+      <section class="recruiter-section" id="recruiterArticles">
+        <div class="recruiter-section-header">
+          <i class="fa-solid fa-pen-nib"></i>
+          <span>Articles</span>
+        </div>
+        <div id="recruiterArticlesList" class="articles-output-list"></div>
+      </section>
+
+      <div class="recruiter-footer">
+        <span>Built with taste. Delivered with clarity.</span>
+        <span class="recruiter-footer-links">
+          <a href="mailto:itsrambikkina@gmail.com">itsrambikkina@gmail.com</a>
+          <span class="recruiter-footer-sep">·</span>
+          <a href="https://github.com/Ramc26" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
      MODAL — Projects / Articles
      ============================================================ -->
   <div class="modal-overlay" id="modalOverlay">
@@ -363,7 +440,7 @@
   <!-- ============================================================
      ONBOARDING HINTS OVERLAY
      ============================================================ -->
-  <div class="onboarding-overlay" id="onboardingOverlay">
+  <div class="onboarding-overlay ob-hidden" id="onboardingOverlay">
     <div class="ob-hint ob-hint-explorer">
       <i class="fa-regular fa-folder-open"></i> Browse files
     </div>
@@ -383,6 +460,25 @@
       <kbd>Ctrl+`</kbd> Terminal &nbsp;·&nbsp; <kbd>Ctrl+B</kbd> Sidebar
     </div>
     <div class="ob-dismiss">Click anywhere to dismiss</div>
+  </div>
+
+  <!-- ============================================================
+     VISITOR MODE GATE
+     ============================================================ -->
+  <div class="visitor-mode-overlay" id="visitorModeOverlay">
+    <div class="visitor-mode-panel">
+      <div class="visitor-mode-title">Welcome to ram.dev</div>
+      <div class="visitor-mode-subtitle">How should I present this portfolio?</div>
+      <div class="visitor-mode-actions">
+        <button class="visitor-mode-btn" id="visitorRecruiterBtn" type="button">
+          <i class="fa-solid fa-user-tie"></i> I’m a Recruiter
+        </button>
+        <button class="visitor-mode-btn visitor-mode-btn-tech" id="visitorTechBtn" type="button">
+          <i class="fa-solid fa-code"></i> I’m Technical
+        </button>
+      </div>
+      <div class="visitor-mode-note">We’ll remember your choice for next time.</div>
+    </div>
   </div>
 
   <script src="script.js"></script>

@@ -368,17 +368,128 @@ const contactFormArea = document.getElementById('contactFormArea');
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
 
+// ===== RECRUITER VIEW DOM REFS =====
+const recruiterView = document.getElementById('recruiterView');
+const recruiterAboutContent = document.getElementById('recruiterAboutContent');
+const recruiterProjectsGrid = document.getElementById('recruiterProjectsGrid');
+const recruiterExperienceTimeline = document.getElementById('recruiterExperienceTimeline');
+const recruiterStackOutput = document.getElementById('recruiterStackOutput');
+const recruiterArticlesList = document.getElementById('recruiterArticlesList');
+const recruiterContactBtn = document.getElementById('recruiterContactBtn');
+const recruiterSwitchTechBtn = document.getElementById('recruiterSwitchTechBtn');
+
+// ===== VISITOR MODE GATE DOM REFS =====
+const ideEl = document.getElementById('ide');
+const visitorModeOverlay = document.getElementById('visitorModeOverlay');
+const visitorRecruiterBtn = document.getElementById('visitorRecruiterBtn');
+const visitorTechBtn = document.getElementById('visitorTechBtn');
+
+// ===== MODE STATE =====
+let techInitialized = false;
+let recruiterInitialized = false;
+
+const MODE_KEY = 'portfolio-visitor-mode';
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
+    // Hide both views until a mode is chosen.
+    if (ideEl) ideEl.style.display = 'none';
+    if (recruiterView) recruiterView.style.display = 'none';
+
+    // These are shared in both modes (modals + contact form wiring).
+    setupModals();
+    setupContact();
+
+    initVisitorGate();
+});
+
+function getInitialMode() {
+    const params = new URLSearchParams(window.location.search);
+    const urlMode = (params.get('mode') || '').toLowerCase().trim();
+    if (urlMode === 'tech' || urlMode === 'recruiter') return urlMode;
+
+    const saved = (localStorage.getItem(MODE_KEY) || '').toLowerCase().trim();
+    if (saved === 'tech' || saved === 'recruiter') return saved;
+
+    return null;
+}
+
+function initVisitorGate() {
+    if (!visitorModeOverlay || !visitorRecruiterBtn || !visitorTechBtn) {
+        // Fallback: show Tech Mode to avoid blank page.
+        activateMode('tech');
+        return;
+    }
+
+    visitorRecruiterBtn.addEventListener('click', () => activateMode('recruiter'));
+    visitorTechBtn.addEventListener('click', () => activateMode('tech'));
+
+    const initial = getInitialMode();
+    if (initial) {
+        activateMode(initial);
+    } else {
+        // Keep overlay visible (default in HTML).
+        visitorModeOverlay.classList.remove('hidden');
+    }
+}
+
+function activateMode(mode) {
+    const normalized = mode === 'recruiter' ? 'recruiter' : 'tech';
+    localStorage.setItem(MODE_KEY, normalized);
+
+    // Apply view visibility.
+    if (normalized === 'recruiter') {
+        document.body.classList.add('mode-recruiter');
+        document.body.classList.remove('mode-tech');
+        if (ideEl) ideEl.style.display = 'none';
+        if (recruiterView) recruiterView.style.display = '';
+    } else {
+        document.body.classList.add('mode-tech');
+        document.body.classList.remove('mode-recruiter');
+        if (ideEl) ideEl.style.display = '';
+        if (recruiterView) recruiterView.style.display = 'none';
+    }
+
+    if (visitorModeOverlay) visitorModeOverlay.classList.add('hidden');
+
+    if (normalized === 'recruiter') {
+        if (!recruiterInitialized) {
+            initRecruiterMode();
+        }
+    } else {
+        if (!techInitialized) {
+            initTechMode();
+        }
+    }
+}
+
+async function initRecruiterMode() {
+    recruiterInitialized = true;
+
+    if (recruiterContactBtn) {
+        recruiterContactBtn.addEventListener('click', () => runContactScript());
+    }
+    if (recruiterSwitchTechBtn) {
+        recruiterSwitchTechBtn.addEventListener('click', () => activateMode('tech'));
+    }
+
+    // Render page sections.
+    await renderRecruiterPage();
+}
+
+function initTechMode() {
+    techInitialized = true;
+
+    // Ensure onboarding hints start hidden; setupOnboarding will show if needed.
+    const onboardingOverlay = document.getElementById('onboardingOverlay');
+    if (onboardingOverlay) onboardingOverlay.classList.add('ob-hidden');
+
     renderFile('readme');
     renderTabs();
     setupFileTree();
     setupTerminal();
     setupResize();
-    setupModals();
-    setupContact();
     setupActivityBar();
-    setupSidebar();
     setupKeyboard();
     setupSearch();
     setupSettings();
@@ -386,7 +497,311 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMobileIDE();
     printWelcome();
     termInput.focus();
-});
+}
+
+function getAboutExpYearsLabel() {
+    // Calculate full-time experience only (exclude intern).
+    const now = new Date();
+    const roles = [
+        { start: new Date('2024-06-01'), end: now, type: 'fulltime' },         // Jukshio current
+        { start: new Date('2020-07-01'), end: new Date('2021-08-31'), type: 'fulltime' }, // Jukshio first stint
+        { start: new Date('2023-02-01'), end: new Date('2023-08-31'), type: 'intern' },   // Rubistone intern
+    ];
+
+    const includeIntern = false;
+    const expMonths = roles
+        .filter(r => includeIntern || r.type === 'fulltime')
+        .reduce((total, r) => {
+            const months = (r.end.getFullYear() - r.start.getFullYear()) * 12 + (r.end.getMonth() - r.start.getMonth());
+            return total + months;
+        }, 0);
+
+    const expYears = Math.floor(expMonths / 12);
+    const expRemain = expMonths % 12;
+    return expRemain > 0 ? `${expYears}y ${expRemain}m` : `${expYears}y`;
+}
+
+async function fetchGitHubCommitCount() {
+    let commitCount = '—';
+    try {
+        const ghRes = await fetch('https://api.github.com/search/commits?q=author:Ramc26+committer-date:>2024-01-01', {
+            headers: { 'Accept': 'application/vnd.github.cloak-preview+json' }
+        });
+        if (ghRes.ok) {
+            const data = await ghRes.json();
+            commitCount = data.total_count || 0;
+        }
+    } catch {
+        commitCount = '—';
+    }
+    return commitCount;
+}
+
+async function renderRecruiterPage() {
+    if (!recruiterAboutContent || !recruiterProjectsGrid || !recruiterExperienceTimeline || !recruiterStackOutput || !recruiterArticlesList) return;
+
+    recruiterAboutContent.innerHTML = '<div class="search-hint">Loading portfolio...</div>';
+    recruiterProjectsGrid.innerHTML = '<div class="search-hint">Loading projects...</div>';
+    recruiterExperienceTimeline.innerHTML = '<div class="search-hint">Loading experience...</div>';
+    recruiterStackOutput.innerHTML = '<div class="search-hint">Loading stack...</div>';
+    recruiterArticlesList.innerHTML = '<div class="search-hint">Loading articles...</div>';
+
+    const [projects, articles] = await Promise.all([
+        loadProjectsData(),
+        loadArticlesData(),
+    ]);
+
+    const expLabel = getAboutExpYearsLabel();
+    let commitCount = '…';
+
+    // About (reuses your existing modal CSS classes for a consistent neon look).
+    recruiterAboutContent.innerHTML = `
+        <div class="about-output">
+            <div class="about-hero">
+                <div class="about-avatar">
+                    <span class="about-avatar-text">
+                        <img src="./elements/pdp.jpg" alt="Ram Bikkina" style="width: 100%; height: 100%; object-fit: cover;">
+                    </span>
+                    <span class="about-avatar-ring"></span>
+                </div>
+                <div class="about-hero-info">
+                    <h2 class="about-name">Ram Bikkina</h2>
+                    <p class="about-role"><i class="fa-solid fa-briefcase"></i> R&D Engineer I @ Jukshio Technologies</p>
+                    <p class="about-loc"><i class="fa-solid fa-location-dot"></i> Hyderabad, TG, India</p>
+                </div>
+            </div>
+
+            <div class="about-stats">
+                <div class="about-stat">
+                    <span class="about-stat-num">${expLabel}</span>
+                    <span class="about-stat-label">Experience</span>
+                </div>
+                <div class="about-stat"><span class="about-stat-num">${articles.length}</span><span class="about-stat-label">Articles</span></div>
+                <div class="about-stat"><span class="about-stat-num">${projects.length}</span><span class="about-stat-label">Projects</span></div>
+                <div class="about-stat"><span class="about-stat-num" id="recruiterCommitCountNum">${commitCount}</span><span class="about-stat-label">Commits (2024+)</span></div>
+            </div>
+
+            <div class="about-section">
+                <h3 class="about-section-title"><i class="fa-solid fa-crosshairs"></i> Focus Areas</h3>
+                <div class="about-focus-grid">
+                    <div class="about-focus-item"><i class="fa-solid fa-robot"></i> Multi-Agent AI Systems</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-wrench"></i> MCP Tool Ecosystems</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-bolt"></i> High-Performance APIs</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-cloud"></i> Cloud Infrastructure</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-cubes"></i> Containerized Microservices</div>
+                    <div class="about-focus-item"><i class="fa-solid fa-brain"></i> LLM Orchestration</div>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h3 class="about-section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+                <div class="about-edu">
+                    <div class="about-edu-card">
+                        <span class="about-edu-degree">MS, Computer &amp; Information Technology</span>
+                        <span class="about-edu-school">Purdue University, Hammond IN</span>
+                        <span class="about-edu-year">2022 — 2023</span>
+                    </div>
+                    <div class="about-edu-card">
+                        <span class="about-edu-degree">B.Tech, Electronics &amp; Communication</span>
+                        <span class="about-edu-school">Aditya College of Engineering, India</span>
+                        <span class="about-edu-year">2016 — 2020</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-links">
+                <a href="https://github.com/Ramc26" target="_blank" rel="noopener noreferrer" class="about-link-btn"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="mailto:itsrambikkina@gmail.com" class="about-link-btn"><i class="fa-solid fa-envelope"></i> Email</a>
+                <a href="tel:+917095838715" class="about-link-btn"><i class="fa-solid fa-phone"></i> Call</a>
+            </div>
+        </div>
+    `;
+
+    // Update commit count async (do not block initial render).
+    fetchGitHubCommitCount().then((c) => {
+        const el = document.getElementById('recruiterCommitCountNum');
+        if (el) el.textContent = String(c);
+    }).catch(() => { /* keep placeholder */ });
+
+    // Projects
+    recruiterProjectsGrid.innerHTML = `
+        ${projects.map((p, i) => `
+            <div class="proj-output-card">
+                <div class="poc-id"># ${i + 1}</div>
+                <div class="poc-name">${p.name}</div>
+                <div class="poc-desc">${p.desc}</div>
+                <div class="poc-impact">↗ ${p.impact}</div>
+                <div class="poc-tech">${(p.tech || []).map(t => `<span class="poc-tag">${t}</span>`).join('')}</div>
+                <a href="${p.github || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer" class="poc-link">
+                    <i class="bi bi-github"></i> View on GitHub
+                </a>
+            </div>
+        `).join('')}
+    `;
+
+    // Experience timeline (same data as your current Tech/Modal view)
+    const experiences = [
+        {
+            role: 'R&D Engineer I',
+            company: 'Jukshio Technologies',
+            location: 'Hyderabad, India',
+            period: 'Jun 2024 — Present',
+            type: 'current',
+            highlights: [
+                'Architected CrewAI-driven multi-agent orchestration layer',
+                'Built 15+ FastAPI MCP tools with zero-hallucination calls',
+                'Designed LangGraph stateful execution graphs',
+                'Deployed containerized microservices via Docker & K8s',
+                'Integrated OpenAI Whisper for real-time transcription',
+            ]
+        },
+        {
+            role: 'Python Developer (Intern)',
+            company: 'Rubistone Technologies',
+            location: 'Chicago, IL',
+            period: 'Feb 2023 — Aug 2023',
+            type: 'past',
+            highlights: [
+                'Processed 500K+ daily articles with multi-language support',
+                'Built PySpark analytics pipeline on AWS Lambda + S3',
+                'Developed LLM-based content automation system',
+                'Maintained 99.5% uptime across production services',
+            ]
+        },
+        {
+            role: 'R&D Engineer I',
+            company: 'Jukshio Technologies',
+            location: 'Hyderabad, India',
+            period: 'Jul 2020 — Aug 2021',
+            type: 'past',
+            highlights: [
+                'Built Python automation & backend REST APIs',
+                'Improved database performance by 40% via SQL optimization',
+                'Developed internal tools reducing manual workflows',
+            ]
+        },
+    ];
+
+    recruiterExperienceTimeline.innerHTML = `
+        ${experiences.map((exp, i) => `
+            <div class="exp-card ${exp.type}" style="animation-delay: ${i * 0.15}s">
+                <div class="exp-card-marker">
+                    <span class="exp-dot ${exp.type}"></span>
+                    ${i < experiences.length - 1 ? '<span class="exp-line"></span>' : ''}
+                </div>
+                <div class="exp-card-body">
+                    <div class="exp-card-header">
+                        <div>
+                            <h3 class="exp-role">${exp.role}</h3>
+                            <p class="exp-company"><i class="fa-solid fa-building"></i> ${exp.company}</p>
+                            <p class="exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</p>
+                        </div>
+                        <span class="exp-period ${exp.type}">${exp.period}</span>
+                    </div>
+                    <ul class="exp-highlights">
+                        ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `).join('')}
+    `;
+
+    // Stack
+    const stackData = [
+        {
+            category: 'AI / ML', color: '#39FF14', items: [
+                { name: 'CrewAI', icon: 'devicon-python-plain' },
+                { name: 'LangGraph', icon: 'devicon-python-plain' },
+                { name: 'LangChain', icon: 'devicon-python-plain' },
+                { name: 'MCP Tools', icon: 'fa-solid fa-wrench' },
+                { name: 'Whisper', icon: 'fa-solid fa-microphone' },
+                { name: 'Ollama', icon: 'fa-solid fa-robot' },
+                { name: 'HuggingFace', icon: 'fa-solid fa-face-smile' },
+                { name: 'OpenCV', icon: 'devicon-opencv-plain' },
+                { name: 'Vertex AI', icon: 'devicon-googlecloud-plain' },
+            ]
+        },
+        {
+            category: 'Backend', color: '#1F51FF', items: [
+                { name: 'Python', icon: 'devicon-python-plain' },
+                { name: 'FastAPI', icon: 'devicon-fastapi-plain' },
+                { name: 'Flask', icon: 'devicon-flask-original' },
+                { name: 'Django', icon: 'devicon-django-plain' },
+                { name: 'GoLang', icon: 'devicon-go-original-wordmark' },
+                { name: 'REST APIs', icon: 'fa-solid fa-plug' },
+                { name: 'SQLAlchemy', icon: 'devicon-sqlalchemy-plain' },
+            ]
+        },
+        {
+            category: 'Databases', color: '#FF6B35', items: [
+                { name: 'PostgreSQL', icon: 'devicon-postgresql-plain' },
+                { name: 'MySQL', icon: 'devicon-mysql-plain' },
+                { name: 'MongoDB', icon: 'devicon-mongodb-plain' },
+                { name: 'Milvus', icon: 'fa-solid fa-database' },
+            ]
+        },
+        {
+            category: 'Cloud & DevOps', color: '#FF2D55', items: [
+                { name: 'AWS', icon: 'devicon-amazonwebservices-plain-wordmark' },
+                { name: 'GCP', icon: 'devicon-googlecloud-plain' },
+                { name: 'Azure', icon: 'devicon-azure-plain' },
+                { name: 'Docker', icon: 'devicon-docker-plain' },
+                { name: 'Kubernetes', icon: 'devicon-kubernetes-plain' },
+                { name: 'Terraform', icon: 'devicon-terraform-plain' },
+                { name: 'CI/CD', icon: 'fa-solid fa-rotate' },
+            ]
+        },
+        {
+            category: 'Languages', color: '#BF5AF2', items: [
+                { name: 'Python', icon: 'devicon-python-plain' },
+                { name: 'GoLang', icon: 'devicon-go-original-wordmark' },
+                { name: 'SQL', icon: 'fa-solid fa-database' },
+                { name: 'Bash', icon: 'devicon-bash-plain' },
+                { name: 'JavaScript', icon: 'devicon-javascript-plain' },
+            ]
+        },
+        {
+            category: 'Certifications', color: '#FFD60A', items: [
+                { name: 'AWS Dev Assoc', icon: 'devicon-amazonwebservices-plain-wordmark' },
+                { name: 'MS Python', icon: 'fa-solid fa-certificate' },
+                { name: 'VMware IT', icon: 'fa-solid fa-certificate' },
+                { name: 'HackerRank SQL', icon: 'fa-solid fa-award' },
+            ]
+        },
+    ];
+
+    recruiterStackOutput.innerHTML = `
+        ${stackData.map(cat => `
+            <div class="stack-category">
+                <h3 class="stack-cat-title" style="--cat-color: ${cat.color}">
+                    <span class="stack-cat-dot" style="background: ${cat.color}"></span>
+                    ${cat.category}
+                    <span class="stack-cat-count">${cat.items.length}</span>
+                </h3>
+                <div class="stack-grid">
+                    ${cat.items.map(item => `
+                        <div class="stack-badge" style="--badge-color: ${cat.color}">
+                            <i class="${item.icon} stack-badge-icon"></i>
+                            <span class="stack-badge-name">${item.name}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('')}
+    `;
+
+    // Articles
+    recruiterArticlesList.innerHTML = `
+        ${articles.map(a => `
+            <a href="${a.url || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer" class="art-output-card">
+                <span class="art-tag">${a.tag}</span>
+                <div class="art-title">${a.title}</div>
+                <div class="art-desc">${a.desc}</div>
+                <span class="art-read">Read more →</span>
+            </a>
+        `).join('')}
+    `;
+}
 
 // ========================================
 // FILE RENDERING
@@ -1329,6 +1744,9 @@ function setupMobileIDE() {
 function setupOnboarding() {
     const overlay = document.getElementById('onboardingOverlay');
     if (!overlay) return;
+
+    // Ensure overlay is visible in Tech Mode when not onboarded yet.
+    overlay.classList.remove('ob-hidden');
 
     // Check if already onboarded
     if (localStorage.getItem('ide-onboarded')) {
