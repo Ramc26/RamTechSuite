@@ -3187,8 +3187,55 @@ body.mode-recruiter #ide {
     display: none;
     height: 100vh;
     overflow-y: auto;
-    background: var(--ide-bg);
-    color: var(--text);
+    background: #f6f7fb;
+    color: #0f172a;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, "Apple Color Emoji",
+        "Segoe UI Emoji";
+
+    /* Recruiter theme variables (scoped to recruiter view) */
+    --ide-bg: #f6f7fb;
+    --ide-bg2: #ffffff;
+    --ide-bg3: #f1f5f9;
+    --ide-sidebar: #ffffff;
+    --ide-titlebar: #ffffff;
+    --ide-statusbar: #ffffff;
+    --ide-terminal: #f8fafc;
+    --ide-line-hl: rgba(22, 163, 74, 0.10);
+    --ide-gutter: #eef2f7;
+
+    --blue: #059669; /* teal/emerald, not blue */
+    --blue-dim: rgba(5, 150, 105, 0.12);
+    --blue-glow: 0 0 18px rgba(5, 150, 105, 0.25);
+
+    --green: #16a34a;
+    --green-dim: rgba(22, 163, 74, 0.10);
+    --green-glow: 0 0 10px rgba(22, 163, 74, 0.35);
+
+    --text: #0f172a;
+    --text-bright: #0b1220;
+    --text-muted: #475569;
+    --text-dim: #64748b;
+    --border: rgba(15, 23, 42, 0.12);
+    --border-hard: rgba(15, 23, 42, 0.18);
+
+    --accent: #16a34a;
+    --gradient: linear-gradient(135deg, rgba(22, 163, 74, 0.95), rgba(245, 158, 11, 0.95));
+
+    --syn-kw: #0f766e;
+    --syn-str: #16a34a;
+    --syn-cmt: #64748b;
+    --syn-num: #7c3aed;
+    --syn-cls: #ea580c;
+    --syn-fn: #0f766e;
+    --syn-prop: #b45309;
+    --syn-type: #ea580c;
+    --syn-op: #0f172a;
+    --syn-bool: #0f766e;
+    --syn-tag: #ea580c;
+    --syn-yaml-k: #0f766e;
+    --syn-bash-v: #0f766e;
+    --syn-bash-k: #059669;
+    --syn-shebang: #16a34a;
 }
 
 body.mode-recruiter #recruiterView {
@@ -3214,8 +3261,9 @@ body.mode-tech #recruiterView {
     justify-content: space-between;
     gap: 12px;
     padding: 10px 0 14px;
-    background: linear-gradient(to bottom, rgba(10, 10, 26, 0.95), rgba(10, 10, 26, 0.55), rgba(10, 10, 26, 0));
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.78);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(10px);
 }
 
 .recruiter-brand {
@@ -3259,7 +3307,7 @@ body.mode-tech #recruiterView {
 
 .recruiter-mode-btn:hover {
     border-color: var(--blue);
-    background: rgba(31, 81, 255, 0.12);
+    background: rgba(5, 150, 105, 0.10);
     transform: translateY(-1px);
 }
 
@@ -3306,8 +3354,8 @@ body.mode-tech #recruiterView {
 
 .recruiter-cta-btn:hover {
     transform: translateY(-1px);
-    background: #3060ff;
-    box-shadow: 0 0 26px rgba(31, 81, 255, 0.55);
+    background: #0b7b53;
+    box-shadow: 0 0 26px rgba(5, 150, 105, 0.35);
 }
 
 .recruiter-ghost-btn {
@@ -3363,6 +3411,587 @@ body.mode-tech #recruiterView {
 
 .recruiter-footer a:hover {
     color: var(--green);
+}
+
+/* ============================================================
+   Recruiter Collapsible UI
+   ============================================================ */
+.rec-details {
+    margin-top: 6px;
+    border: 1px solid var(--rec-border, rgba(15, 23, 42, 0.12));
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.rec-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-weight: 900;
+    color: var(--rec-text, #0f172a);
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.rec-summary::-webkit-details-marker {
+    display: none;
+}
+
+.rec-summary-hint {
+    font-weight: 800;
+    color: var(--rec-muted, #475569);
+    font-size: 12px;
+}
+
+.rec-details-inner {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+body.mode-recruiter #recruiterView #recruiterStackOutput {
+    padding: 14px;
+}
+
+/* Scoped "de-neon" overrides for recruiter palette */
+body.mode-recruiter #recruiterView .about-hero {
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.12), rgba(245, 158, 11, 0.06));
+    border: 1px solid rgba(22, 163, 74, 0.20);
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+    animation: none;
+}
+
+body.mode-recruiter #recruiterView .about-avatar-ring {
+    border-top-color: #16a34a;
+    border-right-color: #f59e0b;
+    animation: none;
+}
+
+body.mode-recruiter #recruiterView .poc-tag {
+    background: rgba(5, 150, 105, 0.10);
+    border: 1px solid rgba(5, 150, 105, 0.22);
+    color: var(--blue);
+}
+
+body.mode-recruiter #recruiterView .proj-output-card,
+body.mode-recruiter #recruiterView .art-output-card {
+    background: var(--ide-bg2);
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.04);
+}
+
+body.mode-recruiter #recruiterView .stack-badge {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+}
+
+/* ============================================================
+   Recruiter View — Clean Portfolio UI
+   (scoped to #recruiterView to avoid affecting Tech/IDE mode)
+   ============================================================ */
+#recruiterView {
+    --rec-bg: #f6f7fb;
+    --rec-surface: #ffffff;
+    --rec-surface-2: #f8fafc;
+    --rec-text: #0f172a;
+    --rec-muted: #475569;
+    --rec-border: rgba(15, 23, 42, 0.10);
+    --rec-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    --rec-accent: #16a34a;
+    --rec-accent-2: #f59e0b;
+}
+
+#recruiterView .rec-loading {
+    padding: 10px 0;
+    color: var(--rec-muted);
+    font-weight: 700;
+}
+
+#recruiterView .recruiter-section-header {
+    margin-bottom: 10px;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    color: var(--rec-text);
+}
+
+#recruiterView .recruiter-section-header i {
+    color: var(--rec-accent);
+}
+
+#recruiterView .recruiter-shell {
+    max-width: 1120px;
+}
+
+#recruiterView .rec-hero-card {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--rec-border);
+    border-radius: 16px;
+    box-shadow: var(--rec-shadow);
+}
+
+#recruiterView .rec-avatar-wrap {
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 28px;
+    background: radial-gradient(circle at top left, rgba(22, 163, 74, 0.22), rgba(245, 158, 11, 0.10) 45%, rgba(255, 255, 255, 0.75) 80%);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+#recruiterView .rec-avatar {
+    width: 86px;
+    height: 86px;
+    border-radius: 26px;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+}
+
+#recruiterView .rec-kicker {
+    color: var(--rec-accent);
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+#recruiterView .rec-name {
+    margin: 0;
+    font-size: 26px;
+    color: var(--rec-text);
+    line-height: 1.15;
+}
+
+#recruiterView .rec-subtitle {
+    margin: 8px 0 0;
+    color: var(--rec-muted);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+#recruiterView .rec-chip-row {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#recruiterView .rec-chip {
+    background: rgba(22, 163, 74, 0.08);
+    border: 1px solid rgba(22, 163, 74, 0.16);
+    color: #0f766e;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+#recruiterView .rec-stats-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+#recruiterView .rec-stat-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--rec-border);
+    border-radius: 14px;
+    padding: 14px 14px 12px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+}
+
+#recruiterView .rec-stat-num {
+    color: var(--rec-text);
+    font-weight: 950;
+    font-size: 18px;
+}
+
+#recruiterView .rec-stat-label {
+    color: var(--rec-muted);
+    font-size: 12px;
+    margin-top: 6px;
+    font-weight: 800;
+}
+
+#recruiterView .rec-summary-card {
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--rec-border);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+}
+
+#recruiterView .rec-summary-title {
+    font-weight: 950;
+    color: var(--rec-text);
+    margin-bottom: 8px;
+}
+
+#recruiterView .rec-summary-list {
+    margin-left: 18px;
+    color: var(--rec-muted);
+    font-weight: 750;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#recruiterView .rec-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+#recruiterView .rec-project-card {
+    background: var(--rec-surface);
+    border: 1px solid var(--rec-border);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+#recruiterView .rec-project-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(22, 163, 74, 0.28);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+#recruiterView .rec-project-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+#recruiterView .rec-project-index {
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(22, 163, 74, 0.10);
+    color: #0f766e;
+    font-weight: 950;
+    font-size: 12px;
+}
+
+#recruiterView .rec-project-title {
+    font-weight: 950;
+    color: var(--rec-text);
+    font-size: 14px;
+    line-height: 1.25;
+}
+
+#recruiterView .rec-project-desc {
+    margin: 0;
+    color: var(--rec-muted);
+    font-size: 13px;
+    line-height: 1.55;
+    min-height: 48px;
+}
+
+#recruiterView .rec-project-impact {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#recruiterView .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 950;
+    font-size: 11px;
+    border-radius: 999px;
+    padding: 6px 10px;
+    border: 1px solid var(--rec-border);
+}
+
+#recruiterView .rec-badge-impact {
+    background: rgba(245, 158, 11, 0.10);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #b45309;
+}
+
+#recruiterView .rec-impact-text {
+    color: var(--rec-text);
+    font-weight: 900;
+    font-size: 12px;
+}
+
+#recruiterView .rec-project-tags {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#recruiterView .rec-tag {
+    background: rgba(2, 6, 23, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    color: rgba(15, 23, 42, 0.85);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+#recruiterView .rec-project-actions {
+    margin-top: 14px;
+    display: flex;
+}
+
+#recruiterView .rec-link-btn {
+    border: 1px solid rgba(22, 163, 74, 0.25);
+    background: rgba(22, 163, 74, 0.10);
+    color: #0f766e;
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 12px;
+    font-weight: 950;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#recruiterView .rec-link-btn:hover {
+    background: rgba(22, 163, 74, 0.16);
+}
+
+#recruiterView .rec-exp-list-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#recruiterView .rec-exp-card {
+    background: var(--rec-surface);
+    border: 1px solid var(--rec-border);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+}
+
+#recruiterView .rec-exp-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#recruiterView .rec-exp-title {
+    font-weight: 950;
+    color: var(--rec-text);
+    font-size: 14px;
+}
+
+#recruiterView .rec-exp-period {
+    color: var(--rec-muted);
+    font-weight: 900;
+    font-size: 12px;
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 6px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+#recruiterView .rec-exp-sub {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--rec-muted);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+#recruiterView .rec-exp-company i,
+#recruiterView .rec-exp-location i {
+    color: var(--rec-accent);
+}
+
+#recruiterView .rec-exp-list {
+    margin: 12px 0 0 18px;
+    color: var(--rec-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 750;
+}
+
+#recruiterView .rec-exp-more .rec-inline-summary {
+    padding: 6px 10px;
+    border-radius: 999px;
+}
+
+#recruiterView .rec-chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#recruiterView .rec-skill-chip {
+    background: rgba(2, 6, 23, 0.03);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    color: rgba(15, 23, 42, 0.90);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 850;
+}
+
+#recruiterView .rec-articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#recruiterView .rec-article-card {
+    background: var(--rec-surface);
+    border: 1px solid var(--rec-border);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+}
+
+#recruiterView .rec-article-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: rgba(22, 163, 74, 0.10);
+    border: 1px solid rgba(22, 163, 74, 0.22);
+    color: #0f766e;
+    font-weight: 950;
+    font-size: 12px;
+}
+
+#recruiterView .rec-article-title {
+    margin-top: 10px;
+    color: var(--rec-text);
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 950;
+}
+
+#recruiterView .rec-article-desc {
+    margin: 8px 0 0;
+    color: var(--rec-muted);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 750;
+}
+
+#recruiterView .rec-article-actions {
+    margin-top: 12px;
+}
+
+#recruiterView .rec-link-text {
+    color: #0f766e;
+    font-weight: 950;
+    text-decoration: none;
+}
+
+#recruiterView .rec-link-text:hover {
+    text-decoration: underline;
+}
+
+#recruiterView .rec-inline-details {
+    margin-top: 14px;
+}
+
+#recruiterView .rec-inline-summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--rec-border);
+    background: rgba(255, 255, 255, 0.7);
+    font-weight: 950;
+    color: var(--rec-text);
+}
+
+#recruiterView .rec-inline-summary-hint {
+    color: var(--rec-muted);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+#recruiterView .rec-inline-details-inner {
+    margin-top: 12px;
+}
+
+/* Neutralize inherited modal grid/flex styles for Recruiter View */
+#recruiterView #recruiterProjectsGrid.projects-output-grid {
+    display: block;
+    grid-template-columns: none;
+    gap: 0;
+    padding: 0;
+}
+
+#recruiterView #recruiterExperienceTimeline.exp-timeline {
+    padding: 0;
+}
+
+#recruiterView #recruiterStackOutput.stack-output {
+    display: block;
+    flex-direction: unset;
+    gap: 0;
+}
+
+#recruiterView #recruiterArticlesList.articles-output-list {
+    display: block;
+}
+
+@media (max-width: 900px) {
+    #recruiterView .rec-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #recruiterView .rec-projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #recruiterView .rec-hero-card {
+        grid-template-columns: 84px 1fr;
+    }
+
+    #recruiterView .rec-avatar-wrap {
+        width: 84px;
+        height: 84px;
+        border-radius: 24px;
+    }
+
+    #recruiterView .rec-avatar {
+        width: 74px;
+        height: 74px;
+        border-radius: 22px;
+    }
 }
 
 @media (max-width: 768px) {
