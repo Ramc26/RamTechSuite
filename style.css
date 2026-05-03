@@ -4090,3 +4090,1069 @@ body.mode-recruiter #recruiterView .stack-badge {
 .visitor-mode-overlay.hidden {
     display: none;
 }
+
+/* ============================================================
+   RECRUITER VIEW — REDESIGN v2
+   Sections: Projects (.proj2-*), Experience (.exp2-*),
+             Tech Stack (.stack2-*), Articles (.art2-*)
+   Scoped to #recruiterView only.
+   ============================================================ */
+
+#recruiterView {
+    --r2-radius-lg: 18px;
+    --r2-radius-md: 14px;
+    --r2-radius-sm: 10px;
+    --r2-shadow-sm: 0 6px 18px rgba(15, 23, 42, 0.05);
+    --r2-shadow-md: 0 14px 32px rgba(15, 23, 42, 0.07);
+    --r2-shadow-hover: 0 20px 44px rgba(15, 23, 42, 0.10);
+    --r2-grad-accent: linear-gradient(180deg, #16a34a 0%, #f59e0b 100%);
+    --r2-grad-soft: linear-gradient(180deg, rgba(22,163,74,0.10) 0%, rgba(245,158,11,0.06) 100%);
+    --r2-chip-bg: rgba(15, 23, 42, 0.04);
+    --r2-chip-border: rgba(15, 23, 42, 0.08);
+}
+
+/* ---------- Projects v2 ---------- */
+#recruiterView .proj2-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+#recruiterView .proj2-card {
+    position: relative;
+    display: flex;
+    background: var(--rec-surface);
+    border: 1px solid var(--rec-border);
+    border-radius: var(--r2-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--r2-shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+#recruiterView .proj2-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(22, 163, 74, 0.30);
+    box-shadow: var(--r2-shadow-hover);
+}
+
+#recruiterView .proj2-card-featured {
+    grid-column: 1 / -1;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfaf6 100%);
+}
+
+#recruiterView .proj2-rail {
+    width: 4px;
+    flex: 0 0 4px;
+    background: var(--r2-grad-accent);
+}
+
+#recruiterView .proj2-body {
+    flex: 1 1 auto;
+    padding: 18px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#recruiterView .proj2-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#recruiterView .proj2-num {
+    font-family: var(--font);
+    font-weight: 950;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    color: var(--rec-muted);
+    background: var(--r2-chip-bg);
+    border: 1px solid var(--r2-chip-border);
+    padding: 4px 8px;
+    border-radius: 999px;
+}
+
+#recruiterView .proj2-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 950;
+    color: #b45309;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    padding: 4px 9px;
+    border-radius: 999px;
+}
+
+#recruiterView .proj2-flag i {
+    font-size: 9px;
+}
+
+#recruiterView .proj2-title {
+    margin: 0;
+    color: var(--rec-text);
+    font-size: 16px;
+    font-weight: 950;
+    line-height: 1.3;
+    letter-spacing: -0.1px;
+}
+
+#recruiterView .proj2-card-featured .proj2-title {
+    font-size: 19px;
+}
+
+#recruiterView .proj2-desc {
+    margin: 0;
+    color: var(--rec-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#recruiterView .proj2-impact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    color: #0f172a;
+    background: rgba(22, 163, 74, 0.08);
+    border: 1px solid rgba(22, 163, 74, 0.22);
+    border-radius: var(--r2-radius-sm);
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+#recruiterView .proj2-impact i {
+    color: #b45309;
+    font-size: 11px;
+}
+
+#recruiterView .proj2-foot {
+    margin-top: auto;
+    padding-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#recruiterView .proj2-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#recruiterView .proj2-chip {
+    background: var(--r2-chip-bg);
+    border: 1px solid var(--r2-chip-border);
+    color: rgba(15, 23, 42, 0.85);
+    border-radius: 999px;
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    white-space: nowrap;
+}
+
+#recruiterView .proj2-chip-more {
+    background: rgba(22, 163, 74, 0.10);
+    border-color: rgba(22, 163, 74, 0.22);
+    color: #0f766e;
+}
+
+#recruiterView .proj2-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #0f172a;
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid var(--rec-border);
+    border-radius: var(--r2-radius-sm);
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 950;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+#recruiterView .proj2-link:hover {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+#recruiterView .proj2-link-ext {
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+/* ---------- Experience v2 (timeline) ---------- */
+#recruiterView .exp2-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0 0;
+}
+
+#recruiterView .exp2-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 16px;
+    padding-bottom: 18px;
+}
+
+#recruiterView .exp2-item-last {
+    padding-bottom: 0;
+}
+
+#recruiterView .exp2-marker {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 18px;
+}
+
+#recruiterView .exp2-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #16a34a;
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.10);
+    z-index: 1;
+}
+
+#recruiterView .exp2-line {
+    position: absolute;
+    top: 32px;
+    bottom: -18px;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(22,163,74,0.35) 0%, rgba(245,158,11,0.25) 100%);
+}
+
+#recruiterView .exp2-card {
+    background: var(--rec-surface);
+    border: 1px solid var(--rec-border);
+    border-radius: var(--r2-radius-lg);
+    padding: 16px 18px 14px;
+    box-shadow: var(--r2-shadow-sm);
+}
+
+#recruiterView .exp2-period {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #0f766e;
+    background: rgba(22, 163, 74, 0.08);
+    border: 1px solid rgba(22, 163, 74, 0.20);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+}
+
+#recruiterView .exp2-period i {
+    font-size: 10px;
+}
+
+#recruiterView .exp2-role {
+    margin: 10px 0 4px;
+    color: var(--rec-text);
+    font-size: 16px;
+    font-weight: 950;
+    line-height: 1.25;
+    letter-spacing: -0.1px;
+}
+
+#recruiterView .exp2-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--rec-muted);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+#recruiterView .exp2-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#recruiterView .exp2-meta-item i {
+    color: #16a34a;
+    font-size: 11px;
+}
+
+#recruiterView .exp2-sep {
+    color: rgba(15, 23, 42, 0.30);
+}
+
+#recruiterView .exp2-bullets {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+#recruiterView .exp2-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--rec-text);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 600;
+}
+
+#recruiterView .exp2-bullets li i {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.12);
+    border-radius: 50%;
+    font-size: 8px;
+    margin-top: 4px;
+}
+
+#recruiterView .exp2-more {
+    margin-top: 12px;
+}
+
+#recruiterView .exp2-bullets-rest {
+    margin-top: 10px;
+}
+
+/* ---------- Tech Stack v2 (categorized) ---------- */
+#recruiterView .stack2-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+#recruiterView .stack2-card {
+    background: var(--rec-surface);
+    border: 1px solid var(--rec-border);
+    border-radius: var(--r2-radius-lg);
+    padding: 14px 14px 14px;
+    box-shadow: var(--r2-shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+#recruiterView .stack2-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(22, 163, 74, 0.28);
+    box-shadow: var(--r2-shadow-md);
+}
+
+#recruiterView .stack2-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed rgba(15, 23, 42, 0.10);
+}
+
+#recruiterView .stack2-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--r2-grad-soft);
+    color: #16a34a;
+    font-size: 13px;
+    border: 1px solid rgba(22, 163, 74, 0.18);
+}
+
+#recruiterView .stack2-cat {
+    margin: 0;
+    flex: 1 1 auto;
+    color: var(--rec-text);
+    font-size: 13px;
+    font-weight: 950;
+    letter-spacing: 0.1px;
+}
+
+#recruiterView .stack2-count {
+    color: var(--rec-muted);
+    background: var(--r2-chip-bg);
+    border: 1px solid var(--r2-chip-border);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+#recruiterView .stack2-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#recruiterView .stack2-chip {
+    background: var(--r2-chip-bg);
+    border: 1px solid var(--r2-chip-border);
+    color: rgba(15, 23, 42, 0.88);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+#recruiterView .stack2-chip:hover {
+    background: rgba(22, 163, 74, 0.10);
+    border-color: rgba(22, 163, 74, 0.25);
+    color: #0f766e;
+}
+
+/* ---------- Articles v2 ---------- */
+#recruiterView .art2-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+#recruiterView .art2-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    background: var(--rec-surface);
+    border: 1px solid var(--rec-border);
+    border-radius: var(--r2-radius-lg);
+    padding: 16px 18px 14px;
+    box-shadow: var(--r2-shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+#recruiterView .art2-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(22, 163, 74, 0.30);
+    box-shadow: var(--r2-shadow-hover);
+}
+
+#recruiterView .art2-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#recruiterView .art2-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 4px 10px;
+    background: rgba(22, 163, 74, 0.08);
+    border: 1px solid rgba(22, 163, 74, 0.20);
+    color: #0f766e;
+    font-weight: 950;
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+#recruiterView .art2-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    color: rgba(15, 23, 42, 0.78);
+    font-size: 10.5px;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+#recruiterView .art2-source i {
+    font-size: 12px;
+    color: #0f172a;
+}
+
+#recruiterView .art2-source-medium {
+    background: rgba(15, 23, 42, 0.06);
+    border-color: rgba(15, 23, 42, 0.14);
+    color: #0f172a;
+}
+#recruiterView .art2-source-medium i {
+    color: #0f172a;
+}
+
+#recruiterView .art2-source-devto {
+    background: rgba(15, 23, 42, 0.92);
+    border-color: rgba(15, 23, 42, 0.92);
+    color: #ffffff;
+}
+#recruiterView .art2-source-devto i {
+    color: #ffffff;
+}
+
+#recruiterView .art2-source-substack {
+    background: rgba(255, 102, 25, 0.10);
+    border-color: rgba(255, 102, 25, 0.32);
+    color: #c2410c;
+}
+#recruiterView .art2-source-substack i {
+    color: #ea580c;
+}
+
+#recruiterView .art2-source-linkedin {
+    background: rgba(10, 102, 194, 0.10);
+    border-color: rgba(10, 102, 194, 0.30);
+    color: #0a66c2;
+}
+#recruiterView .art2-source-linkedin i {
+    color: #0a66c2;
+}
+
+#recruiterView .art2-source-hashnode {
+    background: rgba(33, 117, 244, 0.10);
+    border-color: rgba(33, 117, 244, 0.30);
+    color: #2962ff;
+}
+#recruiterView .art2-source-hashnode i {
+    color: #2962ff;
+}
+
+#recruiterView .art2-title {
+    margin: 0;
+    color: var(--rec-text);
+    font-size: 15px;
+    font-weight: 950;
+    line-height: 1.3;
+    letter-spacing: -0.1px;
+}
+
+#recruiterView .art2-desc {
+    margin: 0;
+    color: var(--rec-muted);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#recruiterView .art2-foot {
+    margin-top: auto;
+    padding-top: 6px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#recruiterView .art2-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0f766e;
+    font-weight: 950;
+    font-size: 12px;
+    transition: gap 0.15s ease, color 0.15s ease;
+}
+
+#recruiterView .art2-card:hover .art2-read {
+    gap: 12px;
+    color: #0f172a;
+}
+
+#recruiterView .art2-read i {
+    font-size: 11px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 980px) {
+    #recruiterView .stack2-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 760px) {
+    #recruiterView .proj2-grid,
+    #recruiterView .art2-grid,
+    #recruiterView .stack2-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #recruiterView .proj2-card-featured {
+        grid-column: auto;
+    }
+
+    #recruiterView .proj2-card-featured .proj2-title {
+        font-size: 17px;
+    }
+
+    #recruiterView .proj2-foot {
+        align-items: stretch;
+    }
+
+    #recruiterView .proj2-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #recruiterView .exp2-item {
+        grid-template-columns: 22px 1fr;
+        gap: 12px;
+    }
+
+    #recruiterView .exp2-card {
+        padding: 14px 14px 12px;
+    }
+
+    #recruiterView .exp2-role {
+        font-size: 15px;
+    }
+
+    #recruiterView .art2-top {
+        flex-wrap: wrap;
+    }
+}
+
+/* ============================================================
+   ZEN SHELL — minimal centered CLI surface (tech mode landing)
+   ============================================================ */
+
+/* --- mode visibility / animations --- */
+body.mode-tech #zenShell { display: flex; }
+body.mode-tech #ide      { display: grid; }
+
+/* When zen is active, hide IDE and animate zen in. */
+body.mode-tech.tech-shell-zen #zenShell {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+    visibility: visible;
+}
+body.mode-tech.tech-shell-zen #ide {
+    opacity: 0;
+    transform: scale(1.02);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* When IDE is active, hide zen and animate IDE in. */
+body.mode-tech.tech-shell-ide #zenShell {
+    opacity: 0;
+    transform: scale(0.96);
+    visibility: hidden;
+    pointer-events: none;
+}
+body.mode-tech.tech-shell-ide #ide {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#zenShell,
+body.mode-tech #ide {
+    transition:
+        opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0.42s;
+}
+body.mode-tech.tech-shell-zen #zenShell,
+body.mode-tech.tech-shell-ide #ide {
+    transition:
+        opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0s;
+}
+
+/* --- shell shell --- */
+.zen-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    background:
+        radial-gradient(1200px 700px at 18% 12%, rgba(31, 81, 255, 0.18), transparent 60%),
+        radial-gradient(900px 600px at 88% 90%, rgba(57, 255, 20, 0.10), transparent 65%),
+        linear-gradient(180deg, #07071a 0%, #04040f 100%);
+    color: var(--text-bright);
+    font-family: var(--font);
+    overflow: hidden;
+}
+
+.zen-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55), transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55), transparent 75%);
+    pointer-events: none;
+}
+
+.zen-bg-orb {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.55;
+    pointer-events: none;
+    animation: zenOrbFloat 12s ease-in-out infinite;
+}
+.zen-bg-orb-1 {
+    top: -120px;
+    left: -120px;
+    background: radial-gradient(circle, rgba(31, 81, 255, 0.55), transparent 70%);
+}
+.zen-bg-orb-2 {
+    bottom: -160px;
+    right: -120px;
+    background: radial-gradient(circle, rgba(57, 255, 20, 0.32), transparent 70%);
+    animation-delay: -4s;
+}
+
+@keyframes zenOrbFloat {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(20px, -22px, 0) scale(1.04); }
+}
+
+/* --- top bar --- */
+.zen-topbar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    background: rgba(8, 8, 22, 0.45);
+}
+
+.zen-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-bright);
+}
+.zen-brand i {
+    color: var(--blue);
+    text-shadow: var(--blue-glow);
+    font-size: 14px;
+}
+.zen-brand-name {
+    font-weight: 800;
+}
+.zen-brand-tag {
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-left: 4px;
+}
+
+.zen-ide-btn {
+    border: 1px solid rgba(57, 255, 20, 0.32);
+    background: rgba(57, 255, 20, 0.08);
+    color: #e6ffe0;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.zen-ide-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(57, 255, 20, 0.16);
+    border-color: rgba(57, 255, 20, 0.55);
+    box-shadow: 0 0 22px rgba(57, 255, 20, 0.20);
+}
+
+/* IDE titlebar -> Zen toggle button */
+.zen-toggle-btn {
+    margin-right: 10px;
+    border: 1px solid rgba(57, 255, 20, 0.28);
+    background: rgba(57, 255, 20, 0.06);
+    color: #d6ffd0;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.zen-toggle-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(57, 255, 20, 0.14);
+    border-color: rgba(57, 255, 20, 0.5);
+}
+.zen-toggle-btn i {
+    font-size: 10px;
+}
+
+/* --- stage --- */
+.zen-stage {
+    position: relative;
+    z-index: 2;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 22px 32px;
+    gap: 18px;
+    overflow-y: auto;
+}
+
+.zen-greet {
+    width: 100%;
+    max-width: 880px;
+    text-align: center;
+}
+.zen-greet-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(230, 235, 244, 0.92);
+}
+.zen-greet-line .tp-dollar { color: var(--green); }
+.zen-greet-text {
+    font-weight: 700;
+}
+.zen-greet-sub {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.1px;
+}
+
+/* --- command palette --- */
+.zen-palette {
+    width: 100%;
+    max-width: 880px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.zen-cmd-chip {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-bright);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition:
+        transform 0.14s ease,
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.2s ease;
+}
+.zen-cmd-chip i {
+    color: var(--blue);
+    font-size: 11px;
+    transition: color 0.18s ease;
+}
+.zen-cmd-chip:hover {
+    transform: translateY(-1px);
+    background: rgba(31, 81, 255, 0.10);
+    border-color: rgba(31, 81, 255, 0.45);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(31, 81, 255, 0.20);
+}
+.zen-cmd-chip:hover i { color: var(--green); }
+.zen-cmd-chip:active { transform: translateY(0); }
+
+/* --- console (the centered CLI card) --- */
+.zen-console {
+    position: relative;
+    width: 100%;
+    max-width: 880px;
+    background: linear-gradient(180deg, rgba(13, 13, 34, 0.85) 0%, rgba(7, 7, 26, 0.85) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+.zen-console::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(31, 81, 255, 0.18), transparent 35%, transparent 65%, rgba(57, 255, 20, 0.10));
+    mix-blend-mode: screen;
+    opacity: 0.55;
+}
+
+.zen-console-output {
+    position: relative;
+    z-index: 1;
+    max-height: 280px;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 14px 18px 6px;
+}
+/* When termOutput is reparented inside zen, neutralize its own padding/border. */
+.zen-console-output > #termOutput,
+.zen-console-output #termOutput {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+.zen-console-output:empty {
+    padding: 0;
+    min-height: 0;
+}
+
+.zen-console-input {
+    position: relative;
+    z-index: 1;
+    padding: 14px 18px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.18);
+}
+.zen-console-input #termInputLine {
+    padding: 0;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.zen-console-input .term-prompt-text {
+    font-size: 13px;
+}
+.zen-console-input #termInput {
+    flex: 1 1 auto;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-bright);
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    caret-color: var(--green);
+}
+
+/* Pulsing "Press Enter" hint */
+.zen-enter-hint {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: rgba(230, 235, 244, 0.88);
+    background: rgba(57, 255, 20, 0.08);
+    border: 1px solid rgba(57, 255, 20, 0.32);
+    padding: 6px 10px;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.zen-enter-hint kbd {
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    padding: 1px 6px;
+    font-family: var(--font);
+    font-size: 11px;
+    color: var(--text-bright);
+}
+.zen-enter-hint-visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: zenHintPulse 1.6s ease-in-out infinite;
+}
+@keyframes zenHintPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.25); }
+    50%      { box-shadow: 0 0 0 6px rgba(57, 255, 20, 0); }
+}
+
+/* --- foot --- */
+.zen-foot {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+}
+.zen-foot kbd {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    padding: 1px 5px;
+    font-family: var(--font);
+    font-size: 10.5px;
+    color: var(--text-bright);
+}
+.zen-foot-sep { color: rgba(255, 255, 255, 0.18); }
+.zen-foot-mono {
+    font-weight: 800;
+    color: var(--text-bright);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    padding: 0 5px;
+}
+
+/* --- responsive --- */
+@media (max-width: 720px) {
+    .zen-topbar { padding: 12px 14px; }
+    .zen-brand-tag { display: none; }
+    .zen-stage { padding: 18px 14px 24px; gap: 14px; }
+    .zen-console-output { max-height: 240px; padding: 12px 14px 4px; }
+    .zen-console-input { padding: 12px 14px 14px; }
+    .zen-enter-hint { right: 10px; bottom: 10px; }
+    .zen-foot { flex-wrap: wrap; justify-content: center; gap: 6px; }
+}

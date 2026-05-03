@@ -7,11 +7,14 @@
 let _projectsData = null;
 let _articlesData = null;
 
+const _byNewest = (a, b) => (Number(b.id) || 0) - (Number(a.id) || 0);
+
 async function loadProjectsData() {
     if (_projectsData) return _projectsData;
     try {
         const resp = await fetch('./data/projects.json');
-        _projectsData = await resp.json();
+        const raw = await resp.json();
+        _projectsData = Array.isArray(raw) ? raw.slice().sort(_byNewest) : [];
     } catch (e) {
         console.warn('Could not load projects.json, using fallback');
         _projectsData = [];
@@ -23,7 +26,8 @@ async function loadArticlesData() {
     if (_articlesData) return _articlesData;
     try {
         const resp = await fetch('./data/articles.json');
-        _articlesData = await resp.json();
+        const raw = await resp.json();
+        _articlesData = Array.isArray(raw) ? raw.slice().sort(_byNewest) : [];
     } catch (e) {
         console.warn('Could not load articles.json, using fallback');
         _articlesData = [];
@@ -495,8 +499,189 @@ function initTechMode() {
     setupSettings();
     setupOnboarding();
     setupMobileIDE();
-    printWelcome();
-    termInput.focus();
+    setupZenShell();
+
+    // Default landing surface: ZenShell (persisted in localStorage).
+    const savedShell = (localStorage.getItem(SHELL_MODE_KEY) || 'zen').toLowerCase();
+    if (savedShell === 'ide') {
+        showIdeShell({ initial: true });
+    } else {
+        showZenShell({ initial: true });
+    }
+}
+
+// ========================================
+// ZEN SHELL — single, centered CLI surface
+// ========================================
+const SHELL_MODE_KEY = 'tech-shell-mode';
+let zenInitialized = false;
+let ideWelcomePrinted = false;
+let zenAutoTypeTimer = null;
+
+function setupZenShell() {
+    if (zenInitialized) return;
+    zenInitialized = true;
+
+    const zenShell = document.getElementById('zenShell');
+    const palette = document.getElementById('zenPalette');
+    const openIdeBtn = document.getElementById('zenOpenIdeBtn');
+    const ideZenBtn = document.getElementById('ideZenBtn');
+    const enterHint = document.getElementById('zenEnterHint');
+    if (!zenShell) return;
+
+    // Palette → run the command in the existing terminal engine.
+    if (palette) {
+        palette.addEventListener('click', (e) => {
+            const chip = e.target.closest('.zen-cmd-chip');
+            if (!chip) return;
+            const cmd = (chip.dataset.cmd || '').trim();
+            if (!cmd) return;
+            hideEnterHint();
+            cancelZenAutoType();
+            runCommandFromUI(cmd);
+        });
+    }
+
+    if (openIdeBtn) openIdeBtn.addEventListener('click', () => showIdeShell());
+    if (ideZenBtn) ideZenBtn.addEventListener('click', () => showZenShell());
+
+    // Hide the "press Enter" hint as soon as the user touches the input.
+    if (termInput) {
+        const onUserTouch = () => hideEnterHint();
+        termInput.addEventListener('input', onUserTouch);
+        termInput.addEventListener('keydown', (e) => {
+            // Ignore modifier-only keys
+            if (['Shift', 'Control', 'Alt', 'Meta', 'CapsLock'].includes(e.key)) return;
+            onUserTouch();
+            // Cancel auto-typing whoami if the user starts interacting.
+            if (e.key !== 'Enter') cancelZenAutoType();
+        });
+    }
+
+    // Click anywhere inside the zen console focuses the input.
+    const zenConsole = document.getElementById('zenConsole');
+    if (zenConsole) zenConsole.addEventListener('click', () => termInput && termInput.focus());
+
+    function hideEnterHint() {
+        if (enterHint) enterHint.classList.remove('zen-enter-hint-visible');
+    }
+}
+
+function showEnterHint() {
+    const enterHint = document.getElementById('zenEnterHint');
+    if (enterHint) enterHint.classList.add('zen-enter-hint-visible');
+}
+
+function hideEnterHint() {
+    const enterHint = document.getElementById('zenEnterHint');
+    if (enterHint) enterHint.classList.remove('zen-enter-hint-visible');
+}
+
+function runCommandFromUI(cmd) {
+    if (!termInput) return;
+    termInput.value = '';
+    cmdHistory.push(cmd);
+    cmdIndex = cmdHistory.length;
+    printPrompt(cmd);
+    processCommand(cmd);
+    scrollTerm();
+    setTimeout(() => termInput.focus(), 0);
+}
+
+function reparentTerminalTo(host) {
+    const termOut = document.getElementById('termOutput');
+    const termInLine = document.getElementById('termInputLine');
+    if (!host || !termOut || !termInLine) return;
+    host.appendChild(termOut);   // reuse same node — preserves listeners + state
+}
+
+function reparentInputTo(host) {
+    const termInLine = document.getElementById('termInputLine');
+    if (!host || !termInLine) return;
+    host.appendChild(termInLine);
+}
+
+function moveTerminalToZen() {
+    const out = document.getElementById('zenTermHost');
+    const inp = document.getElementById('zenInputHost');
+    reparentTerminalTo(out);
+    reparentInputTo(inp);
+}
+
+function moveTerminalToIde() {
+    const ideTermPanel = document.getElementById('termPanel');
+    const ideTermHeader = ideTermPanel && ideTermPanel.querySelector('.terminal-panel-header');
+    const termOut = document.getElementById('termOutput');
+    const termInLine = document.getElementById('termInputLine');
+    if (!ideTermPanel || !ideTermHeader || !termOut || !termInLine) return;
+    // Insert in correct order: header → output → inputline
+    ideTermHeader.after(termOut);
+    termOut.after(termInLine);
+}
+
+function showZenShell({ initial = false } = {}) {
+    document.body.classList.add('tech-shell-zen');
+    document.body.classList.remove('tech-shell-ide');
+    localStorage.setItem(SHELL_MODE_KEY, 'zen');
+
+    moveTerminalToZen();
+
+    // First-time landing: auto-type whoami and surface the Enter hint.
+    if (initial) {
+        // Clear the term output for a clean zen first impression.
+        const termOut = document.getElementById('termOutput');
+        if (termOut) termOut.innerHTML = '';
+        zenAutoTypeWhoami();
+    }
+
+    setTimeout(() => termInput && termInput.focus(), 220);
+}
+
+function showIdeShell({ initial = false } = {}) {
+    document.body.classList.add('tech-shell-ide');
+    document.body.classList.remove('tech-shell-zen');
+    localStorage.setItem(SHELL_MODE_KEY, 'ide');
+
+    moveTerminalToIde();
+
+    // Hide enter hint (zen-only affordance).
+    hideEnterHint();
+    cancelZenAutoType();
+
+    // Print the IDE welcome banner once if the terminal output is empty.
+    const termOut = document.getElementById('termOutput');
+    if (!ideWelcomePrinted && termOut && !termOut.querySelector('.t-line')) {
+        printWelcome();
+        ideWelcomePrinted = true;
+    }
+
+    setTimeout(() => termInput && termInput.focus(), 280);
+}
+
+function zenAutoTypeWhoami() {
+    if (!termInput) return;
+    cancelZenAutoType();
+    termInput.value = '';
+    const text = 'whoami';
+    let i = 0;
+    const tick = () => {
+        if (i < text.length) {
+            // Use direct value mutation so our own keypress doesn't fire input listeners.
+            termInput.value = text.slice(0, ++i);
+            zenAutoTypeTimer = setTimeout(tick, 95);
+        } else {
+            zenAutoTypeTimer = null;
+            showEnterHint();
+        }
+    };
+    zenAutoTypeTimer = setTimeout(tick, 550);
+}
+
+function cancelZenAutoType() {
+    if (zenAutoTypeTimer) {
+        clearTimeout(zenAutoTypeTimer);
+        zenAutoTypeTimer = null;
+    }
 }
 
 function getAboutExpYearsLabel() {
@@ -605,49 +790,65 @@ async function renderRecruiterPage() {
         if (el) el.textContent = String(c);
     }).catch(() => { /* keep placeholder */ });
 
-    // Projects
+    // Projects (redesigned)
     const featuredProjects = projects.slice(0, 4);
     const extraProjects = projects.slice(4);
 
-    const projectCard = (p, idx) => `
-        <article class="rec-project-card">
-            <div class="rec-project-head">
-                <div class="rec-project-index">${idx + 1}</div>
-                <div class="rec-project-title">${p.name}</div>
-            </div>
-            <p class="rec-project-desc">${p.desc}</p>
-            <div class="rec-project-impact">
-                <span class="rec-badge rec-badge-impact">Impact</span>
-                <span class="rec-impact-text">${p.impact}</span>
-            </div>
-            <div class="rec-project-tags">
-                ${(p.tech || []).slice(0, 6).map(t => `<span class="rec-tag">${t}</span>`).join('')}
-            </div>
-            <div class="rec-project-actions">
-                <a class="rec-link-btn" href="${p.github || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-github"></i> GitHub
-                </a>
-            </div>
-        </article>
-    `;
+    const projectCard = (p, idx, opts = {}) => {
+        const num = String(idx + 1).padStart(2, '0');
+        const tags = (p.tech || []).slice(0, 5)
+            .map(t => `<span class="proj2-chip">${t}</span>`).join('');
+        const more = (p.tech || []).length > 5
+            ? `<span class="proj2-chip proj2-chip-more">+${p.tech.length - 5}</span>` : '';
+        const flag = opts.featured
+            ? `<span class="proj2-flag"><i class="fa-solid fa-star"></i> Featured</span>` : '';
+        return `
+            <article class="proj2-card${opts.featured ? ' proj2-card-featured' : ''}">
+                <span class="proj2-rail" aria-hidden="true"></span>
+                <div class="proj2-body">
+                    <div class="proj2-meta">
+                        <span class="proj2-num">${num}</span>
+                        ${flag}
+                    </div>
+                    <h3 class="proj2-title">${p.name}</h3>
+                    <p class="proj2-desc">${p.desc}</p>
+                    <div class="proj2-impact">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>${p.impact}</span>
+                    </div>
+                    <div class="proj2-foot">
+                        <div class="proj2-chips">${tags}${more}</div>
+                        <a class="proj2-link" href="${p.github || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer" aria-label="${p.name} on GitHub">
+                            <i class="bi bi-github"></i>
+                            <span>View</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square proj2-link-ext"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        `;
+    };
 
-    const featuredProjectsHtml = featuredProjects.map((p, i) => projectCard(p, i)).join('');
+    const featuredProjectsHtml = featuredProjects
+        .map((p, i) => projectCard(p, i, { featured: i === 0 })).join('');
     const extraProjectsHtml = extraProjects.length
         ? `
-            <details class="rec-inline-details" open="false">
+            <details class="rec-inline-details">
                 <summary class="rec-inline-summary">
                     <span>More projects</span>
                     <span class="rec-inline-summary-hint">${extraProjects.length} more</span>
                 </summary>
                 <div class="rec-inline-details-inner">
-                    ${extraProjects.map((p, i) => projectCard(p, i + featuredProjects.length)).join('')}
+                    <div class="proj2-grid">
+                        ${extraProjects.map((p, i) => projectCard(p, i + featuredProjects.length)).join('')}
+                    </div>
                 </div>
             </details>
           `
         : '';
 
     recruiterProjectsGrid.innerHTML = `
-        <div class="rec-projects-grid">
+        <div class="proj2-grid">
             ${featuredProjectsHtml}
         </div>
         ${extraProjectsHtml}
@@ -693,107 +894,131 @@ async function renderRecruiterPage() {
         },
     ];
 
-    const expItem = (exp) => {
+    const expItem = (exp, idx, total) => {
         const top = exp.highlights.slice(0, 3);
         const rest = exp.highlights.slice(3);
+        const isLast = idx === total - 1;
         return `
-            <article class="rec-exp-card">
-                <div class="rec-exp-head">
-                    <div class="rec-exp-title">${exp.role}</div>
-                    <div class="rec-exp-period">${exp.period}</div>
+            <li class="exp2-item${isLast ? ' exp2-item-last' : ''}">
+                <div class="exp2-marker" aria-hidden="true">
+                    <span class="exp2-dot"></span>
+                    ${!isLast ? '<span class="exp2-line"></span>' : ''}
                 </div>
-                <div class="rec-exp-sub">
-                    <span class="rec-exp-company"><i class="fa-solid fa-building"></i> ${exp.company}</span>
-                    <span class="rec-exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
+                <div class="exp2-card">
+                    <div class="exp2-period">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span>${exp.period}</span>
+                    </div>
+                    <h3 class="exp2-role">${exp.role}</h3>
+                    <div class="exp2-meta">
+                        <span class="exp2-meta-item"><i class="fa-solid fa-building"></i> ${exp.company}</span>
+                        <span class="exp2-sep" aria-hidden="true">·</span>
+                        <span class="exp2-meta-item"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
+                    </div>
+                    <ul class="exp2-bullets">
+                        ${top.map(h => `<li><i class="fa-solid fa-check"></i><span>${h}</span></li>`).join('')}
+                    </ul>
+                    ${rest.length ? `
+                        <details class="rec-inline-details exp2-more">
+                            <summary class="rec-inline-summary">
+                                <span>More highlights</span>
+                                <span class="rec-inline-summary-hint">${rest.length} more</span>
+                            </summary>
+                            <ul class="exp2-bullets exp2-bullets-rest">
+                                ${rest.map(h => `<li><i class="fa-solid fa-check"></i><span>${h}</span></li>`).join('')}
+                            </ul>
+                        </details>
+                    ` : ''}
                 </div>
-                <ul class="rec-exp-list">
-                    ${top.map(h => `<li>${h}</li>`).join('')}
-                </ul>
-                ${rest.length ? `
-                    <details class="rec-inline-details rec-exp-more" open="false">
-                        <summary class="rec-inline-summary">More</summary>
-                        <ul class="rec-exp-list">
-                            ${rest.map(h => `<li>${h}</li>`).join('')}
-                        </ul>
-                    </details>
-                ` : ''}
-            </article>
+            </li>
         `;
     };
 
     recruiterExperienceTimeline.innerHTML = `
-        <div class="rec-exp-list-wrap">
-            ${experiences.map(expItem).join('')}
-        </div>
+        <ol class="exp2-timeline">
+            ${experiences.map((e, i) => expItem(e, i, experiences.length)).join('')}
+        </ol>
     `;
 
-    // Stack
+    // Stack (redesigned: categorized cards)
     const stackData = [
-        { category: 'AI / ML', items: ['CrewAI', 'LangGraph', 'LangChain', 'MCP Tools', 'Whisper', 'OpenCV', 'Vertex AI'] },
-        { category: 'Backend', items: ['Python', 'FastAPI', 'Flask', 'Django', 'GoLang', 'REST APIs', 'SQLAlchemy'] },
-        { category: 'Databases', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Milvus'] },
-        { category: 'Cloud & DevOps', items: ['AWS', 'GCP', 'Azure', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'] },
-        { category: 'Languages', items: ['JavaScript', 'SQL', 'Bash'] },
-        { category: 'Certifications', items: ['AWS Dev Assoc', 'Microsoft (Python & JS)'] },
+        { category: 'AI / ML',         icon: 'fa-solid fa-microchip',     items: ['CrewAI', 'LangGraph', 'LangChain', 'MCP Tools', 'Whisper', 'OpenCV', 'Vertex AI'] },
+        { category: 'Backend',         icon: 'fa-solid fa-server',        items: ['Python', 'FastAPI', 'Flask', 'Django', 'GoLang', 'REST APIs', 'SQLAlchemy'] },
+        { category: 'Databases',       icon: 'fa-solid fa-database',      items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Milvus'] },
+        { category: 'Cloud & DevOps',  icon: 'fa-solid fa-cloud',         items: ['AWS', 'GCP', 'Azure', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'] },
+        { category: 'Languages',       icon: 'fa-solid fa-code',          items: ['JavaScript', 'SQL', 'Bash'] },
+        { category: 'Certifications',  icon: 'fa-solid fa-certificate',   items: ['AWS Dev Assoc', 'Microsoft (Python & JS)'] },
     ];
 
-    const flatStack = stackData.flatMap(cat => cat.items.map(item => ({ item, cat: cat.category })));
-    const topStack = flatStack.slice(0, 18);
-    const moreStack = flatStack.slice(18);
-
-    recruiterStackOutput.innerHTML = `
-        <div class="rec-chip-grid">
-            ${topStack.map(s => `<span class="rec-skill-chip" title="${s.cat}">${s.item}</span>`).join('')}
-        </div>
-        ${moreStack.length ? `
-            <details class="rec-inline-details" open="false">
-                <summary class="rec-inline-summary">
-                    <span>Show more</span>
-                    <span class="rec-inline-summary-hint">${moreStack.length} more</span>
-                </summary>
-                <div class="rec-inline-details-inner">
-                    <div class="rec-chip-grid">
-                        ${moreStack.map(s => `<span class="rec-skill-chip" title="${s.cat}">${s.item}</span>`).join('')}
-                    </div>
-                </div>
-            </details>
-        ` : ''}
-    `;
-
-    // Articles
-    const featuredArticles = articles.slice(0, 4);
-    const extraArticles = articles.slice(4);
-
-    const articleCard = (a) => `
-        <article class="rec-article-card">
-            <div class="rec-article-top">
-                <span class="rec-article-tag">${a.tag}</span>
-            </div>
-            <div class="rec-article-title">${a.title}</div>
-            <p class="rec-article-desc">${a.desc}</p>
-            <div class="rec-article-actions">
-                <a class="rec-link-text" href="${a.url || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer">Read →</a>
+    const stackCard = (cat) => `
+        <article class="stack2-card">
+            <header class="stack2-head">
+                <span class="stack2-icon"><i class="${cat.icon}"></i></span>
+                <h4 class="stack2-cat">${cat.category}</h4>
+                <span class="stack2-count">${cat.items.length}</span>
+            </header>
+            <div class="stack2-chips">
+                ${cat.items.map(it => `<span class="stack2-chip">${it}</span>`).join('')}
             </div>
         </article>
     `;
 
+    recruiterStackOutput.innerHTML = `
+        <div class="stack2-grid">
+            ${stackData.map(stackCard).join('')}
+        </div>
+    `;
+
+    // Articles (redesigned: 2-col grid, cleaner hierarchy)
+    const featuredArticles = articles.slice(0, 4);
+    const extraArticles = articles.slice(4);
+
+    const platformMeta = (platform) => {
+        const p = (platform || '').toLowerCase().trim();
+        if (p === 'medium')                  return { icon: 'fa-brands fa-medium',   label: 'Medium',   mod: 'art2-source-medium' };
+        if (p === 'dev.to' || p === 'devto') return { icon: 'fa-brands fa-dev',      label: 'Dev.to',   mod: 'art2-source-devto' };
+        if (p === 'substack')                return { icon: 'fa-solid fa-newspaper', label: 'Substack', mod: 'art2-source-substack' };
+        if (p === 'linkedin')                return { icon: 'fa-brands fa-linkedin', label: 'LinkedIn', mod: 'art2-source-linkedin' };
+        if (p === 'hashnode')                return { icon: 'fa-brands fa-hashnode', label: 'Hashnode', mod: 'art2-source-hashnode' };
+        return { icon: 'fa-solid fa-newspaper', label: platform || 'Article', mod: '' };
+    };
+
+    const articleCard = (a) => {
+        const meta = platformMeta(a.platform);
+        return `
+            <a class="art2-card" href="${a.url || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer">
+                <div class="art2-top">
+                    <span class="art2-tag">${a.tag}</span>
+                    <span class="art2-source ${meta.mod}"><i class="${meta.icon}"></i> ${meta.label}</span>
+                </div>
+                <h3 class="art2-title">${a.title}</h3>
+                <p class="art2-desc">${a.desc}</p>
+                <div class="art2-foot">
+                    <span class="art2-read">Read on ${meta.label} <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+        `;
+    };
+
     const featuredHtml = featuredArticles.map(articleCard).join('');
     const extraHtml = extraArticles.length
         ? `
-            <details class="rec-inline-details" open="false">
+            <details class="rec-inline-details">
                 <summary class="rec-inline-summary">
                     <span>More articles</span>
                     <span class="rec-inline-summary-hint">${extraArticles.length} more</span>
                 </summary>
                 <div class="rec-inline-details-inner">
-                    ${extraArticles.map(articleCard).join('')}
+                    <div class="art2-grid">
+                        ${extraArticles.map(articleCard).join('')}
+                    </div>
                 </div>
             </details>
           `
         : '';
 
     recruiterArticlesList.innerHTML = `
-        <div class="rec-articles-list">
+        <div class="art2-grid">
             ${featuredHtml}
         </div>
         ${extraHtml}
@@ -971,6 +1196,9 @@ function setupTerminal() {
             const cmd = termInput.value.trim();
             termInput.value = '';
             if (cmd) { cmdHistory.push(cmd); cmdIndex = cmdHistory.length; }
+            // Zen-only affordance — always hide on submit.
+            const enterHint = document.getElementById('zenEnterHint');
+            if (enterHint) enterHint.classList.remove('zen-enter-hint-visible');
             printPrompt(cmd);
             processCommand(cmd);
             scrollTerm();

@@ -46,6 +46,10 @@
         ram.dev &mdash; Portfolio IDE
       </div>
       <div class="title-right">
+        <button class="zen-toggle-btn" id="ideZenBtn" type="button" title="Switch to Zen Shell">
+          <i class="fa-solid fa-compress"></i>
+          <span>Zen</span>
+        </button>
         <span class="title-user">ram@portfolio</span>
         <button class="mobile-hamburger" id="mobileHamburger" title="Toggle Sidebar">
           <i class="fa-solid fa-bars"></i>
@@ -229,6 +233,98 @@
   </div><!-- /.ide -->
 
   <!-- ============================================================
+     ZEN SHELL — minimal centered CLI (default tech-mode landing)
+     ============================================================ -->
+  <div id="zenShell" class="zen-shell" aria-label="ZenShell">
+    <div class="zen-bg-orb zen-bg-orb-1" aria-hidden="true"></div>
+    <div class="zen-bg-orb zen-bg-orb-2" aria-hidden="true"></div>
+    <div class="zen-grid-bg" aria-hidden="true"></div>
+
+    <header class="zen-topbar">
+      <div class="zen-brand">
+        <i class="fa-solid fa-terminal"></i>
+        <span class="zen-brand-name"><span class="tp-user">ram</span><span class="tp-at">@</span><span class="tp-host">portfolio</span></span>
+        <span class="zen-brand-tag">~ ZenShell</span>
+      </div>
+      <div class="zen-top-actions">
+        <button class="zen-ide-btn" id="zenOpenIdeBtn" type="button" title="Expand into full IDE">
+          <i class="fa-solid fa-bars-staggered"></i>
+          <span>Open IDE</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="zen-stage">
+      <div class="zen-greet">
+        <div class="zen-greet-line">
+          <span class="tp-dollar">$</span>
+          <span class="zen-greet-text">echo "Welcome to ram.dev — a command-line résumé."</span>
+        </div>
+        <div class="zen-greet-sub">
+          Try a command below or type your own. Tab autocompletes filenames. ↑/↓ for history.
+        </div>
+      </div>
+
+      <div class="zen-palette" id="zenPalette" role="list">
+        <button class="zen-cmd-chip" data-cmd="whoami" type="button" role="listitem">
+          <i class="fa-solid fa-user"></i><span>whoami</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="run projects.ts" type="button" role="listitem">
+          <i class="fa-solid fa-diagram-project"></i><span>run projects.ts</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="run experience.json" type="button" role="listitem">
+          <i class="fa-solid fa-clock-rotate-left"></i><span>run experience.json</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="run stack.yaml" type="button" role="listitem">
+          <i class="fa-solid fa-layer-group"></i><span>run stack.yaml</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="run articles.md" type="button" role="listitem">
+          <i class="fa-solid fa-pen-nib"></i><span>run articles.md</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="run contact.sh" type="button" role="listitem">
+          <i class="fa-solid fa-paper-plane"></i><span>run contact.sh</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="git log --oneline" type="button" role="listitem">
+          <i class="fa-solid fa-code-branch"></i><span>git log</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="ls -la" type="button" role="listitem">
+          <i class="fa-solid fa-folder-tree"></i><span>ls -la</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="neofetch" type="button" role="listitem">
+          <i class="fa-solid fa-microchip"></i><span>neofetch</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="help" type="button" role="listitem">
+          <i class="fa-solid fa-circle-question"></i><span>help</span>
+        </button>
+        <button class="zen-cmd-chip" data-cmd="clear" type="button" role="listitem">
+          <i class="fa-solid fa-broom"></i><span>clear</span>
+        </button>
+      </div>
+
+      <section class="zen-console" id="zenConsole">
+        <div class="zen-console-output" id="zenTermHost" aria-live="polite">
+          <!-- #termOutput re-parented here when in zen mode -->
+        </div>
+        <div class="zen-console-input" id="zenInputHost">
+          <!-- #termInputLine re-parented here when in zen mode -->
+        </div>
+        <div class="zen-enter-hint" id="zenEnterHint">
+          <kbd>⏎</kbd>
+          <span>Press <strong>Enter</strong> to run</span>
+        </div>
+      </section>
+
+      <footer class="zen-foot">
+        <span><kbd>↑</kbd> <kbd>↓</kbd> history</span>
+        <span class="zen-foot-sep">·</span>
+        <span><kbd>Tab</kbd> autocomplete</span>
+        <span class="zen-foot-sep">·</span>
+        <span>type <span class="zen-foot-mono">help</span> for all commands</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ============================================================
      RECRUITER VIEW (typical portfolio layout)
      ============================================================ -->
   <div id="recruiterView" class="recruiter-view" aria-label="Portfolio">
@@ -262,20 +358,20 @@
         </div>
       </section>
 
-      <section class="recruiter-section" id="recruiterProjects">
-        <div class="recruiter-section-header">
-          <i class="fa-solid fa-diagram-project"></i>
-          <span>Projects</span>
-        </div>
-        <div id="recruiterProjectsGrid" class="projects-output-grid"></div>
-      </section>
-
       <section class="recruiter-section" id="recruiterExperience">
         <div class="recruiter-section-header">
           <i class="fa-solid fa-clock-rotate-left"></i>
           <span>Experience</span>
         </div>
         <div id="recruiterExperienceTimeline" class="exp-timeline"></div>
+      </section>
+
+      <section class="recruiter-section" id="recruiterProjects">
+        <div class="recruiter-section-header">
+          <i class="fa-solid fa-diagram-project"></i>
+          <span>Projects</span>
+        </div>
+        <div id="recruiterProjectsGrid" class="projects-output-grid"></div>
       </section>
 
       <section class="recruiter-section" id="recruiterStack">
