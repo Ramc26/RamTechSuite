@@ -529,6 +529,8 @@ function setupZenShell() {
     const enterHint = document.getElementById('zenEnterHint');
     if (!zenShell) return;
 
+    setupOwlEyes();
+
     // Palette → run the command in the existing terminal engine.
     if (palette) {
         palette.addEventListener('click', (e) => {
@@ -655,6 +657,10 @@ function showIdeShell({ initial = false } = {}) {
         ideWelcomePrinted = true;
     }
 
+    // Show onboarding hints only the first time the IDE shell is opened
+    // (this is when the hints actually point to real, visible UI).
+    maybeShowOnboarding();
+
     setTimeout(() => termInput && termInput.focus(), 280);
 }
 
@@ -682,6 +688,128 @@ function cancelZenAutoType() {
         clearTimeout(zenAutoTypeTimer);
         zenAutoTypeTimer = null;
     }
+}
+
+// ========================================
+// OWL MASCOT + CUSTOM CURSOR
+// (single rAF loop driving cursor + pupil tracking)
+// ========================================
+let _owlInited = false;
+function setupOwlEyes() {
+    if (_owlInited) return;
+    _owlInited = true;
+
+    const svg = document.querySelector('#zenOwl .zen-owl-svg');
+    const eyes = svg ? [
+        {
+            socket: svg.querySelector('.owl-eye-left'),
+            pupil:  svg.querySelector('.owl-pupil-left'),
+            glint:  svg.querySelector('.owl-glint-left'),
+        },
+        {
+            socket: svg.querySelector('.owl-eye-right'),
+            pupil:  svg.querySelector('.owl-pupil-right'),
+            glint:  svg.querySelector('.owl-glint-right'),
+        }
+    ] : [];
+    const hasOwl = eyes.length === 2 && eyes[0].socket && eyes[0].pupil;
+
+    const cursor = document.getElementById('zenCursor');
+
+    // Detect coarse pointer (touch); skip the custom cursor entirely.
+    const fineMQ = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : { matches: true };
+    const FINE_POINTER = fineMQ.matches;
+    if (!FINE_POINTER && cursor) cursor.style.display = 'none';
+
+    // Tunables — bigger travel makes the eye tracking more obvious.
+    const PUPIL_TRAVEL = 0.78; // pupil moves up to 78% of socket radius
+    const GLINT_TRAVEL = 0.92; // glint travels slightly more (sells the gaze)
+
+    let lastX = window.innerWidth / 2;
+    let lastY = window.innerHeight / 2;
+    let ticking = false;
+
+    const update = () => {
+        ticking = false;
+
+        // Custom cursor follows mouse always (in tech mode).
+        if (cursor && FINE_POINTER) {
+            cursor.style.transform = `translate3d(${lastX}px, ${lastY}px, 0)`;
+        }
+
+        // Owl pupil + glint tracking — only when ZenShell is visible.
+        const zenActive = document.body.classList.contains('tech-shell-zen');
+        if (!hasOwl || !zenActive) return;
+
+        const svgRect = svg.getBoundingClientRect();
+        if (svgRect.width === 0) return;
+        const pxToSvg = 56 / svgRect.width; // viewBox width / rendered width
+
+        eyes.forEach(({ socket, pupil, glint }) => {
+            const r = socket.getBoundingClientRect();
+            const eyeCx = r.left + r.width / 2;
+            const eyeCy = r.top + r.height / 2;
+            const dxPx = lastX - eyeCx;
+            const dyPx = lastY - eyeCy;
+            const distPx = Math.hypot(dxPx, dyPx) || 1;
+            const radiusPx = r.width / 2;
+
+            const pupilMax = radiusPx * PUPIL_TRAVEL;
+            const pupilRatio = Math.min(1, pupilMax / distPx);
+            const ptx = dxPx * pupilRatio * pxToSvg;
+            const pty = dyPx * pupilRatio * pxToSvg;
+            pupil.style.transform = `translate(${ptx}px, ${pty}px)`;
+
+            // Glint tracks slightly farther for a livelier "looking-at-you" feel.
+            if (glint) {
+                const glintMax = radiusPx * GLINT_TRAVEL;
+                const glintRatio = Math.min(1, glintMax / distPx);
+                const gtx = dxPx * glintRatio * pxToSvg;
+                const gty = dyPx * glintRatio * pxToSvg;
+                glint.style.transform = `translate(${gtx}px, ${gty}px)`;
+            }
+        });
+    };
+
+    const onMove = (x, y) => {
+        lastX = x; lastY = y;
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+        }
+    };
+
+    document.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY), { passive: true });
+    document.addEventListener('touchmove', (e) => {
+        if (e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+
+    // Hover state on interactive elements → cursor scales / shifts color
+    if (cursor && FINE_POINTER) {
+        const interactiveSel = 'a, button, input, textarea, select, summary, [role="button"], [role="listitem"], .zen-cmd-chip, .tree-file, .ide-tab, .panel-action-btn, .activity-btn';
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest && e.target.closest(interactiveSel)) {
+                cursor.classList.add('zen-cursor-hover');
+            }
+        });
+        document.addEventListener('mouseout', (e) => {
+            if (!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest(interactiveSel)) {
+                cursor.classList.remove('zen-cursor-hover');
+            }
+        });
+        document.addEventListener('mousedown', () => cursor.classList.add('zen-cursor-down'));
+        document.addEventListener('mouseup',   () => cursor.classList.remove('zen-cursor-down'));
+        document.addEventListener('mouseleave', () => cursor.classList.add('zen-cursor-out'));
+        document.addEventListener('mouseenter', () => cursor.classList.remove('zen-cursor-out'));
+    }
+
+    // Periodic blink for personality (CSS-driven via class toggle).
+    setInterval(() => {
+        const owl = document.getElementById('zenOwl');
+        if (!owl || !document.body.classList.contains('tech-shell-zen')) return;
+        owl.classList.add('owl-blink');
+        setTimeout(() => owl.classList.remove('owl-blink'), 180);
+    }, 5200);
 }
 
 function getAboutExpYearsLabel() {
@@ -1969,24 +2097,29 @@ function setupMobileIDE() {
 function setupOnboarding() {
     const overlay = document.getElementById('onboardingOverlay');
     if (!overlay) return;
+    // Always start hidden; the IDE shell is what triggers the hints,
+    // not the ZenShell landing.
+    overlay.classList.add('ob-hidden');
+}
 
-    // Ensure overlay is visible in Tech Mode when not onboarded yet.
-    overlay.classList.remove('ob-hidden');
+let _onboardingArmed = false;
+function maybeShowOnboarding() {
+    if (_onboardingArmed) return;
+    _onboardingArmed = true;
 
-    // Check if already onboarded
-    if (localStorage.getItem('ide-onboarded')) {
-        overlay.classList.add('ob-hidden');
-        return;
-    }
+    const overlay = document.getElementById('onboardingOverlay');
+    if (!overlay) return;
+    if (localStorage.getItem('ide-onboarded')) return;
 
-    // Auto-dismiss after 5 seconds
-    const autoDismiss = setTimeout(() => dismissOnboarding(overlay), 5000);
-
-    // Click to dismiss immediately
-    overlay.addEventListener('click', () => {
-        clearTimeout(autoDismiss);
-        dismissOnboarding(overlay);
-    });
+    // Slight delay so the IDE fade-in completes before hints appear.
+    setTimeout(() => {
+        overlay.classList.remove('ob-hidden');
+        const autoDismiss = setTimeout(() => dismissOnboarding(overlay), 5000);
+        overlay.addEventListener('click', () => {
+            clearTimeout(autoDismiss);
+            dismissOnboarding(overlay);
+        }, { once: true });
+    }, 460);
 }
 
 function dismissOnboarding(overlay) {

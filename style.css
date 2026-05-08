@@ -5156,3 +5156,267 @@ body.mode-tech.tech-shell-ide #ide {
     .zen-enter-hint { right: 10px; bottom: 10px; }
     .zen-foot { flex-wrap: wrap; justify-content: center; gap: 6px; }
 }
+
+/* ============================================================
+   ZEN SHELL — patches: desktop expansion + mobile hint + owl
+   ============================================================ */
+
+/* Topbar made positioning-aware for absolutely-centered owl. */
+.zen-topbar { position: relative; }
+
+/* Owl mascot — sits dead center of the topbar */
+.zen-owl {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--green);
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 0 6px rgba(57, 255, 20, 0.35));
+    transition: transform 0.25s ease, filter 0.25s ease;
+}
+.zen-owl-svg {
+    width: 56px;
+    height: 44px;
+    overflow: visible;
+}
+
+/* Pupils translate via CSS transform; transform-box scopes the origin
+   to each pupil's own box so translate is local. */
+.owl-pupil {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.08s linear;
+    will-change: transform;
+}
+
+/* Blink animation — squashes the eyes briefly */
+.zen-owl.owl-blink .owl-eye,
+.zen-owl.owl-blink .owl-pupil {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: owlBlink 0.18s ease-in-out;
+}
+@keyframes owlBlink {
+    0%, 100% { transform: scaleY(1); }
+    50%      { transform: scaleY(0.08); }
+}
+
+/* Slight idle bob */
+.zen-owl {
+    animation: zenOwlBob 4.5s ease-in-out infinite;
+}
+@keyframes zenOwlBob {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50%      { transform: translate(-50%, calc(-50% - 2px)); }
+}
+
+/* ---------- Console expansion (desktop) ---------- */
+.zen-stage {
+    /* Push content slightly up from dead-center so the console doesn't
+       feel orphaned in tall viewports. */
+    justify-content: flex-start;
+    padding-top: clamp(28px, 6vh, 72px);
+}
+
+.zen-console {
+    /* Use available width on big screens */
+    max-width: clamp(720px, 80vw, 1080px);
+    width: 100%;
+}
+
+.zen-palette {
+    max-width: clamp(720px, 80vw, 1080px);
+}
+
+.zen-greet {
+    max-width: clamp(720px, 80vw, 1080px);
+}
+
+.zen-console-output {
+    /* Substantial vertical real-estate so terminal output breathes */
+    min-height: clamp(220px, 38vh, 440px);
+    max-height: clamp(260px, 56vh, 640px);
+}
+
+/* Override earlier rule: keep min-height even when empty so the card
+   has presence on landing. */
+.zen-console-output:empty {
+    padding: 14px 18px 6px;
+    min-height: clamp(220px, 38vh, 440px);
+}
+
+/* ---------- Press-Enter hint: don't overlap the input ---------- */
+/* When the hint is visible on desktop, give the input room on the right
+   so the absolute-positioned hint never sits over typed text. */
+.zen-console:has(.zen-enter-hint-visible) .zen-console-input {
+    padding-right: 200px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 980px) {
+    .zen-owl-svg { width: 48px; height: 38px; }
+}
+
+@media (max-width: 720px) {
+    .zen-stage {
+        padding-top: 18px;
+        gap: 12px;
+    }
+
+    .zen-console-output {
+        min-height: clamp(180px, 36vh, 320px);
+        max-height: clamp(220px, 48vh, 380px);
+    }
+    .zen-console-output:empty {
+        min-height: clamp(180px, 36vh, 320px);
+    }
+
+    /* On mobile, let the hint sit BELOW the input — never overlaps. */
+    .zen-enter-hint {
+        position: static;
+        margin: 0 auto 14px;
+        align-self: center;
+        transform: translateY(2px);
+    }
+    .zen-enter-hint-visible {
+        transform: translateY(0);
+    }
+
+    /* Cancel the desktop right-padding hack on mobile. */
+    .zen-console:has(.zen-enter-hint-visible) .zen-console-input {
+        padding-right: 14px;
+    }
+
+    /* Owl shrinks on small screens */
+    .zen-owl-svg { width: 40px; height: 32px; }
+    .zen-brand-name { font-size: 12px; }
+}
+
+@media (max-width: 460px) {
+    /* On very small screens, hide owl to keep topbar uncluttered */
+    .zen-owl { display: none; }
+}
+
+/* ============================================================
+   CUSTOM CURSOR — pointer + click ripple
+   Active only in tech mode on fine-pointer devices.
+   ============================================================ */
+
+/* Hide native cursor in tech mode; recruiter view keeps the OS cursor. */
+body.mode-tech,
+body.mode-tech * {
+    cursor: none !important;
+}
+
+/* Custom cursor — fixed, GPU-accelerated, top of stacking.
+   Hot-point sits near the click ripple (top-left of svg), so we
+   offset by ~6px so the visual click point aligns with the OS cursor. */
+.zen-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    margin-left: -6px;
+    margin-top: -6px;
+    color: var(--green);
+    pointer-events: none;
+    z-index: 100000;
+    display: none;
+    transition:
+        opacity 0.18s ease,
+        color 0.18s ease,
+        filter 0.18s ease;
+    filter: drop-shadow(0 0 5px rgba(57, 255, 20, 0.55));
+    will-change: transform;
+}
+
+body.mode-tech .zen-cursor { display: block; }
+
+.zen-cursor-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Ripple arcs — base opacity + subtle pulse on hover */
+.zen-cursor .zc-ripple {
+    transition: opacity 0.2s ease, stroke 0.2s ease;
+}
+.zen-cursor .zc-ripple-near { opacity: 0.95; }
+.zen-cursor .zc-ripple-far  { opacity: 0.55; }
+
+.zen-cursor .zc-arrow {
+    transition: fill 0.18s ease, transform 0.12s ease;
+    transform-box: fill-box;
+    transform-origin: 12px 12px;
+}
+
+/* Hover state — pointer body + ripples shift to blue accent */
+.zen-cursor.zen-cursor-hover {
+    color: var(--blue);
+    filter: drop-shadow(0 0 9px rgba(31, 81, 255, 0.65));
+}
+.zen-cursor.zen-cursor-hover .zc-ripple-near { opacity: 1; }
+.zen-cursor.zen-cursor-hover .zc-ripple-far  { opacity: 0.85; }
+
+/* Click pulse — arrow shrinks slightly, ripples flare */
+.zen-cursor.zen-cursor-down .zc-arrow {
+    transform: scale(0.88);
+}
+.zen-cursor.zen-cursor-down .zc-ripple-near { opacity: 1; stroke-width: 2.1; }
+.zen-cursor.zen-cursor-down .zc-ripple-far  { opacity: 1; stroke-width: 1.8; }
+
+/* Mouse leaves viewport — fade out */
+.zen-cursor.zen-cursor-out { opacity: 0; }
+
+/* ============================================================
+   OWL — punchier eyes (more noticeable tracking)
+   ============================================================ */
+.zen-owl {
+    /* Stronger glow so the mascot reads at a glance */
+    filter: drop-shadow(0 0 7px rgba(57, 255, 20, 0.55));
+}
+
+.zen-owl .owl-pupil {
+    filter: drop-shadow(0 0 1.6px rgba(57, 255, 20, 0.85));
+}
+
+.zen-owl .owl-glint {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.08s linear;
+    will-change: transform;
+}
+
+/* Subtle iris pulse for liveliness — desaturated so it doesn't distract */
+.zen-owl .owl-eye {
+    animation: owlEyePulse 3.4s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+.zen-owl .owl-eye-right { animation-delay: -1.7s; }
+
+@keyframes owlEyePulse {
+    0%, 100% { stroke-opacity: 0.85; }
+    50%      { stroke-opacity: 1; }
+}
+
+/* During blink, glints disappear for a beat too */
+.zen-owl.owl-blink .owl-glint {
+    opacity: 0;
+    transition: opacity 0.05s linear;
+}
+
+/* Touch / coarse pointer fallback — restore native cursor. */
+@media (hover: none) and (pointer: coarse) {
+    body.mode-tech,
+    body.mode-tech * {
+        cursor: auto !important;
+    }
+    .zen-cursor {
+        display: none !important;
+    }
+}
