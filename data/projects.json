@@ -10,7 +10,8 @@
             "FastAPI",
             "SSE"
         ],
-        "github": "https://github.com/Ramc26"
+        "github": "https://github.com/Ramc26",
+        "featured": false
     },
     {
         "id": 2,
@@ -23,7 +24,8 @@
             "Pandas",
             "Streamlit"
         ],
-        "github": "https://github.com/Ramc26/Sleuth"
+        "github": "https://github.com/Ramc26/Sleuth",
+        "featured": true
     },
     {
         "id": 3,
@@ -36,7 +38,8 @@
             "FastAPI",
             "Streamlit"
         ],
-        "github": "https://github.com/Ramc26/Kueri"
+        "github": "https://github.com/Ramc26/Kueri",
+        "featured": true
     },
     {
         "id": 4,
@@ -48,7 +51,8 @@
             "Python",
             "State Management"
         ],
-        "github": "https://github.com/Ramc26"
+        "github": "https://github.com/Ramc26",
+        "featured": false
     },
     {
         "id": 5,
@@ -61,7 +65,8 @@
             "LangChain",
             "uv"
         ],
-        "github": "https://github.com/Ramc26/RAG-Agents"
+        "github": "https://github.com/Ramc26/RAG-Agents",
+        "featured": false
     },
     {
         "id": 6,
@@ -73,6 +78,7 @@
             "REST APIs",
             "Streamlit"
         ],
-        "github": "https://github.com/Ramc26/Loopify"
+        "github": "https://github.com/Ramc26/Loopify",
+        "featured": false
     }
 ]

@@ -918,20 +918,27 @@ async function renderRecruiterPage() {
         if (el) el.textContent = String(c);
     }).catch(() => { /* keep placeholder */ });
 
-    // Projects (redesigned)
-    const featuredProjects = projects.slice(0, 4);
-    const extraProjects = projects.slice(4);
+    // Projects (redesigned) — featured flag driven by projects.json
+    const isProjectFeatured = (p) => p.featured === true || p.features === true;
+    const featuredProjects = projects.filter(isProjectFeatured);
+    const regularProjects = projects.filter((p) => !isProjectFeatured(p));
+
+    const VISIBLE_REGULAR = 4;
+    const visibleRegular = regularProjects.slice(0, VISIBLE_REGULAR);
+    const extraRegular = regularProjects.slice(VISIBLE_REGULAR);
+    const visibleProjects = [...featuredProjects, ...visibleRegular];
 
     const projectCard = (p, idx, opts = {}) => {
+        const isFeatured = opts.featured === true;
         const num = String(idx + 1).padStart(2, '0');
         const tags = (p.tech || []).slice(0, 5)
             .map(t => `<span class="proj2-chip">${t}</span>`).join('');
         const more = (p.tech || []).length > 5
             ? `<span class="proj2-chip proj2-chip-more">+${p.tech.length - 5}</span>` : '';
-        const flag = opts.featured
+        const flag = isFeatured
             ? `<span class="proj2-flag"><i class="fa-solid fa-star"></i> Featured</span>` : '';
         return `
-            <article class="proj2-card${opts.featured ? ' proj2-card-featured' : ''}">
+            <article class="proj2-card${isFeatured ? ' proj2-card-featured' : ''}">
                 <span class="proj2-rail" aria-hidden="true"></span>
                 <div class="proj2-body">
                     <div class="proj2-meta">
@@ -957,18 +964,18 @@ async function renderRecruiterPage() {
         `;
     };
 
-    const featuredProjectsHtml = featuredProjects
-        .map((p, i) => projectCard(p, i, { featured: i === 0 })).join('');
-    const extraProjectsHtml = extraProjects.length
+    const visibleProjectsHtml = visibleProjects
+        .map((p, i) => projectCard(p, i, { featured: isProjectFeatured(p) })).join('');
+    const extraProjectsHtml = extraRegular.length
         ? `
             <details class="rec-inline-details">
                 <summary class="rec-inline-summary">
                     <span>More projects</span>
-                    <span class="rec-inline-summary-hint">${extraProjects.length} more</span>
+                    <span class="rec-inline-summary-hint">${extraRegular.length} more</span>
                 </summary>
                 <div class="rec-inline-details-inner">
                     <div class="proj2-grid">
-                        ${extraProjects.map((p, i) => projectCard(p, i + featuredProjects.length)).join('')}
+                        ${extraRegular.map((p, i) => projectCard(p, i + visibleProjects.length, { featured: false })).join('')}
                     </div>
                 </div>
             </details>
@@ -977,7 +984,7 @@ async function renderRecruiterPage() {
 
     recruiterProjectsGrid.innerHTML = `
         <div class="proj2-grid">
-            ${featuredProjectsHtml}
+            ${visibleProjectsHtml}
         </div>
         ${extraProjectsHtml}
     `;
