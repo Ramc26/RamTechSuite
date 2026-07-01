@@ -1,0 +1,7 @@
+# https://www.rambuilds.in/
+# Ram Bikkina (Ramarao Bikkina, VVRB, itsmeramc) — official portfolio
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.rambuilds.in/sitemap.xml

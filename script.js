@@ -39,7 +39,7 @@ async function loadArticlesData() {
 const FILES = {
     readme: {
         name: 'README.md', lang: 'Markdown', dot: 'dot-md',
-        content: `<span class="tag"># 🚀 ram.dev — Portfolio IDE</span>
+        content: `<span class="tag"># 🚀 rambuilds.in — Portfolio IDE</span>
 
 <span class="tag2">## Quick Start</span>
 
@@ -70,7 +70,7 @@ terminal to explore my work, projects, and get in touch.
 <span class="cmt">&gt; "Code is poetry — this is my anthology."</span>
 
 <span class="mdhr">---</span>
-<span class="cmt">© 2025 Ram Bikkina | Handcoded with ☕ and 🎧</span>`
+<span class="cmt">© 2025 Ram Bikkina | rambuilds.in | Handcoded with ☕ and 🎧</span>`
     },
 
     about: {
@@ -78,13 +78,13 @@ terminal to explore my work, projects, and get in touch.
         content: `<span class="cmt">#!/usr/bin/env python3</span>
 <span class="cmt">"""
 About Me — Ram Bikkina
-R&D Engineer | AI Agent Architect
+AI Engineer | AI Agent Architect
 """</span>
 
 <span class="kw">class</span> <span class="cls">Engineer</span>:
     <span class="kw">def</span> <span class="fn">__init__</span>(<span class="prop">self</span>):
         <span class="prop">self</span>.name        = <span class="str">"Ram Bikkina"</span>
-        <span class="prop">self</span>.role        = <span class="str">"R&D Engineer I"</span>
+        <span class="prop">self</span>.role        = <span class="str">"AI Engineer"</span>
         <span class="prop">self</span>.company     = <span class="str">"Jukshio Technologies"</span>
         <span class="prop">self</span>.location    = <span class="str">"Hyderabad, TG, India"</span>
         <span class="prop">self</span>.email       = <span class="str">"itsrambikkina@gmail.com"</span>
@@ -170,7 +170,7 @@ R&D Engineer | AI Agent Architect
     stack: {
         name: 'stack.yaml', lang: 'YAML', dot: 'dot-yaml',
         content: `<span class="ycom"># stack.yaml — Technical Stack</span>
-<span class="ycom"># Ram Bikkina | R&D Engineer</span>
+<span class="ycom"># Ram Bikkina | AI Engineer</span>
 
 <span class="ykey">ai_ml</span><span class="punc">:</span>
   <span class="punc">-</span> <span class="yval">CrewAI</span>
@@ -387,12 +387,14 @@ const ideEl = document.getElementById('ide');
 const visitorModeOverlay = document.getElementById('visitorModeOverlay');
 const visitorRecruiterBtn = document.getElementById('visitorRecruiterBtn');
 const visitorTechBtn = document.getElementById('visitorTechBtn');
+const visitorRememberChoice = document.getElementById('visitorRememberChoice');
 
 // ===== MODE STATE =====
 let techInitialized = false;
 let recruiterInitialized = false;
 
 const MODE_KEY = 'portfolio-visitor-mode';
+const MODE_REMEMBER_KEY = 'portfolio-visitor-remember';
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -412,10 +414,23 @@ function getInitialMode() {
     const urlMode = (params.get('mode') || '').toLowerCase().trim();
     if (urlMode === 'tech' || urlMode === 'recruiter') return urlMode;
 
+    const remembered = localStorage.getItem(MODE_REMEMBER_KEY) === 'true';
+    if (!remembered) return null;
+
     const saved = (localStorage.getItem(MODE_KEY) || '').toLowerCase().trim();
     if (saved === 'tech' || saved === 'recruiter') return saved;
 
     return null;
+}
+
+function persistVisitorMode(mode, remember) {
+    if (remember) {
+        localStorage.setItem(MODE_KEY, mode);
+        localStorage.setItem(MODE_REMEMBER_KEY, 'true');
+    } else {
+        localStorage.removeItem(MODE_KEY);
+        localStorage.removeItem(MODE_REMEMBER_KEY);
+    }
 }
 
 function initVisitorGate() {
@@ -425,21 +440,30 @@ function initVisitorGate() {
         return;
     }
 
-    visitorRecruiterBtn.addEventListener('click', () => activateMode('recruiter'));
-    visitorTechBtn.addEventListener('click', () => activateMode('tech'));
+    visitorRecruiterBtn.addEventListener('click', () => {
+        const remember = visitorRememberChoice ? visitorRememberChoice.checked : false;
+        activateMode('recruiter', { remember });
+    });
+    visitorTechBtn.addEventListener('click', () => {
+        const remember = visitorRememberChoice ? visitorRememberChoice.checked : false;
+        activateMode('tech', { remember });
+    });
 
     const initial = getInitialMode();
     if (initial) {
         activateMode(initial);
+        if (visitorRememberChoice) visitorRememberChoice.checked = true;
     } else {
         // Keep overlay visible (default in HTML).
         visitorModeOverlay.classList.remove('hidden');
     }
 }
 
-function activateMode(mode) {
+function activateMode(mode, { remember } = {}) {
     const normalized = mode === 'recruiter' ? 'recruiter' : 'tech';
-    localStorage.setItem(MODE_KEY, normalized);
+    if (remember !== undefined) {
+        persistVisitorMode(normalized, remember);
+    }
 
     // Apply view visibility.
     if (normalized === 'recruiter') {
@@ -866,19 +890,36 @@ async function renderRecruiterPage() {
     recruiterAboutContent.innerHTML = `
         <div class="rec-hero">
             <div class="rec-hero-card">
-                <div class="rec-avatar-wrap">
-                    <img class="rec-avatar" src="./elements/pdp.jpg" alt="Ram Bikkina">
+                <div class="rec-avatar-col">
+                    <div class="avatar-ring avatar-ring-profile" aria-hidden="true">
+                        <div class="avatar-frame">
+                            <img class="rec-avatar" src="./elements/IMG_5903.PNG" alt="Ram Bikkina" loading="lazy" decoding="async">
+                        </div>
+                    </div>
                 </div>
                 <div class="rec-hero-meta">
-                    <div class="rec-kicker">R&D Engineer I</div>
-                    <h2 class="rec-name">Ram Bikkina</h2>
+                    <div class="rec-kicker">AI Engineer</div>
+                    <h2 class="rec-name limelight-regular">Ram Bikkina</h2>
                     <p class="rec-subtitle">AI systems, multi-agent orchestration, and production-grade APIs.</p>
 
                     <div class="rec-chip-row">
                         <span class="rec-chip">Multi-agent systems</span>
                         <span class="rec-chip">MCP tooling</span>
-                        <span class="rec-chip">FastAPI services</span>
                         <span class="rec-chip">Cloud deployments</span>
+                        <span class="rec-chip">Backend dev</span>
+                        <span class="rec-chip">Frontend dev</span>
+                        <span class="rec-chip">RAG Systems</span>
+                        <span class="rec-chip">AI/ML Integrations</span>
+                    </div>
+
+                    <div class="rec-services">
+                        <div class="rec-services-label">Services</div>
+                        <div class="rec-service-row">
+                            <span class="rec-service-chip"><i class="fa-solid fa-server"></i> IT Services</span>
+                            <span class="rec-service-chip"><i class="fa-solid fa-laptop-code"></i> Freelancing</span>
+                            <span class="rec-service-chip"><i class="fa-solid fa-clock"></i> Part-time</span>
+                            <span class="rec-service-chip"><i class="fa-solid fa-file-contract"></i> Contract</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1394,7 +1435,7 @@ function setupTerminal() {
 
 function printWelcome() {
     printLine('t-ascii-line', '┌───────────────────────────────────────────┐');
-    printLine('t-ascii-line', '│        ram.dev — Portfolio IDE v2.0       │');
+    printLine('t-ascii-line', '│     rambuilds.in — Portfolio IDE v2.0     │');
     printLine('t-ascii-line', '│        Type "help" to get started         │');
     printLine('t-ascii-line', '└───────────────────────────────────────────┘');
     printLine('t-muted-line', '');
@@ -1543,7 +1584,7 @@ function processCommand(cmd) {
             printLine('t-ascii-line', '      ⬡⬡⬡⬡⬡      ─────────────────');
             printLine('t-out-line', '     ⬡⬡⬡⬡⬡⬡⬡     <span class="tp-path">OS:</span> PortfolioOS v2.0');
             printLine('t-out-line', '    ⬡⬡⬡⬡⬡⬡⬡⬡⬡    <span class="tp-path">Host:</span> Ram Bikkina');
-            printLine('t-out-line', '   ⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡   <span class="tp-path">Kernel:</span> R&D Engineer I');
+            printLine('t-out-line', '   ⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡   <span class="tp-path">Kernel:</span> AI Engineer');
             printLine('t-out-line', '    ⬡⬡⬡⬡⬡⬡⬡⬡⬡    <span class="tp-path">Shell:</span> portfolio-bash 5.1');
             printLine('t-out-line', '     ⬡⬡⬡⬡⬡⬡⬡     <span class="tp-path">Theme:</span> Shadow Glow');
             printLine('t-out-line', '      ⬡⬡⬡⬡⬡      <span class="tp-path">Terminal:</span> IDE Terminal');
@@ -1763,12 +1804,12 @@ async function openAboutModal() {
         <div class="about-output">
             <div class="about-hero">
                 <div class="about-avatar">
-                    <span class="about-avatar-text"><img src="./elements/pdp.jpg" alt="Ram Bikkina" style="width: 100%; height: 100%; object-fit: cover;"></span>
+                    <span class="about-avatar-text"><img src="./elements/IMG_5903.PNG" alt="Ram Bikkina" style="width: 100%; height: 100%; object-fit: contain;"></span>
                     <span class="about-avatar-ring"></span>
                 </div>
                 <div class="about-hero-info">
-                    <h2 class="about-name">Ram Bikkina</h2>
-                    <p class="about-role"><i class="fa-solid fa-briefcase"></i> R&D Engineer I @ Jukshio Technologies</p>
+                    <h2 class="about-name limelight-regular">Ram Bikkina</h2>
+                    <p class="about-role"><i class="fa-solid fa-briefcase"></i> AI Engineer @ Jukshio Technologies</p>
                     <p class="about-loc"><i class="fa-solid fa-location-dot"></i> Hyderabad, TG, India</p>
                 </div>
             </div>

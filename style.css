@@ -1,7 +1,7 @@
 /* ============================================================
    PORTFOLIO IDE — style.css
    Shadow Glow Palette: #0A0A1A | #1F51FF | #39FF14
-   Font: JetBrains Mono (monospaced IDE font)
+   Font stack: Limelight (name/display) · Cal Sans (heads) · DM Sans (body) · JetBrains Mono (IDE code)
    ============================================================ */
 
 /* ===== RESET & ROOT ===== */
@@ -86,7 +86,11 @@
     --terminal-h: 260px;
     --resize-h: 5px;
 
-    --font: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    --font-display: 'Limelight', sans-serif;
+    --font-head: 'Cal Sans', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    --font: var(--font-body);
     --radius: 4px;
     --transition: 0.18s ease;
 }
@@ -99,9 +103,48 @@ body {
 }
 
 body {
-    font-family: var(--font);
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
     font-size: 13px;
     color: var(--text);
+}
+
+/* ===== Typography utilities ===== */
+.limelight-regular {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: normal;
+}
+
+.cal-sans-regular {
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dm-sans-regular {
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* IDE / terminal surfaces keep monospace */
+.ide {
+    font-family: var(--font-mono);
+}
+
+/* SEO: accessible heading for crawlers, hidden visually */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 a {
@@ -1468,7 +1511,9 @@ button {
 }
 
 .modal-title {
+    font-family: var(--font-head);
     font-size: 12px;
+    font-weight: 400;
     color: var(--text-muted);
     flex: 1;
     text-align: center;
@@ -1658,8 +1703,9 @@ button {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-family: var(--font-head);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     color: var(--cat-color, var(--text-bright));
     margin: 0 0 10px 0;
     font-family: var(--font);
@@ -1845,11 +1891,11 @@ button {
 }
 
 .about-name {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 400;
+    font-family: var(--font-display);
     color: var(--text-bright);
     margin: 0;
-    font-family: var(--font);
 }
 
 .about-role,
@@ -1934,14 +1980,14 @@ button {
 
 /* Focus areas */
 .about-section-title {
+    font-family: var(--font-head);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     color: var(--text-bright);
     margin: 0 0 10px;
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: var(--font);
 }
 
 .about-section-title i {
@@ -2531,7 +2577,9 @@ button {
 }
 
 .settings-title {
+    font-family: var(--font-head);
     font-size: 13px;
+    font-weight: 400;
     color: var(--text-bright);
     display: flex;
     align-items: center;
@@ -3189,8 +3237,8 @@ body.mode-recruiter #ide {
     overflow-y: auto;
     background: #f6f7fb;
     color: #0f172a;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, "Apple Color Emoji",
-        "Segoe UI Emoji";
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
 
     /* Recruiter theme variables (scoped to recruiter view) */
     --ide-bg: #f6f7fb;
@@ -3281,8 +3329,9 @@ body.mode-tech #recruiterView {
 
 .recruiter-brand-name {
     color: var(--text-bright);
-    font-size: 13px;
-    font-weight: 800;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: var(--font-display);
 }
 
 .recruiter-brand-sub {
@@ -3319,8 +3368,9 @@ body.mode-tech #recruiterView {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 13px;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--font-head);
     color: var(--text-bright);
     margin-bottom: 12px;
 }
@@ -3515,10 +3565,8 @@ body.mode-recruiter #recruiterView .stack-badge {
 }
 
 #recruiterView .recruiter-section-header {
-    margin-bottom: 10px;
-    font-size: 14px;
-    letter-spacing: 0.2px;
-    color: var(--rec-text);
+    font-family: var(--font-head);
+    font-weight: 400;
 }
 
 #recruiterView .recruiter-section-header i {
@@ -3531,39 +3579,43 @@ body.mode-recruiter #recruiterView .stack-badge {
 
 #recruiterView .rec-hero-card {
     display: grid;
-    grid-template-columns: 96px 1fr;
-    gap: 16px;
-    align-items: center;
-    padding: 18px;
-    background: rgba(255, 255, 255, 0.75);
+    grid-template-columns: minmax(156px, 180px) 1fr;
+    gap: 0;
+    align-items: stretch;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.82);
     border: 1px solid var(--rec-border);
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: var(--rec-shadow);
+    overflow: hidden;
 }
 
-#recruiterView .rec-avatar-wrap {
-    width: 96px;
-    height: 96px;
+#recruiterView .rec-avatar-col {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 28px;
-    background: radial-gradient(circle at top left, rgba(22, 163, 74, 0.22), rgba(245, 158, 11, 0.10) 45%, rgba(255, 255, 255, 0.75) 80%);
-    border: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 22px 18px;
+    background: linear-gradient(165deg, rgba(22, 163, 74, 0.10) 0%, rgba(245, 158, 11, 0.06) 55%, rgba(255, 255, 255, 0.5) 100%);
+    border-right: 1px solid rgba(15, 23, 42, 0.06);
 }
 
-#recruiterView .rec-avatar {
-    width: 86px;
-    height: 86px;
-    border-radius: 26px;
-    object-fit: cover;
-    border: 3px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+#recruiterView .avatar-ring-profile {
+    width: 148px;
+    height: 148px;
+}
+
+#recruiterView .rec-hero-meta {
+    padding: 20px 20px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
 }
 
 #recruiterView .rec-kicker {
     color: var(--rec-accent);
-    font-weight: 900;
+    font-family: var(--font-head);
+    font-weight: 400;
     font-size: 12px;
     letter-spacing: 0.35px;
     text-transform: uppercase;
@@ -3572,9 +3624,12 @@ body.mode-recruiter #recruiterView .stack-badge {
 
 #recruiterView .rec-name {
     margin: 0;
-    font-size: 26px;
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
     color: var(--rec-text);
     line-height: 1.15;
+    letter-spacing: 0.02em;
 }
 
 #recruiterView .rec-subtitle {
@@ -3600,6 +3655,47 @@ body.mode-recruiter #recruiterView .stack-badge {
     font-size: 12px;
     font-weight: 800;
     white-space: nowrap;
+}
+
+#recruiterView .rec-services {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(15, 23, 42, 0.12);
+}
+
+#recruiterView .rec-services-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+    color: var(--rec-muted);
+    margin-bottom: 8px;
+}
+
+#recruiterView .rec-service-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#recruiterView .rec-service-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    color: var(--rec-text);
+    padding: 7px 11px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+#recruiterView .rec-service-chip i {
+    color: #16a34a;
+    font-size: 11px;
 }
 
 #recruiterView .rec-stats-grid {
@@ -3640,7 +3736,8 @@ body.mode-recruiter #recruiterView .stack-badge {
 }
 
 #recruiterView .rec-summary-title {
-    font-weight: 950;
+    font-family: var(--font-head);
+    font-weight: 400;
     color: var(--rec-text);
     margin-bottom: 8px;
 }
@@ -3978,19 +4075,16 @@ body.mode-recruiter #recruiterView .stack-badge {
     }
 
     #recruiterView .rec-hero-card {
-        grid-template-columns: 84px 1fr;
+        grid-template-columns: minmax(120px, 140px) 1fr;
     }
 
-    #recruiterView .rec-avatar-wrap {
-        width: 84px;
-        height: 84px;
-        border-radius: 24px;
+    #recruiterView .rec-avatar-col {
+        padding: 16px 12px;
     }
 
-    #recruiterView .rec-avatar {
-        width: 74px;
-        height: 74px;
-        border-radius: 22px;
+    #recruiterView .avatar-ring-profile {
+        width: 116px;
+        height: 116px;
     }
 }
 
@@ -4005,6 +4099,32 @@ body.mode-recruiter #recruiterView .stack-badge {
 
     .recruiter-hero-cta-row {
         flex-direction: column;
+    }
+
+    /* Simple view — stack hero vertically, avatar uses vertical space */
+    #recruiterView .rec-hero-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+
+    #recruiterView .rec-avatar-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        padding: clamp(28px, 10vh, 48px) 20px clamp(22px, 7vh, 36px);
+        min-height: clamp(220px, 42vh, 360px);
+    }
+
+    #recruiterView .avatar-ring-profile {
+        width: clamp(160px, 48vw, 220px);
+        height: clamp(160px, 48vw, 220px);
+    }
+
+    #recruiterView .rec-hero-meta {
+        padding: 20px 18px 18px;
+    }
+
+    #recruiterView .rec-name {
+        font-size: 24px;
     }
 }
 
@@ -4021,53 +4141,232 @@ body.mode-recruiter #recruiterView .stack-badge {
     align-items: center;
     justify-content: center;
     padding: 18px;
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
 }
 
 .visitor-mode-panel {
     width: 92vw;
-    max-width: 560px;
-    border-radius: 12px;
+    max-width: 520px;
+    border-radius: 16px;
     background: var(--ide-bg2);
     border: 1px solid var(--border-hard);
     box-shadow: var(--blue-glow), 0 30px 90px rgba(0, 0, 0, 0.8);
-    padding: 18px;
+    padding: 20px 20px 18px;
     animation: slideUp 0.2s ease;
+    text-align: center;
+}
+
+.visitor-mode-hero {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 14px;
+}
+
+/* ===== Shared circular avatar system ===== */
+@keyframes avatarEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes avatarFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+@keyframes avatarRingGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 0 0 rgba(22, 163, 74, 0.22),
+            0 12px 32px rgba(0, 0, 0, 0.28);
+    }
+    50% {
+        box-shadow:
+            0 0 0 6px rgba(22, 163, 74, 0),
+            0 16px 40px rgba(0, 0, 0, 0.32);
+    }
+}
+
+@keyframes avatarRingGlowDark {
+    0%, 100% {
+        box-shadow:
+            0 0 0 0 rgba(31, 81, 255, 0.28),
+            0 14px 36px rgba(0, 0, 0, 0.45);
+    }
+    50% {
+        box-shadow:
+            0 0 0 8px rgba(57, 255, 20, 0),
+            0 18px 44px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.avatar-ring {
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(145deg, #16a34a 0%, #f59e0b 50%, #16a34a 100%);
+    background-size: 200% 200%;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.avatar-ring-visitor {
+    width: clamp(120px, 26vw, 140px);
+    height: clamp(120px, 26vw, 140px);
+    background: linear-gradient(145deg, #1F51FF 0%, #39FF14 55%, #1F51FF 100%);
+    background-size: 200% 200%;
+    animation:
+        avatarEntrance 0.55s cubic-bezier(0.22, 1, 0.36, 1) both,
+        avatarRingGlowDark 3.8s ease-in-out 0.55s infinite;
+}
+
+.avatar-ring-visitor .avatar-frame {
+    animation: avatarFloat 4.5s ease-in-out 0.7s infinite;
+}
+
+.avatar-ring-profile {
+    animation:
+        avatarEntrance 0.6s cubic-bezier(0.22, 1, 0.36, 1) both,
+        avatarRingGlow 4s ease-in-out 0.6s infinite;
+}
+
+.avatar-ring-profile .avatar-frame {
+    animation: avatarFloat 5s ease-in-out 0.8s infinite;
+}
+
+.avatar-frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f8fafc;
+    border: 3px solid rgba(255, 255, 255, 0.95);
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+.visitor-mode-avatar,
+#recruiterView .rec-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+    transform: scale(1.12);
+    pointer-events: none;
+    user-select: none;
 }
 
 .visitor-mode-title {
-    font-size: 18px;
-    font-weight: 900;
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
     color: var(--text-bright);
     margin-bottom: 6px;
 }
 
 .visitor-mode-subtitle {
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
     color: var(--text-muted);
     font-size: 13px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+    padding: 0 6px;
 }
 
 .visitor-mode-actions {
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
 }
 
 .visitor-mode-btn {
-    flex: 1 1 200px;
+    flex: 1 1 auto;
+    width: 100%;
     border: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.03);
     color: var(--text-bright);
     border-radius: 10px;
-    padding: 12px 14px;
+    padding: 14px 16px;
     cursor: pointer;
     font-family: var(--font);
     font-size: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    text-align: left;
+    transition: border-color var(--transition), background var(--transition), transform var(--transition);
+}
+
+.visitor-mode-btn-icon {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border-radius: 10px;
+    background: rgba(31, 81, 255, 0.12);
+    color: var(--blue);
+    font-size: 15px;
+}
+
+.visitor-mode-btn-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.visitor-mode-btn-text strong {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-bright);
+    line-height: 1.25;
+}
+
+.visitor-mode-btn-text small {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+.visitor-mode-btn-tech .visitor-mode-btn-icon {
+    background: rgba(57, 255, 20, 0.10);
+    color: var(--green);
+}
+
+.visitor-mode-remember {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
     gap: 10px;
-    transition: border-color var(--transition), background var(--transition), transform var(--transition);
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: left;
+}
+
+.visitor-mode-remember input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--green);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.visitor-mode-remember span {
+    line-height: 1.35;
 }
 
 .visitor-mode-btn:hover {
@@ -4085,6 +4384,11 @@ body.mode-recruiter #recruiterView .stack-badge {
     margin-top: 12px;
     color: var(--text-muted);
     font-size: 12px;
+}
+
+/* Remove legacy note if present */
+.visitor-mode-note:empty {
+    display: none;
 }
 
 .visitor-mode-overlay.hidden {
@@ -4192,9 +4496,10 @@ body.mode-recruiter #recruiterView .stack-badge {
 
 #recruiterView .proj2-title {
     margin: 0;
+    font-family: var(--font-head);
     color: var(--rec-text);
     font-size: 16px;
-    font-weight: 950;
+    font-weight: 400;
     line-height: 1.3;
     letter-spacing: -0.1px;
 }
@@ -4361,9 +4666,10 @@ body.mode-recruiter #recruiterView .stack-badge {
 
 #recruiterView .exp2-role {
     margin: 10px 0 4px;
+    font-family: var(--font-head);
     color: var(--rec-text);
     font-size: 16px;
-    font-weight: 950;
+    font-weight: 400;
     line-height: 1.25;
     letter-spacing: -0.1px;
 }
@@ -4481,9 +4787,10 @@ body.mode-recruiter #recruiterView .stack-badge {
 #recruiterView .stack2-cat {
     margin: 0;
     flex: 1 1 auto;
+    font-family: var(--font-head);
     color: var(--rec-text);
     font-size: 13px;
-    font-weight: 950;
+    font-weight: 400;
     letter-spacing: 0.1px;
 }
 
@@ -4635,9 +4942,10 @@ body.mode-recruiter #recruiterView .stack-badge {
 
 #recruiterView .art2-title {
     margin: 0;
+    font-family: var(--font-head);
     color: var(--rec-text);
     font-size: 15px;
-    font-weight: 950;
+    font-weight: 400;
     line-height: 1.3;
     letter-spacing: -0.1px;
 }
@@ -4794,7 +5102,8 @@ body.mode-tech.tech-shell-ide #ide {
         radial-gradient(900px 600px at 88% 90%, rgba(57, 255, 20, 0.10), transparent 65%),
         linear-gradient(180deg, #07071a 0%, #04040f 100%);
     color: var(--text-bright);
-    font-family: var(--font);
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
     overflow: hidden;
 }
 
@@ -4863,12 +5172,15 @@ body.mode-tech.tech-shell-ide #ide {
     text-shadow: var(--blue-glow);
     font-size: 14px;
 }
-.zen-brand-name {
-    font-weight: 800;
+.zen-brand-name .tp-user {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.02em;
 }
 .zen-brand-tag {
+    font-family: var(--font-head);
     color: var(--text-muted);
-    font-weight: 700;
+    font-weight: 400;
     margin-left: 4px;
 }
 
@@ -4943,14 +5255,17 @@ body.mode-tech.tech-shell-ide #ide {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
+    font-family: var(--font-head);
+    font-size: 15px;
     color: rgba(230, 235, 244, 0.92);
 }
-.zen-greet-line .tp-dollar { color: var(--green); }
+.zen-greet-line .tp-dollar { color: var(--green); font-family: var(--font-mono); }
 .zen-greet-text {
-    font-weight: 700;
+    font-weight: 400;
 }
 .zen-greet-sub {
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
     margin-top: 8px;
     font-size: 12px;
     color: var(--text-muted);
@@ -5061,6 +5376,14 @@ body.mode-tech.tech-shell-ide #ide {
     align-items: center;
     gap: 10px;
 }
+.zen-console-output,
+.zen-console-output #termOutput,
+.zen-console-input,
+.zen-console-input #termInputLine,
+.zen-console-input .term-prompt-text,
+.zen-console-input #termInput {
+    font-family: var(--font-mono);
+}
 .zen-console-input .term-prompt-text {
     font-size: 13px;
 }
@@ -5070,7 +5393,6 @@ body.mode-tech.tech-shell-ide #ide {
     border: none;
     outline: none;
     color: var(--text-bright);
-    font-family: var(--font);
     font-size: 14px;
     font-weight: 600;
     caret-color: var(--green);
