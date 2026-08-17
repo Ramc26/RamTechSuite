@@ -582,6 +582,9 @@ button {
 .title-right {
     margin-left: auto;
     padding-right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     -webkit-app-region: no-drag;
 }
 
@@ -2822,6 +2825,23 @@ button {
 
     .title-center {
         font-size: 12px;
+        max-width: 46vw;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .zen-toggle-btn {
+        margin-right: 0;
+        padding: 4px 8px;
+    }
+
+    .zen-toggle-btn span {
+        display: none;
+    }
+
+    .title-right {
+        padding-right: max(8px, env(safe-area-inset-right));
     }
 
     /* IDE grid → single column stack */
@@ -2972,7 +2992,7 @@ button {
     }
 
     .term-input {
-        font-size: 12px;
+        font-size: 16px; /* iOS: <16px zooms the viewport on focus */
     }
 
     .term-prompt-text {
@@ -3308,7 +3328,9 @@ body.mode-tech #recruiterView {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    flex-wrap: wrap;
     padding: 10px 0 14px;
+    padding-top: max(10px, env(safe-area-inset-top));
     background: rgba(255, 255, 255, 0.78);
     border-bottom: 1px solid rgba(15, 23, 42, 0.08);
     backdrop-filter: blur(10px);
@@ -3339,6 +3361,14 @@ body.mode-tech #recruiterView {
     font-size: 12px;
 }
 
+.recruiter-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
 .recruiter-mode-btn {
     border: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.03);
@@ -3351,6 +3381,9 @@ body.mode-tech #recruiterView {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-decoration: none;
     transition: border-color var(--transition), background var(--transition), transform var(--transition);
 }
 
@@ -4128,6 +4161,27 @@ body.mode-recruiter #recruiterView .stack-badge {
     }
 }
 
+@media (max-width: 480px) {
+    .recruiter-brand-sub {
+        display: none;
+    }
+
+    .recruiter-mode-btn {
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+
+    .visitor-mode-btn {
+        padding: 12px 12px;
+        gap: 10px;
+    }
+
+    .visitor-mode-panel {
+        padding: 16px 14px 14px;
+        width: 100%;
+    }
+}
+
 /* ============================================================
    VISITOR MODE GATE
    ============================================================ */
@@ -4140,14 +4194,18 @@ body.mode-recruiter #recruiterView .stack-badge {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 18px;
+    padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     font-family: var(--font-body);
     font-optical-sizing: auto;
 }
 
 .visitor-mode-panel {
-    width: 92vw;
+    width: min(92vw, 520px);
     max-width: 520px;
+    max-height: min(92dvh, 720px);
+    overflow-y: auto;
     border-radius: 16px;
     background: var(--ide-bg2);
     border: 1px solid var(--border-hard);
@@ -4263,10 +4321,11 @@ body.mode-recruiter #recruiterView .stack-badge {
 
 .visitor-mode-title {
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: clamp(18px, 5vw, 22px);
     font-weight: 400;
     color: var(--text-bright);
     margin-bottom: 6px;
+    padding: 0 4px;
 }
 
 .visitor-mode-subtitle {
@@ -5155,6 +5214,9 @@ body.mode-tech.tech-shell-ide #ide {
     justify-content: space-between;
     gap: 12px;
     padding: 16px 22px;
+    padding-top: max(16px, env(safe-area-inset-top));
+    padding-left: max(22px, env(safe-area-inset-left));
+    padding-right: max(22px, env(safe-area-inset-right));
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
     background: rgba(8, 8, 22, 0.45);
@@ -5199,11 +5261,43 @@ body.mode-tech.tech-shell-ide #ide {
     cursor: pointer;
     transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
+.zen-ide-btn[hidden] {
+    display: none !important;
+}
 .zen-ide-btn:hover {
     transform: translateY(-1px);
     background: rgba(57, 255, 20, 0.16);
     border-color: rgba(57, 255, 20, 0.55);
     box-shadow: 0 0 22px rgba(57, 255, 20, 0.20);
+}
+
+.zen-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.zen-rec-btn {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-bright);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+.zen-rec-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(31, 81, 255, 0.14);
+    border-color: rgba(31, 81, 255, 0.45);
 }
 
 /* IDE titlebar -> Zen toggle button */
@@ -5254,14 +5348,18 @@ body.mode-tech.tech-shell-ide #ide {
 .zen-greet-line {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 10px;
     font-family: var(--font-head);
-    font-size: 15px;
+    font-size: clamp(13px, 2.4vw, 15px);
     color: rgba(230, 235, 244, 0.92);
+    max-width: 100%;
 }
 .zen-greet-line .tp-dollar { color: var(--green); font-family: var(--font-mono); }
 .zen-greet-text {
     font-weight: 400;
+    word-break: break-word;
 }
 .zen-greet-sub {
     font-family: var(--font-body);
@@ -5460,6 +5558,14 @@ body.mode-tech.tech-shell-ide #ide {
     color: var(--text-bright);
 }
 .zen-foot-sep { color: rgba(255, 255, 255, 0.18); }
+.zen-foot-link {
+    color: var(--green);
+    text-decoration: none;
+    font-family: var(--font-mono, inherit);
+}
+.zen-foot-link:hover {
+    text-decoration: underline;
+}
 .zen-foot-mono {
     font-weight: 800;
     color: var(--text-bright);
@@ -5470,13 +5576,16 @@ body.mode-tech.tech-shell-ide #ide {
 
 /* --- responsive --- */
 @media (max-width: 720px) {
-    .zen-topbar { padding: 12px 14px; }
+    .zen-topbar { padding: 12px 14px; padding-top: max(12px, env(safe-area-inset-top)); }
     .zen-brand-tag { display: none; }
-    .zen-stage { padding: 18px 14px 24px; gap: 14px; }
+    .zen-stage { padding: 18px 14px max(24px, env(safe-area-inset-bottom)); gap: 14px; }
     .zen-console-output { max-height: 240px; padding: 12px 14px 4px; }
     .zen-console-input { padding: 12px 14px 14px; }
     .zen-enter-hint { right: 10px; bottom: 10px; }
-    .zen-foot { flex-wrap: wrap; justify-content: center; gap: 6px; }
+    .zen-foot { flex-wrap: wrap; justify-content: center; gap: 6px; padding-bottom: env(safe-area-inset-bottom); }
+    .zen-rec-btn { padding: 7px 10px; font-size: 11px; }
+    .zen-cmd-chip { padding: 7px 10px; font-size: 11px; }
+    .zen-console-input #termInput { font-size: 16px; }
 }
 
 /* ============================================================
@@ -5619,6 +5728,23 @@ body.mode-tech.tech-shell-ide #ide {
 @media (max-width: 460px) {
     /* On very small screens, hide owl to keep topbar uncluttered */
     .zen-owl { display: none; }
+    .zen-rec-btn span { display: none; }
+    .zen-rec-btn { padding: 8px 10px; }
+    .zen-brand { min-width: 0; }
+    .zen-brand-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+@media (max-height: 560px) {
+    .zen-stage {
+        padding-top: 10px;
+        gap: 10px;
+        justify-content: flex-start;
+    }
+    .zen-console-output,
+    .zen-console-output:empty {
+        min-height: 110px;
+        max-height: 38vh;
+    }
 }
 
 /* ============================================================

@@ -1,0 +1,270 @@
+{
+  "meta": {
+    "kicker": "Independent AI engineering",
+    "title": "Freelance studio",
+    "headline": "I design and ship AI systems that hold up in production.",
+    "lede": "Multi-agent orchestration, RAG copilots, MCP tools, and FastAPI backends — for founders and teams who need a builder, not a slide deck.",
+    "availability": "Open for freelance & contract",
+    "location": "Hyderabad, India · Remote worldwide",
+    "email": "itsrambikkina@gmail.com",
+    "phone": "+91 70958 38715",
+    "github": "https://github.com/Ramc26",
+    "ctaPrimary": "Start a project",
+    "ctaSecondary": "See selected work"
+  },
+  "stats": [
+    { "value": "5", "label": "Client projects shipped" },
+    { "value": "35d", "label": "Zero-to-one e-commerce rebuild" },
+    { "value": "3d", "label": "Monolith-to-services onboarding" },
+    { "value": "Remote", "label": "US, EU & India timezones" }
+  ],
+  "services": [
+    {
+      "id": "agents",
+      "icon": "fa-sitemap",
+      "name": "Multi-agent systems",
+      "blurb": "CrewAI and LangGraph setups with a manager that delegates to specialists — IDV, OCR, research, ops — instead of one bloated prompt.",
+      "deliverables": [
+        "Supervisor / specialist graphs",
+        "Custom MCP tools with JSON Schema",
+        "Eval hooks for tool-call reliability"
+      ]
+    },
+    {
+      "id": "rag",
+      "icon": "fa-layer-group",
+      "name": "RAG & internal copilots",
+      "blurb": "Grounded Q&A over your docs, ledgers, Slack, and tickets — with citations, not vibes.",
+      "deliverables": [
+        "Ingestion + chunking pipelines",
+        "Tool-routed retrieval (not one giant index)",
+        "Streamlit or web UI for the team"
+      ]
+    },
+    {
+      "id": "apis",
+      "icon": "fa-bolt",
+      "name": "APIs & MCP tooling",
+      "blurb": "FastAPI services, SSE streams, and MCP servers so models can actually do work against your stack.",
+      "deliverables": [
+        "Production FastAPI / Flask APIs",
+        "Auth, rate limits, structured logs",
+        "MCP servers for Claude, Cursor, custom agents"
+      ]
+    },
+    {
+      "id": "nl2sql",
+      "icon": "fa-database",
+      "name": "Text-to-SQL & data apps",
+      "blurb": "Natural-language access to warehouses and Postgres so operators stop waiting on an analyst.",
+      "deliverables": [
+        "LangGraph query planners",
+        "Guardrails + dry-run SQL",
+        "Read-only dashboards for non-technical users"
+      ]
+    },
+    {
+      "id": "cloud",
+      "icon": "fa-cloud",
+      "name": "Cloud & deployment",
+      "blurb": "Containerized services on AWS, GCP, or Azure — Docker, Kubernetes, Terraform — with boring, repeatable deploys.",
+      "deliverables": [
+        "Docker / K8s packaging",
+        "CI-friendly env & secrets",
+        "Cost and latency pass before handoff"
+      ]
+    },
+    {
+      "id": "fractional",
+      "icon": "fa-user-clock",
+      "name": "Fractional AI engineer",
+      "blurb": "Part-time or contract embedding: architecture reviews, agent debugging, and shipping the next milestone with your team.",
+      "deliverables": [
+        "Weekly build cadence",
+        "Written decisions, not tribal knowledge",
+        "Handoff docs your team can own"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "featured": true,
+      "client": "DataToBiz / PracticeAI",
+      "name": "PracticeAI — AI/ML Engineering",
+      "role": "AI/ML Engineer",
+      "year": "2026",
+      "summary": "AI/ML engineering work for PracticeAI, focused on understanding product requirements, improving the existing architecture, and helping transition a monolithic service toward a microservice-based architecture.",
+      "did": [
+        "Understood and translated product requirements into practical technical solutions",
+        "Worked on AI/ML engineering and backend services",
+        "Helped restructure the existing monolithic service into microservices",
+        "Contributed to architecture, service separation, and backend improvements",
+        "Adapted quickly to an existing codebase and product environment"
+      ],
+      "outcome": "Helped accelerate the transition from a monolithic architecture toward a more scalable microservice-based system within the first few days of onboarding.",
+      "tech": ["Python", "AI/ML", "Microservices", "Backend", "APIs"],
+      "testimonial": {
+        "quote": "Ram understood the requirements precisely and got things moving in no time. Within just three days of onboarding, he also helped us restructure our monolithic service into microservices. He is the kind of person we can rely on when things get difficult.",
+        "name": "Yashita Agarwal",
+        "role": "Product Manager",
+        "org": "PracticeAI / DataToBiz"
+      }
+    },
+    {
+      "id": 2,
+      "featured": true,
+      "client": "Jesse Miller",
+      "name": "AI Automated Logistics Email Processing",
+      "role": "AI Automation Engineer",
+      "year": "2025",
+      "summary": "An AI-powered logistics automation system that processes operational emails, extracts shipment information, checks tracking status, and automates repetitive logistics workflows.",
+      "did": [
+        "Built AI-powered email classification and information extraction",
+        "Automated shipment and tracking information processing",
+        "Integrated Gmail and Google Sheets workflows",
+        "Automated shipment-status checks through browser and API workflows",
+        "Implemented automated response drafting",
+        "Worked with cloud infrastructure and workflow automation"
+      ],
+      "outcome": "Turned a repetitive, email-driven logistics workflow into an automated process with significantly less manual intervention.",
+      "tech": ["Python", "LLMs", "Gmail", "Google Sheets", "AWS", "Lambda", "Playwright", "Composio"],
+      "testimonial": {
+        "quote": "",
+        "name": "Jesse Miller",
+        "role": "CEO",
+        "org": "Several Millers"
+      }
+    },
+    {
+      "id": 3,
+      "featured": true,
+      "client": "Prapul",
+      "name": "Interactive Wedding Web Invitation",
+      "role": "Web Developer",
+      "year": "2026",
+      "summary": "A custom digital wedding invitation designed as an interactive web experience with a modern visual style and personalized wedding details.",
+      "did": [
+        "Designed and developed the complete wedding invitation experience",
+        "Created a modern and visually engaging invitation design",
+        "Implemented interactive sections and animations",
+        "Incorporated client feedback and revisions",
+        "Handled deployment and hosting"
+      ],
+      "outcome": "Delivered a complete personalized wedding web invitation in under two days while incorporating the requested feedback and changes.",
+      "tech": ["HTML", "CSS", "JavaScript", "Responsive Web Design", "Animations"],
+      "testimonial": {
+        "quote": "Ram delivered my online wedding invite with a really cool design at a very reasonable cost. He completed it in under two days and also took care of all the feedback and changes I asked for. Really happy with how it turned out.",
+        "name": "Prapul",
+        "role": "Client",
+        "org": ""
+      }
+    },
+    {
+      "id": 4,
+      "featured": true,
+      "client": "Kamesh",
+      "name": "Interactive Wedding Web Invitation",
+      "role": "Web Developer",
+      "year": "2026",
+      "summary": "A visually rich and interactive digital wedding invitation designed with multiple layers of animation, information, and interactive elements for guests.",
+      "did": [
+        "Designed and developed the complete wedding invitation",
+        "Created multiple interactive and animated sections",
+        "Organized wedding information into an engaging guest experience",
+        "Focused on visual storytelling and progressive reveal of information",
+        "Handled hosting and deployment"
+      ],
+      "outcome": "Delivered the wedding invitation on time with an interactive experience designed to keep guests engaged while exploring the invitation.",
+      "tech": ["HTML", "CSS", "JavaScript", "Animations", "Responsive Web Design", "Hosting"],
+      "testimonial": {
+        "quote": "Ram delivered a very beautiful and informative wedding invite for me right on time, as expected. It had so many layers of amusement and interactivity while going through the invite, which made it really interesting for the guests. He also took care of the hosting, which made the whole process very easy for me.",
+        "name": "Kamesh",
+        "role": "Client",
+        "org": ""
+      }
+    },
+    {
+      "id": 5,
+      "featured": true,
+      "client": "BozSkyVedaLife",
+      "name": "E-commerce Platform — Zero to One",
+      "role": "Full-Stack Developer",
+      "year": "2026",
+      "summary": "A complete zero-to-one redesign and rebuild of an e-commerce platform, covering product design, UI, backend, database, admin panel, and the overall commerce experience.",
+      "did": [
+        "Redesigned the platform completely from scratch",
+        "Built the frontend UI and responsive user experience",
+        "Developed the backend and business logic",
+        "Designed and implemented the database",
+        "Built the admin panel and management workflows",
+        "Implemented core e-commerce functionality",
+        "Iterated on the product based on client feedback and change requests",
+        "Handled the complete development lifecycle from design to deployment"
+      ],
+      "outcome": "Rebuilt the e-commerce platform from zero to one in approximately 35 days, covering design, UI, backend, database, admin panel, and subsequent feedback-driven rework.",
+      "tech": ["HTML", "CSS", "JavaScript", "Bootstrap", "jQuery", "Next.js", "Python", "Backend", "Database"],
+      "testimonial": {
+        "quote": "Ram completely redesigned and rebuilt my e-commerce platform from scratch. He took care of everything from the design and UI to the backend, database, and admin panel, taking it from zero to one in just 35 days. He was also open to reworking things based on my feedback and implemented the changes I proposed. Really appreciate the ownership he took throughout the project.",
+        "name": "BozSkyVedaLife",
+        "role": "Client",
+        "org": ""
+      }
+    }
+  ],
+  "process": [
+    {
+      "step": "01",
+      "title": "Scope",
+      "text": "A short call on the problem, data, constraints, and what 'done' looks like. You get a written outline — stack, risks, and a first milestone."
+    },
+    {
+      "step": "02",
+      "title": "Build",
+      "text": "Weekly demos, not a big reveal. Agents, APIs, and UIs land in a repo you own, with notes on why each decision was made."
+    },
+    {
+      "step": "03",
+      "title": "Ship",
+      "text": "Deploy, docs, and a runbook. Eval hooks where they matter. No mystery notebooks left behind."
+    },
+    {
+      "step": "04",
+      "title": "Support",
+      "text": "Optional retainer for the next slice — new tools, model swaps, or sitting with your team while they take the wheel."
+    }
+  ],
+  "engagements": [
+    {
+      "name": "Sprint",
+      "duration": "2–6 weeks",
+      "fit": "A bounded system: one agent loop, one RAG copilot, one API. Fixed scope, weekly demos."
+    },
+    {
+      "name": "Part-time",
+      "duration": "Ongoing",
+      "fit": "Embedded builder on your cadence. Architecture, shipping, and reviews without a full-time hire."
+    },
+    {
+      "name": "Contract",
+      "duration": "Project or retainer",
+      "fit": "When you need production ownership — deploys, MCP tools, and a handoff your staff can run."
+    }
+  ],
+  "contact": {
+    "eyebrow": "Next step",
+    "title": "Tell me what you're trying to ship.",
+    "note": "I read every note. Typical reply within one business day. For a faster start, include stack, deadline, and whether this is a sprint or an ongoing seat.",
+    "interests": [
+      "Multi-agent system",
+      "RAG / copilot",
+      "API / MCP tools",
+      "Logistics automation",
+      "Architecture / microservices",
+      "E-commerce",
+      "Web experience",
+      "Fractional / part-time",
+      "Something else"
+    ]
+  }
+}

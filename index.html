@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <!-- Primary SEO -->
   <title>Ram Bikkina | AI Engineer &amp; AI Systems Developer — rambuilds.in</title>
@@ -212,7 +212,7 @@
         rambuilds.in &mdash; Portfolio IDE
       </div>
       <div class="title-right">
-        <button class="zen-toggle-btn" id="ideZenBtn" type="button" title="Switch to Zen Shell">
+        <button class="zen-toggle-btn" id="ideZenBtn" type="button" title="Return to Zen Shell">
           <i class="fa-solid fa-compress"></i>
           <span>Zen</span>
         </button>
@@ -445,9 +445,14 @@
       </div>
 
       <div class="zen-top-actions">
-        <button class="zen-ide-btn" id="zenOpenIdeBtn" type="button" title="Expand into full IDE">
+        <!-- IDE remains in the repo; opened from Zen via `edit .`, not as a visitor mode. -->
+        <button class="zen-ide-btn" id="zenOpenIdeBtn" type="button" hidden title="Expand into full IDE">
           <i class="fa-solid fa-bars-staggered"></i>
           <span>Open IDE</span>
+        </button>
+        <button class="zen-rec-btn" id="zenSwitchRecruiterBtn" type="button" title="Switch to Recruiter Mode">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Recruiter</span>
         </button>
       </div>
     </header>
@@ -518,6 +523,10 @@
         <span><kbd>Tab</kbd> autocomplete</span>
         <span class="zen-foot-sep">·</span>
         <span>type <span class="zen-foot-mono">help</span> for all commands</span>
+        <span class="zen-foot-sep">·</span>
+        <span><span class="zen-foot-mono">edit .</span> opens the IDE</span>
+        <span class="zen-foot-sep">·</span>
+        <a class="zen-foot-link" href="./freelance.html">freelance</a>
       </footer>
     </main>
   </div>
@@ -534,8 +543,11 @@
           <span class="recruiter-brand-sub">Portfolio</span>
         </div>
         <div class="recruiter-top-actions">
-          <button class="recruiter-mode-btn" id="recruiterSwitchTechBtn" type="button" title="Switch to the computer-style view">
-            <i class="fa-solid fa-terminal"></i> Computer View
+          <a class="recruiter-mode-btn" href="./freelance.html">
+            <i class="fa-solid fa-briefcase"></i> <span>Freelance</span>
+          </a>
+          <button class="recruiter-mode-btn" id="recruiterSwitchTechBtn" type="button" title="Switch to Zen Shell">
+            <i class="fa-solid fa-terminal"></i> <span>Zen Shell</span>
           </button>
         </div>
       </header>
@@ -550,6 +562,9 @@
           <button class="recruiter-cta-btn" id="recruiterContactBtn" type="button">
             <i class="fa-solid fa-paper-plane"></i> Contact Ram
           </button>
+          <a class="recruiter-ghost-btn" href="./freelance.html">
+            Freelance studio <i class="fa-solid fa-arrow-right"></i>
+          </a>
           <a class="recruiter-ghost-btn" href="#recruiterProjects">
             See Projects <i class="fa-solid fa-arrow-right"></i>
           </a>
@@ -782,15 +797,15 @@
         <button class="visitor-mode-btn" id="visitorRecruiterBtn" type="button">
           <span class="visitor-mode-btn-icon"><i class="fa-solid fa-book-open"></i></span>
           <span class="visitor-mode-btn-text">
-            <strong>Simple &amp; easy to read</strong>
-            <small>For everyone — my story, work, and how to contact me</small>
+            <strong>Recruiter Mode</strong>
+            <small>Simple &amp; easy to read — my story, work, and how to contact me</small>
           </span>
         </button>
         <button class="visitor-mode-btn visitor-mode-btn-tech" id="visitorTechBtn" type="button">
           <span class="visitor-mode-btn-icon"><i class="fa-solid fa-terminal"></i></span>
           <span class="visitor-mode-btn-text">
-            <strong>Computer-style view</strong>
-            <small>For people comfortable with terminals and code</small>
+            <strong>Zen Shell</strong>
+            <small>Minimal command-line résumé — type commands to explore</small>
           </span>
         </button>
       </div>

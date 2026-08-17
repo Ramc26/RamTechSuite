@@ -52,6 +52,7 @@ Open the <span class="mdcode">TERMINAL</span> below and type <span class="mdcode
 | <span class="mdcode">help</span>                  | Show all available commands           |
 | <span class="mdcode">ls</span>                    | List portfolio files                  |
 | <span class="mdcode">open &lt;filename&gt;</span>       | Open a file in the editor             |
+| <span class="mdcode">edit .</span>               | Open the VS Code–style IDE            |
 | <span class="mdcode">cat &lt;filename&gt;</span>        | Print file contents to terminal       |
 | <span class="mdcode">run projects.ts</span>       | View projects (opens modal)           |
 | <span class="mdcode">run articles.md</span>       | View articles (opens modal)           |
@@ -487,6 +488,9 @@ function activateMode(mode, { remember } = {}) {
     } else {
         if (!techInitialized) {
             initTechMode();
+        } else {
+            // Tech mode is always Zen Shell; IDE is only reached via `edit .`.
+            showZenShell();
         }
     }
 }
@@ -525,13 +529,9 @@ function initTechMode() {
     setupMobileIDE();
     setupZenShell();
 
-    // Default landing surface: ZenShell (persisted in localStorage).
-    const savedShell = (localStorage.getItem(SHELL_MODE_KEY) || 'zen').toLowerCase();
-    if (savedShell === 'ide') {
-        showIdeShell({ initial: true });
-    } else {
-        showZenShell({ initial: true });
-    }
+    // Tech mode always lands on Zen Shell. The VS Code IDE stays in the repo
+    // and is opened from the shell with `edit .` — never as a visitor mode.
+    showZenShell({ initial: true });
 }
 
 // ========================================
@@ -550,6 +550,7 @@ function setupZenShell() {
     const palette = document.getElementById('zenPalette');
     const openIdeBtn = document.getElementById('zenOpenIdeBtn');
     const ideZenBtn = document.getElementById('ideZenBtn');
+    const zenSwitchRecruiterBtn = document.getElementById('zenSwitchRecruiterBtn');
     const enterHint = document.getElementById('zenEnterHint');
     if (!zenShell) return;
 
@@ -570,6 +571,12 @@ function setupZenShell() {
 
     if (openIdeBtn) openIdeBtn.addEventListener('click', () => showIdeShell());
     if (ideZenBtn) ideZenBtn.addEventListener('click', () => showZenShell());
+    if (zenSwitchRecruiterBtn) {
+        zenSwitchRecruiterBtn.addEventListener('click', () => {
+            cancelZenAutoType();
+            activateMode('recruiter');
+        });
+    }
 
     // Hide the "press Enter" hint as soon as the user touches the input.
     if (termInput) {
@@ -686,6 +693,39 @@ function showIdeShell({ initial = false } = {}) {
     maybeShowOnboarding();
 
     setTimeout(() => termInput && termInput.focus(), 280);
+}
+
+function isIdeShellActive() {
+    return document.body.classList.contains('tech-shell-ide');
+}
+
+function openIdeFromCommand(arg) {
+    const target = (arg || '.').trim();
+    const workspace = target === '' || target === '.' || target === './';
+    const alreadyIde = isIdeShellActive();
+
+    if (workspace) {
+        if (alreadyIde) {
+            printLine('t-muted-line', 'Already in the Portfolio IDE. Type "exit" to return to Zen Shell.');
+            return;
+        }
+        printLine('t-ok-line', '✓ Opening Portfolio IDE …');
+        showIdeShell();
+        printLine('t-muted-line', 'Type <span class="tp-path">exit</span> or click Zen to return to Zen Shell.');
+        return;
+    }
+
+    const key = findFileKey(target);
+    if (!key) {
+        printLine('t-err-line', `error: file not found — "${target}". Try: ls  (or edit . to open the IDE)`);
+        return;
+    }
+    if (!alreadyIde) {
+        printLine('t-ok-line', `✓ Opening ${FILES[key].name} in the Portfolio IDE …`);
+        showIdeShell();
+    }
+    renderFile(key);
+    printLine('t-ok-line', `✓ Opened ${FILES[key].name}`);
 }
 
 function zenAutoTypeWhoami() {
@@ -1477,6 +1517,8 @@ function processCommand(cmd) {
                 ['help', 'Show this help message'],
                 ['ls / ls -la', 'List portfolio files'],
                 ['open <file>', 'Open file in editor'],
+                ['edit .', 'Open the VS Code–style IDE'],
+                ['exit', 'Return to Zen Shell (from IDE)'],
                 ['cat <file>', 'Print file to terminal'],
                 ['run projects.ts', 'View projects (modal)'],
                 ['run articles.md', 'View articles (modal)'],
@@ -1511,6 +1553,11 @@ function processCommand(cmd) {
             const openKey = findFileKey(arg);
             if (openKey) { renderFile(openKey); printLine('t-ok-line', `✓ Opened ${FILES[openKey].name}`); }
             else printLine('t-err-line', `error: file not found — "${arg}". Try: ls`);
+            break;
+
+        case 'edit':
+        case 'code':
+            openIdeFromCommand(arg);
             break;
 
         case 'cat':
@@ -1576,7 +1623,12 @@ function processCommand(cmd) {
             break;
 
         case 'exit':
-            printLine('t-muted-line', 'You can never leave... 👻');
+            if (document.body.classList.contains('tech-shell-ide')) {
+                printLine('t-ok-line', '✓ Returning to Zen Shell …');
+                showZenShell();
+            } else {
+                printLine('t-muted-line', 'You can never leave... 👻');
+            }
             break;
 
         case 'neofetch':
