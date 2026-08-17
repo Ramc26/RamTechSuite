@@ -925,15 +925,17 @@ const REC_AVATAR_POSES = [
     './elements/pdp_poses/thumbsup.png',
 ];
 
-const REC_AVATAR_HOLD_MS = 3500;
 const REC_AVATAR_FADE_MS = 850;
 let recAvatarCycleTimer = null;
+let recOnAvatarTransitionStart = null;
+let recRequestAvatarAdvance = null;
 
 function stopRecAvatarCycle() {
     if (recAvatarCycleTimer) {
         clearTimeout(recAvatarCycleTimer);
         recAvatarCycleTimer = null;
     }
+    recRequestAvatarAdvance = null;
 }
 
 function preloadRecAvatarPoses() {
@@ -978,6 +980,8 @@ function initRecAvatarCycle() {
 
     initRecAvatarPointer(frame, reduceMotion);
 
+    recRequestAvatarAdvance = null;
+
     if (reduceMotion) return;
 
     preloadRecAvatarPoses();
@@ -985,10 +989,6 @@ function initRecAvatarCycle() {
     let currentIdx = 0;
     let activeIsA = true;
     let transitioning = false;
-
-    const scheduleNext = () => {
-        recAvatarCycleTimer = setTimeout(crossfade, REC_AVATAR_HOLD_MS);
-    };
 
     const crossfade = () => {
         if (transitioning) return;
@@ -1000,7 +1000,11 @@ function initRecAvatarCycle() {
 
         incoming.src = REC_AVATAR_POSES[nextIdx];
 
-        // Force paint before activating so opacity dissolve runs
+        // Thought timeline starts with avatar transition (t=0)
+        if (typeof recOnAvatarTransitionStart === 'function') {
+            recOnAvatarTransitionStart(nextIdx);
+        }
+
         void incoming.offsetWidth;
         incoming.classList.add('is-active');
         outgoing.classList.remove('is-active');
@@ -1009,11 +1013,13 @@ function initRecAvatarCycle() {
             currentIdx = nextIdx;
             activeIsA = !activeIsA;
             transitioning = false;
-            scheduleNext();
         }, REC_AVATAR_FADE_MS);
     };
 
-    scheduleNext();
+    recRequestAvatarAdvance = () => {
+        if (transitioning) return;
+        crossfade();
+    };
 }
 
 function initRecAvatarPointer(frame, reduceMotion) {
@@ -1053,10 +1059,156 @@ function initRecAvatarPointer(frame, reduceMotion) {
     area.addEventListener('pointerleave', onLeave);
 }
 
+/* ===== About thought bubble — synced to avatar settle ===== */
+const REC_THOUGHTS = [
+    'Should I go to office?',
+    'What\'s for breakfast?',
+    'What\'s on my calendar?',
+    'Need to order groceries?',
+    'Hmm..Coffee or tea? ☕',
+    'Shit, I forgot that.',
+    'Which model should I use?',
+    'This prompt needs to be refined.',
+    'Let\'s build a new tool.',
+    'What\'s new in AI?',
+    'Ah..I forgot what I was doing.',
+    'Should I make a quick POC?',
+    'Need to read this first.',
+    'What\'s happening on Twitter?',
+    'Wow, this song is catchy. 🎵',
+    'Oooo, this movie!',
+    'Should I ride or metro?',
+    'Days are too boring.',
+    'Let\'s plan a temple trip. 🛕',
+    'Maybe I need a break.',
+    'Namasthe Asthu Bhagan....',
+    'Godhuli dhusaritha....',
+    'Shiva nee Namamu Sarvavasyakaramau...',
+    'Kaladandhuru dheenulayeda...',
+    'Jaladaradehu...',
+];
+
+let recThoughtTimers = [];
+let recThoughtGen = 0;
+
+function stopRecThoughtBubble() {
+    recThoughtGen += 1;
+    recThoughtTimers.forEach((id) => clearTimeout(id));
+    recThoughtTimers = [];
+    recOnAvatarTransitionStart = null;
+}
+
+function scheduleRecThought(fn, ms) {
+    const gen = recThoughtGen;
+    const id = setTimeout(() => {
+        if (gen !== recThoughtGen) return;
+        fn();
+    }, ms);
+    recThoughtTimers.push(id);
+    return id;
+}
+
+function randBetween(min, max) {
+    return Math.floor(min + Math.random() * (max - min + 1));
+}
+
+function pickNextThought(prev) {
+    if (REC_THOUGHTS.length < 2) return REC_THOUGHTS[0] || '';
+    let next = REC_THOUGHTS[Math.floor(Math.random() * REC_THOUGHTS.length)];
+    let guards = 0;
+    while (next === prev && guards < 8) {
+        next = REC_THOUGHTS[Math.floor(Math.random() * REC_THOUGHTS.length)];
+        guards += 1;
+    }
+    if (next === prev) {
+        const idx = REC_THOUGHTS.indexOf(prev);
+        next = REC_THOUGHTS[(idx + 1) % REC_THOUGHTS.length];
+    }
+    return next;
+}
+
+function initRecThoughtBubble() {
+    stopRecThoughtBubble();
+
+    const root = document.getElementById('recThoughtBubble');
+    const textEl = document.getElementById('recThoughtText');
+    if (!root || !textEl) return;
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = '';
+    let thoughtBusy = false;
+
+    const clearPhases = () => {
+        root.classList.remove(
+            'is-show-sm',
+            'is-show-md',
+            'is-show-main',
+            'is-show-text',
+            'is-hiding'
+        );
+    };
+
+    const finishAndAdvance = () => {
+        thoughtBusy = false;
+        clearPhases();
+        // Quiet ≥4s, then next avatar + thought cycle
+        scheduleRecThought(() => {
+            if (typeof recRequestAvatarAdvance === 'function') {
+                recRequestAvatarAdvance();
+            } else if (reduceMotion) {
+                playThoughtTimeline();
+            }
+        }, 4000);
+    };
+
+    const playThoughtTimeline = () => {
+        if (thoughtBusy) return;
+        thoughtBusy = true;
+
+        current = pickNextThought(current);
+        textEl.textContent = current;
+        clearPhases();
+
+        if (reduceMotion) {
+            root.classList.add('is-show-sm', 'is-show-md', 'is-show-main', 'is-show-text');
+            scheduleRecThought(() => {
+                root.classList.add('is-hiding');
+                root.classList.remove('is-show-text', 'is-show-main', 'is-show-md', 'is-show-sm');
+                scheduleRecThought(finishAndAdvance, 400);
+            }, 4000);
+            return;
+        }
+
+        // Fixed timeline from avatar transition t=0 (prompt spec)
+        scheduleRecThought(() => root.classList.add('is-show-sm'), 120);
+        scheduleRecThought(() => root.classList.add('is-show-md'), 220);
+        scheduleRecThought(() => root.classList.add('is-show-main'), 360);
+        scheduleRecThought(() => root.classList.add('is-show-text'), 560);
+
+        scheduleRecThought(() => {
+            root.classList.add('is-hiding');
+            root.classList.remove('is-show-text');
+        }, 4560);
+        scheduleRecThought(() => root.classList.remove('is-show-main'), 4860);
+        scheduleRecThought(() => root.classList.remove('is-show-md'), 5060);
+        scheduleRecThought(() => root.classList.remove('is-show-sm'), 5260);
+        scheduleRecThought(finishAndAdvance, 5260);
+    };
+
+    // Fired when avatar crossfade begins
+    recOnAvatarTransitionStart = () => {
+        playThoughtTimeline();
+    };
+
+    // Initial pose: play thought without waiting for a transition
+    scheduleRecThought(playThoughtTimeline, reduceMotion ? 600 : 200);
+}
+
 async function renderRecruiterPage() {
     if (!recruiterAboutContent || !recruiterProjectsGrid || !recruiterExperienceTimeline || !recruiterStackOutput || !recruiterArticlesList) return;
 
     stopRecAvatarCycle();
+    stopRecThoughtBubble();
 
     recruiterAboutContent.innerHTML = '<div class="rec-loading">Loading portfolio...</div>';
     recruiterProjectsGrid.innerHTML = '<div class="rec-loading">Loading projects...</div>';
@@ -1072,10 +1224,51 @@ async function renderRecruiterPage() {
         <div class="rec-hero">
             <div class="rec-hero-card">
                 <div class="rec-avatar-col">
-                    <div class="avatar-ring avatar-ring-profile" aria-hidden="true">
-                        <div class="avatar-frame rec-avatar-live" id="recAvatarLive">
-                            <img class="rec-avatar is-active" src="./elements/pdp_poses/IMG_5903.PNG" alt="Ram Bikkina" width="200" height="200" decoding="async">
-                            <img class="rec-avatar" src="./elements/pdp_poses/IMG_5903.PNG" alt="" width="200" height="200" decoding="async" aria-hidden="true">
+                    <div class="rec-avatar-stage">
+                        <div class="avatar-ring avatar-ring-profile" aria-hidden="true">
+                            <div class="avatar-frame rec-avatar-live" id="recAvatarLive">
+                                <img class="rec-avatar is-active" src="./elements/pdp_poses/IMG_5903.PNG" alt="Ram Bikkina" width="200" height="200" decoding="async">
+                                <img class="rec-avatar" src="./elements/pdp_poses/IMG_5903.PNG" alt="" width="200" height="200" decoding="async" aria-hidden="true">
+                            </div>
+                        </div>
+                        <div class="rec-thought" id="recThoughtBubble" aria-hidden="true">
+                            <div class="rec-thought-main">
+                                <svg class="rec-thought-shape" viewBox="0 0 360 190" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+                                    <defs>
+                                        <radialGradient id="cloudBase" cx="32%" cy="28%" r="72%">
+                                            <stop offset="0%" stop-color="#FFFFFF"/>
+                                            <stop offset="55%" stop-color="#F7FAFF"/>
+                                            <stop offset="100%" stop-color="#F1F6FF"/>
+                                        </radialGradient>
+                                        <radialGradient id="cloudHighlight" cx="28%" cy="18%" r="45%">
+                                            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+                                            <stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.45"/>
+                                            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                                        </radialGradient>
+                                        <radialGradient id="cloudDepth" cx="50%" cy="90%" r="50%">
+                                            <stop offset="0%" stop-color="#D5DEEC" stop-opacity="0.22"/>
+                                            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                                        </radialGradient>
+                                        <clipPath id="recThoughtCloudClip">
+                                            <path d="M71.5 150 C42 150 24 130 27 103 C30 78 50 60 74 58 C78 34 100 18 126 20 C140 4 166 0 188 12 C206 1 234 6 246 26 C272 20 298 36 304 60 C330 64 348 84 346 108 C344 132 322 150 296 150 C280 162 252 166 222 162 C192 170 148 168 112 158 C96 162 80 158 71.5 150 Z"/>
+                                        </clipPath>
+                                        <filter id="cloudShadow" x="-35%" y="-35%" width="170%" height="180%">
+                                            <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#1E2D46" flood-opacity="0.16"/>
+                                        </filter>
+                                    </defs>
+                                    <g filter="url(#cloudShadow)">
+                                        <path class="rec-thought-cloud-base" fill="url(#cloudBase)" d="M71.5 150 C42 150 24 130 27 103 C30 78 50 60 74 58 C78 34 100 18 126 20 C140 4 166 0 188 12 C206 1 234 6 246 26 C272 20 298 36 304 60 C330 64 348 84 346 108 C344 132 322 150 296 150 C280 162 252 166 222 162 C192 170 148 168 112 158 C96 162 80 158 71.5 150 Z"/>
+                                    </g>
+                                    <g clip-path="url(#recThoughtCloudClip)">
+                                        <rect x="0" y="0" width="360" height="190" fill="url(#cloudDepth)"/>
+                                        <rect class="rec-thought-cloud-shine" x="0" y="0" width="360" height="190" fill="url(#cloudHighlight)"/>
+                                        <ellipse class="rec-thought-cloud-spec" cx="95" cy="46" rx="36" ry="16" fill="#FFFFFF" fill-opacity="0.55"/>
+                                    </g>
+                                </svg>
+                                <span class="rec-thought-text" id="recThoughtText"></span>
+                            </div>
+                            <span class="rec-thought-dot rec-thought-dot-md" aria-hidden="true"></span>
+                            <span class="rec-thought-dot rec-thought-dot-sm" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -1142,6 +1335,7 @@ async function renderRecruiterPage() {
     }).catch(() => { /* keep placeholder */ });
 
     initRecAvatarCycle();
+    initRecThoughtBubble();
 
     // Projects (redesigned) — featured flag driven by projects.json
     const isProjectFeatured = (p) => p.featured === true || p.features === true;

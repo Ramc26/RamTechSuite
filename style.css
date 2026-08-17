@@ -3620,7 +3620,7 @@ body.mode-recruiter #recruiterView .stack-badge {
     border: 1px solid var(--rec-border);
     border-radius: 20px;
     box-shadow: var(--rec-shadow);
-    overflow: hidden;
+    overflow: visible;
 }
 
 #recruiterView .rec-avatar-col {
@@ -3631,11 +3631,189 @@ body.mode-recruiter #recruiterView .stack-badge {
     background: linear-gradient(165deg, rgba(22, 163, 74, 0.10) 0%, rgba(245, 158, 11, 0.06) 55%, rgba(255, 255, 255, 0.5) 100%);
     border-right: 1px solid rgba(15, 23, 42, 0.06);
     perspective: 640px;
+    position: relative;
+    overflow: visible;
+    border-radius: 20px 0 0 20px;
 }
 
 #recruiterView .avatar-ring-profile {
     width: 148px;
     height: 148px;
+}
+
+/* Stage anchors thought trail to the avatar ring (not the column) */
+#recruiterView .rec-avatar-stage {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+/* ===== About thought bubble (decorative only) ===== */
+#recruiterView .rec-thought {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    user-select: none;
+    overflow: visible;
+}
+
+#recruiterView .rec-thought-dot {
+    background:
+        radial-gradient(circle at 32% 28%,
+            #ffffff 0%,
+            #f7faff 45%,
+            #eef3fb 100%);
+    box-shadow:
+        0 6px 14px rgba(30, 45, 70, 0.14),
+        0 2px 4px rgba(30, 45, 70, 0.08),
+        inset 0 2px 3px rgba(255, 255, 255, 0.95),
+        inset 0 -4px 8px rgba(148, 163, 184, 0.16);
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: center;
+    transition:
+        opacity 180ms ease-out,
+        transform 200ms ease-out;
+}
+
+#recruiterView .rec-thought-main {
+    position: absolute;
+    /* Above + slightly right of avatar; trail meets cloud lower-left */
+    right: -6px;
+    bottom: calc(100% + 14px);
+    width: 142px;
+    height: 82px;
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.75);
+    transform-origin: 25% 120%;
+    transition:
+        opacity 220ms ease-out,
+        transform 280ms cubic-bezier(0.22, 1.15, 0.36, 1);
+    overflow: visible;
+}
+
+#recruiterView .rec-thought-shape {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    filter:
+        drop-shadow(0 12px 18px rgba(30, 45, 70, 0.14))
+        drop-shadow(0 4px 8px rgba(30, 45, 70, 0.10));
+}
+
+#recruiterView .rec-thought-cloud-shine,
+#recruiterView .rec-thought-cloud-spec {
+    opacity: 0;
+    transition: opacity 700ms ease-out;
+}
+
+#recruiterView .rec-thought.is-show-main .rec-thought-cloud-shine,
+#recruiterView .rec-thought.is-show-main .rec-thought-cloud-spec {
+    opacity: 1;
+}
+
+#recruiterView .rec-thought-text {
+    position: absolute;
+    inset: 24% 14% 20%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-body, inherit);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #0F172A;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transform: translate3d(0, 5px, 0);
+    transition:
+        opacity 220ms ease-out,
+        transform 250ms ease-out;
+}
+
+/* Trail: top-right rim → curved stream into cloud (2 bubbles) */
+#recruiterView .rec-thought-dot-sm {
+    width: 11px;
+    height: 11px;
+    top: -6px;
+    right: 18px;
+    left: auto;
+    bottom: auto;
+}
+
+#recruiterView .rec-thought-dot-md {
+    width: 18px;
+    height: 18px;
+    top: -24px;
+    right: 4px;
+    left: auto;
+    bottom: auto;
+}
+
+#recruiterView .rec-thought.is-show-sm .rec-thought-dot-sm,
+#recruiterView .rec-thought.is-show-md .rec-thought-dot-md {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#recruiterView .rec-thought.is-show-main .rec-thought-main {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+#recruiterView .rec-thought.is-show-text .rec-thought-text {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+#recruiterView .rec-thought.is-hiding .rec-thought-text {
+    opacity: 0;
+    transform: translate3d(0, 3px, 0);
+    transition-duration: 220ms;
+}
+
+#recruiterView .rec-thought.is-hiding:not(.is-show-main) .rec-thought-main {
+    opacity: 0;
+    transform: translate3d(0, 4px, 0) scale(0.94);
+    transition-duration: 280ms;
+}
+
+#recruiterView .rec-thought.is-hiding:not(.is-show-md) .rec-thought-dot-md {
+    opacity: 0;
+    transform: scale(0.8);
+    transition-duration: 200ms;
+}
+
+#recruiterView .rec-thought.is-hiding:not(.is-show-sm) .rec-thought-dot-sm {
+    opacity: 0;
+    transform: scale(0.7);
+    transition-duration: 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #recruiterView .rec-thought-main,
+    #recruiterView .rec-thought-text,
+    #recruiterView .rec-thought-dot,
+    #recruiterView .rec-thought-cloud-shine,
+    #recruiterView .rec-thought-cloud-spec {
+        transition: opacity 280ms ease;
+        transform: none !important;
+    }
+
+    #recruiterView .rec-thought.is-show-main .rec-thought-main,
+    #recruiterView .rec-thought.is-show-sm .rec-thought-dot-sm,
+    #recruiterView .rec-thought.is-show-md .rec-thought-dot-md {
+        transform: none !important;
+    }
 }
 
 #recruiterView .rec-hero-meta {
@@ -4120,6 +4298,32 @@ body.mode-recruiter #recruiterView .stack-badge {
         width: 116px;
         height: 116px;
     }
+
+    #recruiterView .rec-thought-main {
+        right: -4px;
+        bottom: calc(100% + 10px);
+        width: 120px;
+        height: 70px;
+    }
+
+    #recruiterView .rec-thought-text {
+        font-size: 11px;
+        inset: 24% 13% 20%;
+    }
+
+    #recruiterView .rec-thought-dot-sm {
+        top: -4px;
+        right: 12px;
+        width: 9px;
+        height: 9px;
+    }
+
+    #recruiterView .rec-thought-dot-md {
+        top: -18px;
+        right: 2px;
+        width: 15px;
+        height: 15px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -4146,11 +4350,39 @@ body.mode-recruiter #recruiterView .stack-badge {
         border-bottom: 1px solid rgba(15, 23, 42, 0.06);
         padding: clamp(28px, 10vh, 48px) 20px clamp(22px, 7vh, 36px);
         min-height: clamp(220px, 42vh, 360px);
+        border-radius: 20px 20px 0 0;
     }
 
     #recruiterView .avatar-ring-profile {
         width: clamp(160px, 48vw, 220px);
         height: clamp(160px, 48vw, 220px);
+    }
+
+    #recruiterView .rec-thought-main {
+        right: -4px;
+        bottom: calc(100% + 14px);
+        width: 134px;
+        height: 78px;
+    }
+
+    #recruiterView .rec-thought-text {
+        font-size: 12px;
+        color: #0F172A;
+        inset: 24% 14% 20%;
+    }
+
+    #recruiterView .rec-thought-dot-sm {
+        top: -6px;
+        right: 22px;
+        width: 11px;
+        height: 11px;
+    }
+
+    #recruiterView .rec-thought-dot-md {
+        top: -24px;
+        right: 8px;
+        width: 17px;
+        height: 17px;
     }
 
     #recruiterView .rec-hero-meta {
