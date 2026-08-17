@@ -3630,6 +3630,7 @@ body.mode-recruiter #recruiterView .stack-badge {
     padding: 22px 18px;
     background: linear-gradient(165deg, rgba(22, 163, 74, 0.10) 0%, rgba(245, 158, 11, 0.06) 55%, rgba(255, 255, 255, 0.5) 100%);
     border-right: 1px solid rgba(15, 23, 42, 0.06);
+    perspective: 640px;
 }
 
 #recruiterView .avatar-ring-profile {
@@ -4294,7 +4295,13 @@ body.mode-recruiter #recruiterView .stack-badge {
 }
 
 .avatar-ring-profile .avatar-frame {
-    animation: avatarFloat 5s ease-in-out 0.8s infinite;
+    transition: transform 0.35s ease-out;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+}
+
+.avatar-ring-profile.is-tracking .avatar-frame {
+    transition: transform 0.12s ease-out;
 }
 
 .avatar-frame {
@@ -4317,6 +4324,35 @@ body.mode-recruiter #recruiterView .stack-badge {
     transform: scale(1.12);
     pointer-events: none;
     user-select: none;
+}
+
+/* About profile — layered crossfade inside existing circular frame */
+#recruiterView .avatar-frame.rec-avatar-live {
+    position: relative;
+}
+
+#recruiterView .rec-avatar-live .rec-avatar {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 850ms ease-in-out;
+    will-change: opacity, transform;
+}
+
+#recruiterView .rec-avatar-live .rec-avatar.is-active {
+    opacity: 1;
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #recruiterView .rec-avatar-live .rec-avatar {
+        transition: none;
+    }
+
+    .avatar-ring-profile .avatar-frame {
+        transition: none;
+    }
 }
 
 .visitor-mode-title {

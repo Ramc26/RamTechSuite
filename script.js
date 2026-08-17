@@ -914,8 +914,149 @@ async function fetchGitHubCommitCount() {
     return commitCount;
 }
 
+/* ===== About avatar — subtle randomized pose crossfade ===== */
+const REC_AVATAR_POSES = [
+    './elements/pdp_poses/IMG_5903.PNG',
+    './elements/pdp_poses/casual.png',
+    './elements/pdp_poses/coffee.png',
+    './elements/pdp_poses/hi.png',
+    './elements/pdp_poses/idea.png',
+    './elements/pdp_poses/thinking.png',
+    './elements/pdp_poses/thumbsup.png',
+];
+
+const REC_AVATAR_HOLD_MS = 3500;
+const REC_AVATAR_FADE_MS = 850;
+let recAvatarCycleTimer = null;
+
+function stopRecAvatarCycle() {
+    if (recAvatarCycleTimer) {
+        clearTimeout(recAvatarCycleTimer);
+        recAvatarCycleTimer = null;
+    }
+}
+
+function preloadRecAvatarPoses() {
+    REC_AVATAR_POSES.forEach((src) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = src;
+    });
+}
+
+function pickNextRecAvatarIndex(currentIdx) {
+    const len = REC_AVATAR_POSES.length;
+    if (len < 2) return 0;
+    let next = Math.floor(Math.random() * len);
+    // Never repeat consecutively; re-roll a few times to avoid fixed sequences
+    let guards = 0;
+    while (next === currentIdx && guards < 8) {
+        next = Math.floor(Math.random() * len);
+        guards += 1;
+    }
+    if (next === currentIdx) next = (currentIdx + 1) % len;
+    return next;
+}
+
+function initRecAvatarCycle() {
+    stopRecAvatarCycle();
+
+    const frame = document.getElementById('recAvatarLive');
+    if (!frame) return;
+
+    const layers = Array.from(frame.querySelectorAll('.rec-avatar'));
+    if (layers.length < 2) return;
+
+    const [layerA, layerB] = layers;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Default pose always first paint
+    layerA.src = REC_AVATAR_POSES[0];
+    layerA.classList.add('is-active');
+    layerB.classList.remove('is-active');
+    layerB.src = REC_AVATAR_POSES[0];
+
+    initRecAvatarPointer(frame, reduceMotion);
+
+    if (reduceMotion) return;
+
+    preloadRecAvatarPoses();
+
+    let currentIdx = 0;
+    let activeIsA = true;
+    let transitioning = false;
+
+    const scheduleNext = () => {
+        recAvatarCycleTimer = setTimeout(crossfade, REC_AVATAR_HOLD_MS);
+    };
+
+    const crossfade = () => {
+        if (transitioning) return;
+        transitioning = true;
+
+        const nextIdx = pickNextRecAvatarIndex(currentIdx);
+        const incoming = activeIsA ? layerB : layerA;
+        const outgoing = activeIsA ? layerA : layerB;
+
+        incoming.src = REC_AVATAR_POSES[nextIdx];
+
+        // Force paint before activating so opacity dissolve runs
+        void incoming.offsetWidth;
+        incoming.classList.add('is-active');
+        outgoing.classList.remove('is-active');
+
+        recAvatarCycleTimer = setTimeout(() => {
+            currentIdx = nextIdx;
+            activeIsA = !activeIsA;
+            transitioning = false;
+            scheduleNext();
+        }, REC_AVATAR_FADE_MS);
+    };
+
+    scheduleNext();
+}
+
+function initRecAvatarPointer(frame, reduceMotion) {
+    const ring = frame.closest('.avatar-ring-profile');
+    const area = frame.closest('.rec-avatar-col') || ring;
+    if (!ring || !area) return;
+
+    frame.style.transform = '';
+    ring.classList.remove('is-tracking');
+
+    if (reduceMotion) return;
+
+    const maxShift = 5; // px
+    const maxTilt = 5;  // deg
+
+    const onMove = (e) => {
+        const rect = ring.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+        const x = Math.max(-1, Math.min(1, nx));
+        const y = Math.max(-1, Math.min(1, ny));
+
+        ring.classList.add('is-tracking');
+        frame.style.transform =
+            `translate3d(${x * maxShift}px, ${y * maxShift}px, 0) ` +
+            `rotateX(${(-y * maxTilt).toFixed(2)}deg) rotateY(${(x * maxTilt).toFixed(2)}deg)`;
+    };
+
+    const onLeave = () => {
+        ring.classList.remove('is-tracking');
+        frame.style.transform = '';
+    };
+
+    area.addEventListener('pointermove', onMove);
+    area.addEventListener('pointerleave', onLeave);
+}
+
 async function renderRecruiterPage() {
     if (!recruiterAboutContent || !recruiterProjectsGrid || !recruiterExperienceTimeline || !recruiterStackOutput || !recruiterArticlesList) return;
+
+    stopRecAvatarCycle();
 
     recruiterAboutContent.innerHTML = '<div class="rec-loading">Loading portfolio...</div>';
     recruiterProjectsGrid.innerHTML = '<div class="rec-loading">Loading projects...</div>';
@@ -932,8 +1073,9 @@ async function renderRecruiterPage() {
             <div class="rec-hero-card">
                 <div class="rec-avatar-col">
                     <div class="avatar-ring avatar-ring-profile" aria-hidden="true">
-                        <div class="avatar-frame">
-                            <img class="rec-avatar" src="./elements/IMG_5903.PNG" alt="Ram Bikkina" loading="lazy" decoding="async">
+                        <div class="avatar-frame rec-avatar-live" id="recAvatarLive">
+                            <img class="rec-avatar is-active" src="./elements/pdp_poses/IMG_5903.PNG" alt="Ram Bikkina" width="200" height="200" decoding="async">
+                            <img class="rec-avatar" src="./elements/pdp_poses/IMG_5903.PNG" alt="" width="200" height="200" decoding="async" aria-hidden="true">
                         </div>
                     </div>
                 </div>
@@ -998,6 +1140,8 @@ async function renderRecruiterPage() {
         const el = document.getElementById('recruiterCommitCountNum');
         if (el) el.textContent = String(c);
     }).catch(() => { /* keep placeholder */ });
+
+    initRecAvatarCycle();
 
     // Projects (redesigned) — featured flag driven by projects.json
     const isProjectFeatured = (p) => p.featured === true || p.features === true;
@@ -1856,7 +2000,7 @@ async function openAboutModal() {
         <div class="about-output">
             <div class="about-hero">
                 <div class="about-avatar">
-                    <span class="about-avatar-text"><img src="./elements/IMG_5903.PNG" alt="Ram Bikkina" style="width: 100%; height: 100%; object-fit: contain;"></span>
+                    <span class="about-avatar-text"><img src="./elementspdp_poses/IMG_5903.PNG" alt="Ram Bikkina" style="width: 100%; height: 100%; object-fit: contain;"></span>
                     <span class="about-avatar-ring"></span>
                 </div>
                 <div class="about-hero-info">
