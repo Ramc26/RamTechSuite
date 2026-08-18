@@ -380,7 +380,6 @@ const recruiterProjectsGrid = document.getElementById('recruiterProjectsGrid');
 const recruiterExperienceTimeline = document.getElementById('recruiterExperienceTimeline');
 const recruiterStackOutput = document.getElementById('recruiterStackOutput');
 const recruiterArticlesList = document.getElementById('recruiterArticlesList');
-const recruiterContactBtn = document.getElementById('recruiterContactBtn');
 const recruiterSwitchTechBtn = document.getElementById('recruiterSwitchTechBtn');
 
 // ===== VISITOR MODE GATE DOM REFS =====
@@ -498,15 +497,110 @@ function activateMode(mode, { remember } = {}) {
 async function initRecruiterMode() {
     recruiterInitialized = true;
 
-    if (recruiterContactBtn) {
-        recruiterContactBtn.addEventListener('click', () => runContactScript());
+    if (recruiterView) {
+        recruiterView.addEventListener('click', (e) => {
+            if (e.target.closest('#recruiterContactBtn')) {
+                e.preventDefault();
+                runContactScript();
+            }
+        });
     }
     if (recruiterSwitchTechBtn) {
         recruiterSwitchTechBtn.addEventListener('click', () => activateMode('tech'));
     }
 
+    setupRecruiterNav();
+    setupRecruiterMobileMenu();
+
     // Render page sections.
     await renderRecruiterPage();
+    setupRecruiterMotion();
+}
+
+function setupRecruiterNav() {
+    const root = recruiterView;
+    if (!root) return;
+    const links = Array.from(root.querySelectorAll('.recruiter-nav-link'));
+    const sections = [...new Set(
+        links.map((a) => root.querySelector(a.getAttribute('href'))).filter(Boolean)
+    )];
+    if (!links.length || !sections.length) return;
+
+    const setActive = (id) => {
+        links.forEach((a) => {
+            a.classList.toggle('is-active', a.getAttribute('href') === `#${id}`);
+        });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible && visible.target.id) setActive(visible.target.id);
+    }, { root, rootMargin: '-18% 0px -62% 0px', threshold: [0.1, 0.25, 0.5] });
+
+    sections.forEach((sec) => observer.observe(sec));
+}
+
+function setupRecruiterMobileMenu() {
+    const root = recruiterView;
+    const toggle = document.getElementById('recruiterMenuToggle');
+    const overlay = document.getElementById('recruiterMenuOverlay');
+    if (!root || !toggle || !overlay) return;
+
+    const setOpen = (open) => {
+        overlay.classList.toggle('is-open', open);
+        toggle.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.classList.toggle('rec-menu-open', open);
+    };
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setOpen(!toggle.classList.contains('is-open'));
+    });
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.closest('.recruiter-nav-link')) {
+            setOpen(false);
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && toggle.classList.contains('is-open')) setOpen(false);
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && toggle.classList.contains('is-open')) setOpen(false);
+    });
+}
+
+function setupRecruiterMotion() {
+    const root = recruiterView;
+    if (!root) return;
+
+    const targets = [
+        ...root.querySelectorAll('.recruiter-section.rec-reveal'),
+        ...root.querySelectorAll('.rec-stats-grid'),
+    ];
+    const markIn = (el) => el.classList.add('is-in');
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduce || !('IntersectionObserver' in window)) {
+        targets.forEach(markIn);
+        return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            markIn(entry.target);
+            io.unobserve(entry.target);
+        });
+    }, { root, threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+
+    targets.forEach((el) => io.observe(el));
 }
 
 function initTechMode() {
@@ -1277,29 +1371,41 @@ async function renderRecruiterPage() {
                     <h2 class="rec-name limelight-regular">Ram Bikkina</h2>
                     <p class="rec-subtitle">AI systems, multi-agent orchestration, and production-grade APIs.</p>
 
-                    <div class="rec-chip-row">
-                        <span class="rec-chip">Multi-agent systems</span>
-                        <span class="rec-chip">MCP tooling</span>
-                        <span class="rec-chip">Cloud deployments</span>
-                        <span class="rec-chip">Backend dev</span>
-                        <span class="rec-chip">Frontend dev</span>
-                        <span class="rec-chip">RAG Systems</span>
-                        <span class="rec-chip">AI/ML Integrations</span>
-                    </div>
+                    <p class="rec-skill-line">
+                        Multi-agent systems
+                        <span aria-hidden="true">·</span> MCP tooling
+                        <span aria-hidden="true">·</span> Cloud deployments
+                        <span aria-hidden="true">·</span> Backend
+                        <span aria-hidden="true">·</span> Frontend
+                        <span aria-hidden="true">·</span> RAG
+                        <span aria-hidden="true">·</span> AI/ML
+                    </p>
 
                     <div class="rec-services">
                         <div class="rec-services-label">Services</div>
                         <div class="rec-service-row">
-                            <span class="rec-service-chip"><i class="fa-solid fa-server"></i> IT Services</span>
-                            <span class="rec-service-chip"><i class="fa-solid fa-laptop-code"></i> Freelancing</span>
-                            <span class="rec-service-chip"><i class="fa-solid fa-clock"></i> Part-time</span>
-                            <span class="rec-service-chip"><i class="fa-solid fa-file-contract"></i> Contract</span>
+                            <span class="rec-service-chip">IT Services</span>
+                            <span class="rec-service-chip">Freelancing</span>
+                            <span class="rec-service-chip">Part-time</span>
+                            <span class="rec-service-chip">Contract</span>
                         </div>
+                    </div>
+
+                    <div class="rec-hero-cta-row">
+                        <button class="recruiter-cta-btn" id="recruiterContactBtn" type="button">
+                            Contact Ram <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                        <a class="recruiter-ghost-btn" href="#recruiterProjects">
+                            View Projects <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a class="recruiter-ghost-btn" href="./freelance.html">
+                            Freelance studio
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <div class="rec-stats-grid">
+            <div class="rec-stats-grid" aria-label="Engineering metrics">
                 <div class="rec-stat-card">
                     <div class="rec-stat-num">${expLabel}</div>
                     <div class="rec-stat-label">Experience</div>
@@ -1314,8 +1420,26 @@ async function renderRecruiterPage() {
                 </div>
                 <div class="rec-stat-card">
                     <div class="rec-stat-num" id="recruiterCommitCountNum">…</div>
-                    <div class="rec-stat-label">GitHub commits (2024+)</div>
+                    <div class="rec-stat-label">Commits</div>
                 </div>
+            </div>
+
+            <div class="rec-currently">
+                <div class="rec-currently-label">Currently</div>
+                <dl class="rec-currently-list">
+                    <div>
+                        <dt>Building</dt>
+                        <dd>AI agent infrastructure</dd>
+                    </div>
+                    <div>
+                        <dt>Exploring</dt>
+                        <dd>Agentic architectures</dd>
+                    </div>
+                    <div>
+                        <dt>Writing</dt>
+                        <dd>AI engineering notes</dd>
+                    </div>
+                </dl>
             </div>
 
             <div class="rec-summary-card">
@@ -1331,60 +1455,88 @@ async function renderRecruiterPage() {
 
     fetchGitHubCommitCount().then((c) => {
         const el = document.getElementById('recruiterCommitCountNum');
-        if (el) el.textContent = String(c);
+        if (el) el.textContent = /^\d+$/.test(String(c)) ? `${c}+` : String(c);
     }).catch(() => { /* keep placeholder */ });
 
     initRecAvatarCycle();
     initRecThoughtBubble();
 
-    // Projects (redesigned) — featured flag driven by projects.json
+    // Projects — featured first (Kueri, Sleuth), then compact bento
     const isProjectFeatured = (p) => p.featured === true || p.features === true;
-    const featuredProjects = projects.filter(isProjectFeatured);
+    const featuredRank = (p) => {
+        const n = (p.name || '').toLowerCase();
+        if (n.includes('kueri')) return 0;
+        if (n.includes('sleuth')) return 1;
+        return 2;
+    };
+    const featuredProjects = projects.filter(isProjectFeatured).sort((a, b) => featuredRank(a) - featuredRank(b));
     const regularProjects = projects.filter((p) => !isProjectFeatured(p));
 
     const VISIBLE_REGULAR = 4;
     const visibleRegular = regularProjects.slice(0, VISIBLE_REGULAR);
     const extraRegular = regularProjects.slice(VISIBLE_REGULAR);
-    const visibleProjects = [...featuredProjects, ...visibleRegular];
 
-    const projectCard = (p, idx, opts = {}) => {
-        const isFeatured = opts.featured === true;
+    const projectFlow = (p) => {
+        const n = (p.name || '').toLowerCase();
+        if (n.includes('kueri')) {
+            return ['Natural Language', 'Agent', 'SQL Generation', 'MCP Tool', 'Database', 'Answer'];
+        }
+        if (n.includes('sleuth')) {
+            return ['Structured ledgers', 'Unstructured context', 'RAG-lite match', 'Investigation'];
+        }
+        return null;
+    };
+
+    const featuredCard = (p, idx) => {
         const num = String(idx + 1).padStart(2, '0');
-        const tags = (p.tech || []).slice(0, 5)
-            .map(t => `<span class="proj2-chip">${t}</span>`).join('');
-        const more = (p.tech || []).length > 5
-            ? `<span class="proj2-chip proj2-chip-more">+${p.tech.length - 5}</span>` : '';
-        const flag = isFeatured
-            ? `<span class="proj2-flag"><i class="fa-solid fa-star"></i> Featured</span>` : '';
+        const tags = (p.tech || []).slice(0, 6)
+            .map((t) => `<span class="rec-work-chip">${t}</span>`).join('');
+        const flow = projectFlow(p);
+        const flowHtml = flow
+            ? `<ol class="rec-work-flow">${flow.map((step) => `<li>${step}</li>`).join('')}</ol>`
+            : '';
+        const subtitle = (p.name || '').includes(':')
+            ? p.name.split(':').slice(1).join(':').trim()
+            : (p.impact || '');
+        const title = (p.name || '').includes(':')
+            ? p.name.split(':')[0].trim()
+            : p.name;
         return `
-            <article class="proj2-card${isFeatured ? ' proj2-card-featured' : ''}">
-                <span class="proj2-rail" aria-hidden="true"></span>
-                <div class="proj2-body">
-                    <div class="proj2-meta">
-                        <span class="proj2-num">${num}</span>
-                        ${flag}
-                    </div>
-                    <h3 class="proj2-title">${p.name}</h3>
-                    <p class="proj2-desc">${p.desc}</p>
-                    <div class="proj2-impact">
-                        <i class="fa-solid fa-bolt"></i>
-                        <span>${p.impact}</span>
-                    </div>
-                    <div class="proj2-foot">
-                        <div class="proj2-chips">${tags}${more}</div>
-                        <a class="proj2-link" href="${p.github || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer" aria-label="${p.name} on GitHub">
-                            <i class="bi bi-github"></i>
-                            <span>View</span>
-                            <i class="fa-solid fa-arrow-up-right-from-square proj2-link-ext"></i>
-                        </a>
-                    </div>
+            <article class="rec-work-featured">
+                <div class="rec-work-kicker">${num} · Featured</div>
+                <h3 class="rec-work-title">${title}</h3>
+                ${subtitle ? `<p class="rec-work-sub">${subtitle}</p>` : ''}
+                <p class="rec-work-desc">${p.desc}</p>
+                ${flowHtml}
+                <div class="rec-work-foot">
+                    <div class="rec-work-chips">${tags}</div>
+                    <a class="rec-work-link" href="${p.github || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer">
+                        View <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
                 </div>
             </article>
         `;
     };
 
-    const visibleProjectsHtml = visibleProjects
-        .map((p, i) => projectCard(p, i, { featured: isProjectFeatured(p) })).join('');
+    const compactCard = (p, idx) => {
+        const num = String(idx + 1).padStart(2, '0');
+        const tags = (p.tech || []).slice(0, 4)
+            .map((t) => `<span class="rec-work-chip">${t}</span>`).join('');
+        return `
+            <article class="rec-work-compact">
+                <span class="rec-work-num">${num}</span>
+                <h3 class="rec-work-title">${p.name}</h3>
+                <p class="rec-work-desc">${p.desc}</p>
+                <div class="rec-work-foot">
+                    <div class="rec-work-chips">${tags}</div>
+                    <a class="rec-work-link" href="${p.github || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer" aria-label="${p.name} on GitHub">
+                        View <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </article>
+        `;
+    };
+
     const extraProjectsHtml = extraRegular.length
         ? `
             <details class="rec-inline-details">
@@ -1392,26 +1544,27 @@ async function renderRecruiterPage() {
                     <span>More projects</span>
                     <span class="rec-inline-summary-hint">${extraRegular.length} more</span>
                 </summary>
-                <div class="rec-inline-details-inner">
-                    <div class="proj2-grid">
-                        ${extraRegular.map((p, i) => projectCard(p, i + visibleProjects.length, { featured: false })).join('')}
-                    </div>
+                <div class="rec-inline-details-inner rec-work-bento">
+                    ${extraRegular.map((p, i) => compactCard(p, featuredProjects.length + visibleRegular.length + i)).join('')}
                 </div>
             </details>
           `
         : '';
 
     recruiterProjectsGrid.innerHTML = `
-        <div class="proj2-grid">
-            ${visibleProjectsHtml}
+        <div class="rec-work">
+            ${featuredProjects.map((p, i) => featuredCard(p, i)).join('')}
+            <div class="rec-work-bento">
+                ${visibleRegular.map((p, i) => compactCard(p, featuredProjects.length + i)).join('')}
+            </div>
+            ${extraProjectsHtml}
         </div>
-        ${extraProjectsHtml}
     `;
 
     // Experience
     const experiences = [
         {
-            role: 'R&D Engineer I',
+            role: 'Python AI Engineer',
             company: 'Jukshio Technologies',
             location: 'Hyderabad, India',
             period: 'Jun 2024 — Present',
@@ -1421,6 +1574,8 @@ async function renderRecruiterPage() {
                 'Designed LangGraph stateful execution graphs',
                 'Deployed containerized microservices via Docker & K8s',
                 'Integrated OpenAI Whisper for real-time transcription',
+                'Developed and deployed production-grade APIs with FastAPI',
+
             ]
         },
         {
@@ -1444,6 +1599,7 @@ async function renderRecruiterPage() {
                 'Built Python automation & backend REST APIs',
                 'Improved database performance by 40% via SQL optimization',
                 'Developed internal tools reducing manual workflows',
+                
             ]
         },
     ];
@@ -1459,18 +1615,15 @@ async function renderRecruiterPage() {
                     ${!isLast ? '<span class="exp2-line"></span>' : ''}
                 </div>
                 <div class="exp2-card">
-                    <div class="exp2-period">
-                        <i class="fa-regular fa-calendar"></i>
-                        <span>${exp.period}</span>
-                    </div>
+                    <div class="exp2-period">${exp.period}</div>
                     <h3 class="exp2-role">${exp.role}</h3>
                     <div class="exp2-meta">
-                        <span class="exp2-meta-item"><i class="fa-solid fa-building"></i> ${exp.company}</span>
+                        <span>${exp.company}</span>
                         <span class="exp2-sep" aria-hidden="true">·</span>
-                        <span class="exp2-meta-item"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
+                        <span>${exp.location}</span>
                     </div>
                     <ul class="exp2-bullets">
-                        ${top.map(h => `<li><i class="fa-solid fa-check"></i><span>${h}</span></li>`).join('')}
+                        ${top.map(h => `<li>${h}</li>`).join('')}
                     </ul>
                     ${rest.length ? `
                         <details class="rec-inline-details exp2-more">
@@ -1479,7 +1632,7 @@ async function renderRecruiterPage() {
                                 <span class="rec-inline-summary-hint">${rest.length} more</span>
                             </summary>
                             <ul class="exp2-bullets exp2-bullets-rest">
-                                ${rest.map(h => `<li><i class="fa-solid fa-check"></i><span>${h}</span></li>`).join('')}
+                                ${rest.map(h => `<li>${h}</li>`).join('')}
                             </ul>
                         </details>
                     ` : ''}
@@ -1494,32 +1647,69 @@ async function renderRecruiterPage() {
         </ol>
     `;
 
-    // Stack (redesigned: categorized cards)
+    // Stack — typographic groups from existing skill set
+    const stackIcon = (name) => {
+        const map = {
+            'CrewAI': 'fa-solid fa-robot',
+            'LangGraph': 'fa-solid fa-diagram-project',
+            'LangChain': 'fa-solid fa-link',
+            'MCP Tools': 'fa-solid fa-plug',
+            'MCP': 'fa-solid fa-plug',
+            'Whisper': 'fa-solid fa-microphone',
+            'Vertex AI': 'devicon-googlecloud-plain',
+            'OpenCV': 'devicon-opencv-plain',
+            'Python': 'devicon-python-plain',
+            'FastAPI': 'devicon-fastapi-plain',
+            'Flask': 'devicon-flask-original',
+            'Django': 'devicon-django-plain',
+            'GoLang': 'devicon-go-original-wordmark',
+            'Go': 'devicon-go-original-wordmark',
+            'REST APIs': 'fa-solid fa-network-wired',
+            'SQLAlchemy': 'devicon-sqlalchemy-plain',
+            'PostgreSQL': 'devicon-postgresql-plain',
+            'MySQL': 'devicon-mysql-plain',
+            'MongoDB': 'devicon-mongodb-plain',
+            'Milvus': 'fa-solid fa-cubes',
+            'AWS': 'fa-brands fa-aws',
+            'GCP': 'devicon-googlecloud-plain',
+            'Azure': 'devicon-azure-plain',
+            'Docker': 'devicon-docker-plain',
+            'Kubernetes': 'devicon-kubernetes-plain',
+            'Terraform': 'devicon-terraform-plain',
+            'CI/CD': 'fa-solid fa-gears',
+            'JavaScript': 'devicon-javascript-plain',
+            'SQL': 'fa-solid fa-table',
+            'Bash': 'devicon-bash-plain',
+            'AWS Dev Assoc': 'fa-brands fa-aws',
+            'AWS Dev Associate': 'fa-brands fa-aws',
+            'Microsoft (Python & JS)': 'fa-brands fa-microsoft',
+            'Microsoft Certs': 'fa-brands fa-microsoft',
+        };
+        return map[name] || 'fa-solid fa-code';
+    };
+
     const stackData = [
-        { category: 'AI / ML',         icon: 'fa-solid fa-microchip',     items: ['CrewAI', 'LangGraph', 'LangChain', 'MCP Tools', 'Whisper', 'OpenCV', 'Vertex AI'] },
-        { category: 'Backend',         icon: 'fa-solid fa-server',        items: ['Python', 'FastAPI', 'Flask', 'Django', 'GoLang', 'REST APIs', 'SQLAlchemy'] },
-        { category: 'Databases',       icon: 'fa-solid fa-database',      items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Milvus'] },
-        { category: 'Cloud & DevOps',  icon: 'fa-solid fa-cloud',         items: ['AWS', 'GCP', 'Azure', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'] },
-        { category: 'Languages',       icon: 'fa-solid fa-code',          items: ['JavaScript', 'SQL', 'Bash'] },
-        { category: 'Certifications',  icon: 'fa-solid fa-certificate',   items: ['AWS Dev Assoc', 'Microsoft (Python & JS)'] },
+        { category: 'AI / Agents', items: ['CrewAI', 'LangGraph', 'LangChain', 'MCP Tools', 'Whisper', 'Vertex AI', 'OpenCV'] },
+        { category: 'Backend', items: ['Python', 'FastAPI', 'Flask', 'Django', 'GoLang', 'REST APIs', 'SQLAlchemy'] },
+        { category: 'Data', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Milvus'] },
+        { category: 'Cloud & Infrastructure', items: ['AWS', 'GCP', 'Azure', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'] },
+        { category: 'Languages & Certs', items: ['JavaScript', 'SQL', 'Bash', 'AWS Dev Assoc', 'Microsoft (Python & JS)'] },
     ];
 
-    const stackCard = (cat) => `
-        <article class="stack2-card">
-            <header class="stack2-head">
-                <span class="stack2-icon"><i class="${cat.icon}"></i></span>
-                <h4 class="stack2-cat">${cat.category}</h4>
-                <span class="stack2-count">${cat.items.length}</span>
-            </header>
-            <div class="stack2-chips">
-                ${cat.items.map(it => `<span class="stack2-chip">${it}</span>`).join('')}
-            </div>
-        </article>
-    `;
-
     recruiterStackOutput.innerHTML = `
-        <div class="stack2-grid">
-            ${stackData.map(stackCard).join('')}
+        <div class="rec-stack">
+            ${stackData.map((cat) => `
+                <div class="rec-stack-group">
+                    <h3 class="rec-stack-cat">${cat.category}</h3>
+                    <div class="rec-stack-tiles">
+                        ${cat.items.map((it) => {
+                            const icon = stackIcon(it);
+                            const kind = icon.startsWith('devicon-') ? 'devicon' : 'fa';
+                            return `<span class="rec-stack-tile"><i class="${icon}${kind === 'fa' ? '' : ' colored'}" aria-hidden="true"></i><span>${it}</span></span>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('')}
         </div>
     `;
 
@@ -1537,24 +1727,22 @@ async function renderRecruiterPage() {
         return { icon: 'fa-solid fa-newspaper', label: platform || 'Article', mod: '' };
     };
 
-    const articleCard = (a) => {
+    const articleCard = (a, idx) => {
         const meta = platformMeta(a.platform);
+        const num = String(idx + 1).padStart(2, '0');
         return `
-            <a class="art2-card" href="${a.url || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer">
-                <div class="art2-top">
-                    <span class="art2-tag">${a.tag}</span>
-                    <span class="art2-source ${meta.mod}"><i class="${meta.icon}"></i> ${meta.label}</span>
-                </div>
-                <h3 class="art2-title">${a.title}</h3>
-                <p class="art2-desc">${a.desc}</p>
-                <div class="art2-foot">
-                    <span class="art2-read">Read on ${meta.label} <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
+            <a class="rec-writing-row" href="${a.url || 'https://github.com/Ramc26'}" target="_blank" rel="noopener noreferrer">
+                <span class="rec-writing-num">${num}</span>
+                <span class="rec-writing-title">${a.title}</span>
+                <span class="rec-writing-desc">${a.desc}</span>
+                <span class="rec-writing-tag">${a.tag}</span>
+                <span class="rec-writing-source">${meta.label}</span>
+                <span class="rec-writing-go">Read <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </a>
         `;
     };
 
-    const featuredHtml = featuredArticles.map(articleCard).join('');
+    const featuredHtml = featuredArticles.map((a, i) => articleCard(a, i)).join('');
     const extraHtml = extraArticles.length
         ? `
             <details class="rec-inline-details">
@@ -1562,17 +1750,15 @@ async function renderRecruiterPage() {
                     <span>More articles</span>
                     <span class="rec-inline-summary-hint">${extraArticles.length} more</span>
                 </summary>
-                <div class="rec-inline-details-inner">
-                    <div class="art2-grid">
-                        ${extraArticles.map(articleCard).join('')}
-                    </div>
+                <div class="rec-inline-details-inner rec-writing">
+                    ${extraArticles.map((a, i) => articleCard(a, featuredArticles.length + i)).join('')}
                 </div>
             </details>
           `
         : '';
 
     recruiterArticlesList.innerHTML = `
-        <div class="art2-grid">
+        <div class="rec-writing">
             ${featuredHtml}
         </div>
         ${extraHtml}

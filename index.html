@@ -537,88 +537,91 @@
   <div id="recruiterView" class="recruiter-view" aria-label="Portfolio">
     <div class="recruiter-shell">
       <header class="recruiter-topbar">
-        <div class="recruiter-brand">
-          <i class="fa-solid fa-terminal"></i>
+        <a class="recruiter-brand" href="#recruiterAbout">
+          <span class="recruiter-brand-prompt" aria-hidden="true">&gt;_</span>
           <span class="recruiter-brand-name limelight-regular">rambuilds.in</span>
           <span class="recruiter-brand-sub">Portfolio</span>
-        </div>
+        </a>
+        <nav class="recruiter-nav" id="recruiterDesktopNav" aria-label="Section">
+          <a class="recruiter-nav-link" href="#recruiterAbout">About</a>
+          <a class="recruiter-nav-link" href="#recruiterExperience">Experience</a>
+          <a class="recruiter-nav-link" href="#recruiterProjects">Projects</a>
+          <a class="recruiter-nav-link" href="#recruiterStack">Stack</a>
+          <a class="recruiter-nav-link" href="#recruiterArticles">Writing</a>
+        </nav>
         <div class="recruiter-top-actions">
-          <a class="recruiter-mode-btn" href="./freelance.html">
-            <i class="fa-solid fa-briefcase"></i> <span>Freelance</span>
+          <a class="recruiter-mode-btn recruiter-mode-btn-desk recruiter-mode-btn-freelance" href="./freelance.html" aria-label="Freelance">
+            <i class="fa-solid fa-briefcase" aria-hidden="true"></i> <span>Freelance</span>
           </a>
-          <button class="recruiter-mode-btn" id="recruiterSwitchTechBtn" type="button" title="Switch to Zen Shell">
-            <i class="fa-solid fa-terminal"></i> <span>Zen Shell</span>
+          <button class="recruiter-mode-btn recruiter-mode-btn-desk recruiter-mode-btn-zen" id="recruiterSwitchTechBtn" type="button" title="Switch to Zen Shell" aria-label="Zen Shell">
+            <i class="fa-solid fa-terminal" aria-hidden="true"></i> <span>Zen Shell</span>
+          </button>
+          <button class="recruiter-menu-toggle" id="recruiterMenuToggle" type="button" aria-expanded="false" aria-controls="recruiterMenuSheet" aria-label="Open menu">
+            <span class="rec-menu-icon" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
           </button>
         </div>
       </header>
+      <div class="recruiter-menu-overlay" id="recruiterMenuOverlay">
+        <nav class="recruiter-menu-sheet" id="recruiterMenuSheet" aria-label="Mobile">
+          <a class="recruiter-nav-link" href="#recruiterAbout">About</a>
+          <a class="recruiter-nav-link" href="#recruiterExperience">Experience</a>
+          <a class="recruiter-nav-link" href="#recruiterProjects">Projects</a>
+          <a class="recruiter-nav-link" href="#recruiterStack">Stack</a>
+          <a class="recruiter-nav-link" href="#recruiterArticles">Writing</a>
+        </nav>
+      </div>
 
-      <section class="recruiter-section">
+      <section class="recruiter-section rec-reveal" id="recruiterAbout">
         <div class="recruiter-section-header">
-          <i class="fa-solid fa-id-badge"></i>
-          <span>About</span>
+          <span class="rec-sec-label">About</span>
         </div>
         <div id="recruiterAboutContent"></div>
-        <div class="recruiter-hero-cta-row">
-          <button class="recruiter-cta-btn" id="recruiterContactBtn" type="button">
-            <i class="fa-solid fa-paper-plane"></i> Contact Ram
-          </button>
-          <a class="recruiter-ghost-btn" href="./freelance.html">
-            Freelance studio <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a class="recruiter-ghost-btn" href="#recruiterProjects">
-            See Projects <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
       </section>
 
-      <section class="recruiter-section" id="recruiterExperience">
+      <section class="recruiter-section rec-reveal" id="recruiterExperience">
         <div class="recruiter-section-header">
-          <i class="fa-solid fa-clock-rotate-left"></i>
-          <span>Experience</span>
+          <span class="rec-sec-label">Experience</span>
+          <span class="rec-sec-lede">Roles and production systems I’ve shipped.</span>
         </div>
         <div id="recruiterExperienceTimeline" class="exp-timeline"></div>
       </section>
 
-      <section class="recruiter-section" id="recruiterProjects">
+      <section class="recruiter-section rec-reveal" id="recruiterProjects">
         <div class="recruiter-section-header">
-          <i class="fa-solid fa-diagram-project"></i>
-          <span>Projects</span>
+          <span class="rec-sec-label">Selected work</span>
+          <span class="rec-sec-lede">Systems I’ve designed, built, and shipped.</span>
         </div>
         <div id="recruiterProjectsGrid" class="projects-output-grid"></div>
       </section>
 
-      <section class="recruiter-section" id="recruiterStack">
+      <section class="recruiter-section rec-reveal" id="recruiterStack">
         <div class="recruiter-section-header">
-          <i class="fa-solid fa-layer-group"></i>
-          <span>Stack</span>
+          <span class="rec-sec-label">Tech stack</span>
+          <span class="rec-sec-lede">Tools I use to design, ship, and operate systems.</span>
         </div>
-        <details class="rec-details" id="recruiterStackDetails">
-          <summary class="rec-summary">
-            <span>Tech Stack</span>
-            <span class="rec-summary-hint">click to expand</span>
-          </summary>
-          <div id="recruiterStackOutput" class="stack-output"></div>
-        </details>
+        <div id="recruiterStackOutput" class="stack-output"></div>
       </section>
 
-      <section class="recruiter-section" id="recruiterArticles">
+      <section class="recruiter-section rec-reveal" id="recruiterArticles">
         <div class="recruiter-section-header">
-          <i class="fa-solid fa-pen-nib"></i>
-          <span>Articles</span>
+          <span class="rec-sec-label">Writing</span>
+          <span class="rec-sec-lede">Experiments, engineering notes &amp; things I’ve learned.</span>
         </div>
         <div id="recruiterArticlesList" class="articles-output-list"></div>
       </section>
 
-      <div class="recruiter-footer">
-        <span>Built with taste. Delivered with clarity.</span>
+      <footer class="recruiter-footer">
+        <p class="recruiter-footer-mark">Built with taste. Delivered with clarity.</p>
         <span class="recruiter-footer-links">
           <a href="https://www.rambuilds.in/" rel="noopener noreferrer">rambuilds.in</a>
           <span class="recruiter-footer-sep">·</span>
-          <a href="mailto:itsrambikkina@gmail.com">itsrambikkina@gmail.com</a>
+          <a href="mailto:itsrambikkina@gmail.com">Email</a>
           <span class="recruiter-footer-sep">·</span>
           <a href="https://github.com/Ramc26" target="_blank" rel="noopener noreferrer">GitHub</a>
         </span>
-      </div>
+      </footer>
     </div>
   </div>
 
