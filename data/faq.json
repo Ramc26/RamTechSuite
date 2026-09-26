@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "q": "What does Ram Bikkina build?",
+      "a": "Ram designs and ships production AI systems: multi-agent orchestration (CrewAI, LangGraph), RAG and internal copilots, MCP tools and servers, FastAPI backends, text-to-SQL data apps, and cloud deployments for founders and product teams."
+    },
+    {
+      "q": "Does Ram take freelance AI engineering projects?",
+      "a": "Yes. Ram works on freelance and contract engagements — scoped sprints, part-time embedded seats, and project retainers — with weekly demos and handoff in repos clients own."
+    },
+    {
+      "q": "Does Ram work on contract engagements?",
+      "a": "Yes. Contract work includes fixed-scope builds (agents, copilots, APIs) and ongoing retainers for production ownership, deploys, and MCP integrations."
+    },
+    {
+      "q": "Can Ram build AI agents?",
+      "a": "Yes. Ram builds supervisor-led multi-agent systems with specialist delegation, custom MCP tools, eval hooks, and production APIs — not one-off prompt demos."
+    },
+    {
+      "q": "Can Ram build MCP servers?",
+      "a": "Yes. Ram builds Model Context Protocol servers and tool integrations so Claude, Cursor, and custom agents can call your APIs and internal systems with structured schemas."
+    },
+    {
+      "q": "Can Ram build RAG applications?",
+      "a": "Yes. Ram builds grounded Q&A over docs, ledgers, Slack, and tickets with ingestion pipelines, tool-routed retrieval, citations, and team-facing UIs."
+    },
+    {
+      "q": "Can Ram build Python and FastAPI backends?",
+      "a": "Yes. Ram ships FastAPI and Flask services with auth, rate limits, structured logging, SSE streams, and deployment-ready packaging."
+    },
+    {
+      "q": "Can Ram help build an AI product from an idea?",
+      "a": "Yes. Engagements start with a short scope call and written milestone; Ram delivers working software in your repo with docs and deploy paths — typical fit is an AI MVP or first production slice."
+    },
+    {
+      "q": "Does Ram work remotely?",
+      "a": "Yes. Ram is based in Hyderabad, India and works remotely with US, EU, and India timezones."
+    },
+    {
+      "q": "Is Ram available for fractional AI engineering?",
+      "a": "Yes. Fractional / part-time embedding covers architecture reviews, agent debugging, and shipping the next milestone alongside your team."
+    },
+    {
+      "q": "What technologies does Ram use?",
+      "a": "Python, FastAPI, Flask, CrewAI, LangGraph, LangChain, MCP, OpenAI and other LLM APIs, FAISS, Streamlit, Docker, Kubernetes, AWS/GCP/Azure, and standard data tooling (Postgres, Pandas, etc.) depending on the project."
+    },
+    {
+      "q": "How can I contact Ram?",
+      "a": "Email itsrambikkina@gmail.com, call +91 70958 38715, or use the contact form on this page. GitHub: github.com/Ramc26."
+    }
+  ]
+}

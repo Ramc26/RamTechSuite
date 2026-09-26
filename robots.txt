@@ -1,7 +1,24 @@
 # https://www.rambuilds.in/
-# Ram Bikkina (Ramarao Bikkina, VVRB, itsmeramc) — official portfolio
+# Ram Bikkina — official portfolio
 
 User-agent: *
 Allow: /
+
+# AI search / answer crawlers (search access — not training policy)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Training crawlers: default site-wide Allow above; restrict here if you opt out later
+# User-agent: GPTBot
+# Disallow: /
 
 Sitemap: https://www.rambuilds.in/sitemap.xml

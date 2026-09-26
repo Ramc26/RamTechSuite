@@ -36,26 +36,41 @@ function splitHeadline(text) {
     ).join(' ');
 }
 
+function setTextIfEmpty(id, value) {
+    const el = $(id);
+    if (!el || !value) return;
+    if (!el.textContent.trim()) el.textContent = value;
+}
+
 function renderHero(data) {
     const m = data.meta || {};
-    $('flAvailability').textContent = m.availability || m.kicker || '';
-    splitHeadline(m.headline || '');
-    $('flLede').textContent = m.lede || '';
-    $('flCtaPrimary').textContent = m.ctaPrimary || 'Start a project';
-    $('flCtaSecondary').textContent = m.ctaSecondary || 'See selected work';
+    setTextIfEmpty('flAvailability', m.availability || m.kicker || '');
+    const headlineEl = $('flHeadline');
+    const headline = m.headline || headlineEl?.textContent?.trim() || '';
+    if (headline) splitHeadline(headline);
+    setTextIfEmpty('flLede', m.lede || '');
+    setTextIfEmpty('flCtaPrimary', m.ctaPrimary || 'Start a project');
+    setTextIfEmpty('flCtaSecondary', m.ctaSecondary || 'See selected work');
     const bits = [m.location, m.email].filter(Boolean);
-    $('flHeroMeta').textContent = bits.join('  ·  ');
+    if (!$('flHeroMeta').textContent.trim()) {
+        $('flHeroMeta').textContent = bits.join('  ·  ');
+    }
 
-    $('flStats').innerHTML = (data.stats || []).map((s) => `
+    const statsHost = $('flStats');
+    if (!statsHost.querySelector('.fl-stat')) {
+        statsHost.innerHTML = (data.stats || []).map((s) => `
         <article class="fl-stat">
             <div class="fl-stat-value">${escapeHtml(s.value)}</div>
             <div class="fl-stat-label">${escapeHtml(s.label)}</div>
         </article>
     `).join('');
+    }
 }
 
 function renderServices(services) {
-    $('flServices').innerHTML = (services || []).map((s) => `
+    const host = $('flServices');
+    if (host.querySelector('.fl-service')) return;
+    host.innerHTML = (services || []).map((s) => `
         <article class="fl-service">
             <div class="fl-service-icon" aria-hidden="true"><i class="fa-solid ${escapeHtml(s.icon || 'fa-circle')}"></i></div>
             <h3>${escapeHtml(s.name)}</h3>
@@ -269,7 +284,9 @@ function renderQuotes(items) {
 }
 
 function renderProcess(steps) {
-    $('flProcess').innerHTML = (steps || []).map((s) => `
+    const host = $('flProcess');
+    if (host.querySelector('.fl-step')) return;
+    host.innerHTML = (steps || []).map((s) => `
         <article class="fl-step">
             <div class="fl-step-num">${escapeHtml(s.step)}</div>
             <h3>${escapeHtml(s.title)}</h3>
@@ -279,7 +296,9 @@ function renderProcess(steps) {
 }
 
 function renderEngage(items) {
-    $('flEngage').innerHTML = (items || []).map((e) => `
+    const host = $('flEngage');
+    if (host.querySelector('.fl-engage-card')) return;
+    host.innerHTML = (items || []).map((e) => `
         <article class="fl-engage-card">
             <h3>${escapeHtml(e.name)}</h3>
             <div class="dur">${escapeHtml(e.duration)}</div>
@@ -291,14 +310,16 @@ function renderEngage(items) {
 function renderContact(data) {
     const c = data.contact || {};
     const m = data.meta || {};
-    $('flContactEyebrow').textContent = c.eyebrow || '';
-    $('flContactTitle').textContent = c.title || '';
-    $('flContactNote').textContent = c.note || '';
+    setTextIfEmpty('flContactEyebrow', c.eyebrow || '');
+    setTextIfEmpty('flContactTitle', c.title || '');
+    setTextIfEmpty('flContactNote', c.note || '');
 
     const select = $('flInterest');
-    select.innerHTML = (c.interests || ['Something else']).map((opt) =>
-        `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`
-    ).join('');
+    if (select && !select.options.length) {
+        select.innerHTML = (c.interests || ['Something else']).map((opt) =>
+            `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`
+        ).join('');
+    }
 
     const channels = document.querySelectorAll('.fl-channel');
     if (channels[0] && m.email) {

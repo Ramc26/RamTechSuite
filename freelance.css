@@ -555,6 +555,10 @@ html {
     margin-bottom: 28px;
 }
 
+.fl-section-index-empty {
+    visibility: hidden;
+}
+
 .fl-section-index {
     font-family: var(--font-display);
     font-size: 13px;
@@ -574,6 +578,70 @@ html {
     color: var(--fl-muted);
     margin-top: 6px;
     max-width: 40rem;
+}
+
+.fl-service-links {
+    margin-top: 1.25rem;
+    font-size: 0.88rem;
+    color: var(--fl-muted);
+    max-width: 68ch;
+}
+
+.fl-service-links a {
+    color: var(--fl-copper-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.fl-faq details {
+    border-bottom: 1px solid var(--fl-line);
+    padding: 0.85rem 0;
+}
+
+.fl-faq summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--fl-ink);
+    list-style: none;
+}
+
+.fl-faq summary::-webkit-details-marker {
+    display: none;
+}
+
+.fl-faq p {
+    margin-top: 0.55rem;
+    color: var(--fl-muted);
+    font-size: 0.95rem;
+    max-width: 68ch;
+}
+
+.fl-faq a {
+    color: var(--fl-copper-2);
+}
+
+.fl-work-noscript {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.fl-work-noscript article {
+    padding: 1rem;
+    background: var(--fl-surface);
+    border-radius: var(--fl-radius-sm);
+    border: 1px solid var(--fl-line);
+}
+
+.fl-work-noscript h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+}
+
+.fl-work-noscript p {
+    color: var(--fl-muted);
+    font-size: 0.92rem;
 }
 
 .fl-subhead {

@@ -1,0 +1,123 @@
+/* Content pages (services / projects) — same palette as freelance, prose layout only */
+
+.seo-page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--fl-max);
+    margin: 0 auto;
+    padding: calc(80px + var(--fl-pad)) var(--fl-pad) var(--fl-pad);
+}
+
+.seo-page h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.35rem);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+}
+
+.seo-page .seo-lede {
+    color: var(--fl-muted);
+    font-size: 1.05rem;
+    max-width: 62ch;
+    margin-bottom: 2rem;
+}
+
+.seo-page h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    margin: 2rem 0 0.75rem;
+}
+
+.seo-page h3 {
+    font-size: 1.05rem;
+    margin: 1.25rem 0 0.5rem;
+    color: var(--fl-copper-2);
+}
+
+.seo-page p,
+.seo-page li {
+    color: var(--fl-ink);
+    max-width: 68ch;
+}
+
+.seo-page ul {
+    margin: 0.5rem 0 1rem 1.25rem;
+    color: var(--fl-muted);
+}
+
+.seo-page a {
+    color: var(--fl-copper-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.seo-breadcrumb {
+    font-size: 0.85rem;
+    color: var(--fl-faint);
+    margin-bottom: 1.5rem;
+}
+
+.seo-breadcrumb a {
+    color: var(--fl-muted);
+}
+
+.seo-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+}
+
+.seo-card-grid {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+}
+
+@media (min-width: 640px) {
+    .seo-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.seo-card {
+    background: var(--fl-surface);
+    border: 1px solid var(--fl-line);
+    border-radius: var(--fl-radius-sm);
+    padding: 1rem 1.15rem;
+}
+
+.seo-card h3 {
+    margin-top: 0;
+    font-size: 1rem;
+}
+
+.seo-faq details {
+    border-bottom: 1px solid var(--fl-line);
+    padding: 0.85rem 0;
+}
+
+.seo-faq summary {
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+}
+
+.seo-faq summary::-webkit-details-marker {
+    display: none;
+}
+
+.seo-faq p {
+    margin-top: 0.5rem;
+    color: var(--fl-muted);
+    font-size: 0.95rem;
+}
+
+.seo-foot-nav {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--fl-line);
+    font-size: 0.9rem;
+    color: var(--fl-muted);
+}

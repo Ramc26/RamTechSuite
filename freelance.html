@@ -22,27 +22,76 @@
   <meta property="og:title" content="Freelance AI Engineering — Ram Bikkina">
   <meta property="og:description"
     content="Independent AI engineering for teams that need systems, not slides. Agents, RAG, APIs, cloud.">
-  <meta property="og:image" content="https://www.rambuilds.in/elements/pdp_posespdp_poses/IMG_5903.PNG">
+  <meta property="og:image" content="https://www.rambuilds.in/elements/pdp_poses/IMG_5903.PNG">
+  <meta property="og:image:alt" content="Ram Bikkina — freelance AI engineer">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Freelance AI Engineering — Ram Bikkina">
   <meta name="twitter:description" content="Hire Ram for multi-agent systems, RAG copilots, MCP tools, and production APIs.">
-  <meta name="twitter:image" content="https://www.rambuilds.in/elementspdp_poses/IMG_5903.PNG">
+  <meta name="twitter:image" content="https://www.rambuilds.in/elements/pdp_poses/IMG_5903.PNG">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "@id": "https://www.rambuilds.in/freelance#studio",
-    "name": "Ram Bikkina Freelance Studio",
-    "url": "https://www.rambuilds.in/freelance",
-    "image": "https://www.rambuilds.in/elementspdp_poses/IMG_5903.PNG",
-    "description": "Freelance and contract AI engineering: multi-agent systems, RAG, MCP tools, FastAPI, and cloud deployments.",
-    "provider": { "@id": "https://www.rambuilds.in/#person" },
-    "areaServed": "Worldwide",
-    "email": "mailto:itsrambikkina@gmail.com",
-    "telephone": "+91-70958-38715",
-    "sameAs": ["https://www.rambuilds.in/", "https://github.com/Ramc26"]
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.rambuilds.in/freelance#webpage",
+        "url": "https://www.rambuilds.in/freelance",
+        "name": "Freelance AI Engineering — Ram Bikkina",
+        "description": "Freelance and contract AI engineering: multi-agent systems, RAG copilots, MCP tools, FastAPI backends, and cloud deployments. Hyderabad, India · remote worldwide.",
+        "isPartOf": { "@id": "https://www.rambuilds.in/#website" },
+        "about": { "@id": "https://www.rambuilds.in/#person" },
+        "primaryImageOfPage": { "@type": "ImageObject", "url": "https://www.rambuilds.in/elements/pdp_poses/IMG_5903.PNG" },
+        "inLanguage": "en-IN",
+        "breadcrumb": { "@id": "https://www.rambuilds.in/freelance#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://www.rambuilds.in/freelance#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.rambuilds.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Freelance", "item": "https://www.rambuilds.in/freelance" }
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.rambuilds.in/freelance#studio",
+        "name": "Ram Bikkina — Freelance AI Engineering",
+        "url": "https://www.rambuilds.in/freelance",
+        "image": "https://www.rambuilds.in/elements/pdp_poses/IMG_5903.PNG",
+        "description": "Freelance and contract AI engineering: multi-agent systems, RAG, MCP tools, FastAPI, and cloud deployments.",
+        "provider": { "@id": "https://www.rambuilds.in/#person" },
+        "areaServed": ["Worldwide", { "@type": "City", "name": "Hyderabad" }],
+        "email": "mailto:itsrambikkina@gmail.com",
+        "telephone": "+91-70958-38715",
+        "sameAs": ["https://www.rambuilds.in/", "https://github.com/Ramc26", "https://medium.com/@itsmeramc"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "AI engineering services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://www.rambuilds.in/services/ai-agent-development#service", "name": "AI Agent Development", "provider": { "@id": "https://www.rambuilds.in/#person" } } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://www.rambuilds.in/services/rag-development#service", "name": "RAG & LLM Applications", "provider": { "@id": "https://www.rambuilds.in/#person" } } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://www.rambuilds.in/services/mcp-development#service", "name": "MCP Development", "provider": { "@id": "https://www.rambuilds.in/#person" } } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://www.rambuilds.in/services/python-development#service", "name": "Python & FastAPI Development", "provider": { "@id": "https://www.rambuilds.in/#person" } } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://www.rambuilds.in/services/backend-development#service", "name": "Backend & API Development", "provider": { "@id": "https://www.rambuilds.in/#person" } } }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.rambuilds.in/freelance#faq",
+        "mainEntity": [
+          { "@type": "Question", "name": "What does Ram Bikkina build?", "acceptedAnswer": { "@type": "Answer", "text": "Ram designs and ships production AI systems: multi-agent orchestration, RAG copilots, MCP tools, FastAPI backends, text-to-SQL data apps, and cloud deployments." } },
+          { "@type": "Question", "name": "Does Ram take freelance AI engineering projects?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — freelance, contract, and fractional engagements with scoped sprints or embedded part-time work." } },
+          { "@type": "Question", "name": "Can Ram build AI agents?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — supervisor-led multi-agent systems with MCP tools and production APIs." } },
+          { "@type": "Question", "name": "Can Ram build MCP servers?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — MCP servers and integrations for Claude, Cursor, and custom agents." } },
+          { "@type": "Question", "name": "Can Ram build RAG applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — grounded Q&A with ingestion, tool-routed retrieval, and citations." } },
+          { "@type": "Question", "name": "Does Ram work remotely?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — based in Hyderabad, India, working remotely with US, EU, and India timezones." } },
+          { "@type": "Question", "name": "How can I contact Ram?", "acceptedAnswer": { "@type": "Answer", "text": "Email itsrambikkina@gmail.com or use the contact form on this page." } }
+        ]
+      }
+    ]
   }
   </script>
 
@@ -87,6 +136,7 @@
       <a href="#work">Work</a>
       <a href="#feedback">Feedback</a>
       <a href="#process">Process</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
 
@@ -101,15 +151,32 @@
 
   <main>
     <section class="fl-hero" id="top">
-      <p class="fl-kicker" id="flAvailability"></p>
-      <h1 class="fl-headline" id="flHeadline"></h1>
-      <p class="fl-lede" id="flLede"></p>
+      <p class="fl-kicker" id="flAvailability">Open for freelance &amp; contract</p>
+      <h1 class="fl-headline" id="flHeadline">I design and ship AI systems that hold up in production.</h1>
+      <p class="fl-lede" id="flLede">Multi-agent orchestration, RAG copilots, MCP tools, and FastAPI backends — for founders and teams who need a builder, not a slide deck.</p>
       <div class="fl-hero-actions">
-        <a class="fl-btn-primary" href="#contact" id="flCtaPrimary"></a>
-        <a class="fl-btn-ghost" href="#work" id="flCtaSecondary"></a>
+        <a class="fl-btn-primary" href="#contact" id="flCtaPrimary">Start a project</a>
+        <a class="fl-btn-ghost" href="#work" id="flCtaSecondary">See selected work</a>
       </div>
-      <p class="fl-hero-meta" id="flHeroMeta"></p>
-      <div class="fl-stats" id="flStats"></div>
+      <p class="fl-hero-meta" id="flHeroMeta">Hyderabad, India · Remote worldwide  ·  itsrambikkina@gmail.com</p>
+      <div class="fl-stats" id="flStats">
+        <article class="fl-stat">
+          <div class="fl-stat-value">5</div>
+          <div class="fl-stat-label">Client projects shipped</div>
+        </article>
+        <article class="fl-stat">
+          <div class="fl-stat-value">35d</div>
+          <div class="fl-stat-label">Zero-to-one e-commerce rebuild</div>
+        </article>
+        <article class="fl-stat">
+          <div class="fl-stat-value">3d</div>
+          <div class="fl-stat-label">Monolith-to-services onboarding</div>
+        </article>
+        <article class="fl-stat">
+          <div class="fl-stat-value">Remote</div>
+          <div class="fl-stat-label">US, EU &amp; India timezones</div>
+        </article>
+      </div>
     </section>
 
     <section class="fl-section fl-reveal" id="services">
@@ -120,7 +187,69 @@
           <p>Scoped builds and embedded seats. Pick a lane — or mix them.</p>
         </div>
       </header>
-      <div class="fl-services" id="flServices"></div>
+      <div class="fl-services" id="flServices">
+        <article class="fl-service">
+          <div class="fl-service-icon" aria-hidden="true"><i class="fa-solid fa-sitemap"></i></div>
+          <h3>Multi-agent systems</h3>
+          <p>CrewAI and LangGraph setups with a manager that delegates to specialists — IDV, OCR, research, ops — instead of one bloated prompt.</p>
+          <ul>
+            <li>Supervisor / specialist graphs</li>
+            <li>Custom MCP tools with JSON Schema</li>
+            <li>Eval hooks for tool-call reliability</li>
+          </ul>
+        </article>
+        <article class="fl-service">
+          <div class="fl-service-icon" aria-hidden="true"><i class="fa-solid fa-layer-group"></i></div>
+          <h3>RAG &amp; internal copilots</h3>
+          <p>Grounded Q&amp;A over your docs, ledgers, Slack, and tickets — with citations, not vibes.</p>
+          <ul>
+            <li>Ingestion + chunking pipelines</li>
+            <li>Tool-routed retrieval (not one giant index)</li>
+            <li>Streamlit or web UI for the team</li>
+          </ul>
+        </article>
+        <article class="fl-service">
+          <div class="fl-service-icon" aria-hidden="true"><i class="fa-solid fa-bolt"></i></div>
+          <h3>APIs &amp; MCP tooling</h3>
+          <p>FastAPI services, SSE streams, and MCP servers so models can actually do work against your stack.</p>
+          <ul>
+            <li>Production FastAPI / Flask APIs</li>
+            <li>Auth, rate limits, structured logs</li>
+            <li>MCP servers for Claude, Cursor, custom agents</li>
+          </ul>
+        </article>
+        <article class="fl-service">
+          <div class="fl-service-icon" aria-hidden="true"><i class="fa-solid fa-database"></i></div>
+          <h3>Text-to-SQL &amp; data apps</h3>
+          <p>Natural-language access to warehouses and Postgres so operators stop waiting on an analyst.</p>
+          <ul>
+            <li>LangGraph query planners</li>
+            <li>Guardrails + dry-run SQL</li>
+            <li>Read-only dashboards for non-technical users</li>
+          </ul>
+        </article>
+        <article class="fl-service">
+          <div class="fl-service-icon" aria-hidden="true"><i class="fa-solid fa-cloud"></i></div>
+          <h3>Cloud &amp; deployment</h3>
+          <p>Containerized services on AWS, GCP, or Azure — Docker, Kubernetes, Terraform — with boring, repeatable deploys.</p>
+          <ul>
+            <li>Docker / K8s packaging</li>
+            <li>CI-friendly env &amp; secrets</li>
+            <li>Cost and latency pass before handoff</li>
+          </ul>
+        </article>
+        <article class="fl-service">
+          <div class="fl-service-icon" aria-hidden="true"><i class="fa-solid fa-user-clock"></i></div>
+          <h3>Fractional AI engineer</h3>
+          <p>Part-time or contract embedding: architecture reviews, agent debugging, and shipping the next milestone with your team.</p>
+          <ul>
+            <li>Weekly build cadence</li>
+            <li>Written decisions, not tribal knowledge</li>
+            <li>Handoff docs your team can own</li>
+          </ul>
+        </article>
+      </div>
+      <p class="fl-service-links">Related: <a href="./services/ai-agent-development">AI agent development</a> · <a href="./services/rag-development">RAG development</a> · <a href="./services/mcp-development">MCP development</a> · <a href="./services/python-development">Python development</a> · <a href="./services/backend-development">Backend development</a> · <a href="./services/llm-development">LLM development</a></p>
     </section>
 
     <section class="fl-section fl-reveal" id="work">
@@ -132,6 +261,13 @@
         </div>
       </header>
       <div class="fl-work" id="flWork"></div>
+      <noscript>
+        <div class="fl-work-noscript">
+          <article><h3>PracticeAI — AI/ML Engineering</h3><p>DataToBiz / PracticeAI · AI/ML Engineer · 2026. AI/ML engineering and backend work; helped transition a monolithic service toward microservices.</p></article>
+          <article><h3>AI Automated Logistics Email Processing</h3><p>Jesse Miller · AI Automation Engineer · 2025. AI email classification, shipment extraction, Gmail/Sheets integration, and automated logistics workflows.</p></article>
+          <article><h3>E-commerce Platform — Zero to One</h3><p>BozSkyVedaLife · Full-Stack Developer · 2026. Complete zero-to-one e-commerce rebuild: UI, backend, database, and admin panel.</p></article>
+        </div>
+      </noscript>
     </section>
 
     <section class="fl-section fl-feedback-section fl-reveal" id="feedback">
@@ -153,18 +289,79 @@
           <p>Short loop. You own the repo from day one.</p>
         </div>
       </header>
-      <div class="fl-process" id="flProcess"></div>
+      <div class="fl-process" id="flProcess">
+        <article class="fl-step">
+          <div class="fl-step-num">01</div>
+          <h3>Scope</h3>
+          <p>A short call on the problem, data, constraints, and what 'done' looks like. You get a written outline — stack, risks, and a first milestone.</p>
+        </article>
+        <article class="fl-step">
+          <div class="fl-step-num">02</div>
+          <h3>Build</h3>
+          <p>Weekly demos, not a big reveal. Agents, APIs, and UIs land in a repo you own, with notes on why each decision was made.</p>
+        </article>
+        <article class="fl-step">
+          <div class="fl-step-num">03</div>
+          <h3>Ship</h3>
+          <p>Deploy, docs, and a runbook. Eval hooks where they matter. No mystery notebooks left behind.</p>
+        </article>
+        <article class="fl-step">
+          <div class="fl-step-num">04</div>
+          <h3>Support</h3>
+          <p>Optional retainer for the next slice — new tools, model swaps, or sitting with your team while they take the wheel.</p>
+        </article>
+      </div>
       <h3 class="fl-subhead">Engagements</h3>
-      <div class="fl-engage" id="flEngage"></div>
+      <div class="fl-engage" id="flEngage">
+        <article class="fl-engage-card">
+          <h3>Sprint</h3>
+          <div class="dur">2–6 weeks</div>
+          <p>A bounded system: one agent loop, one RAG copilot, one API. Fixed scope, weekly demos.</p>
+        </article>
+        <article class="fl-engage-card">
+          <h3>Part-time</h3>
+          <div class="dur">Ongoing</div>
+          <p>Embedded builder on your cadence. Architecture, shipping, and reviews without a full-time hire.</p>
+        </article>
+        <article class="fl-engage-card">
+          <h3>Contract</h3>
+          <div class="dur">Project or retainer</div>
+          <p>When you need production ownership — deploys, MCP tools, and a handoff your staff can run.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="fl-section fl-faq-section fl-reveal" id="faq">
+      <header class="fl-section-head">
+        <p class="fl-section-index fl-section-index-empty" aria-hidden="true"></p>
+        <div>
+          <h2>Frequently Asked Questions</h2>
+          <p>Freelance AI engineering, contract work, and how to get started.</p>
+        </div>
+      </header>
+      <div class="fl-faq" id="flFaq">
+        <details><summary>What does Ram Bikkina build?</summary><p>Ram designs and ships production AI systems: multi-agent orchestration (CrewAI, LangGraph), RAG and internal copilots, MCP tools and servers, FastAPI backends, text-to-SQL data apps, and cloud deployments for founders and product teams.</p></details>
+        <details><summary>Does Ram take freelance AI engineering projects?</summary><p>Yes. Ram works on freelance and contract engagements — scoped sprints, part-time embedded seats, and project retainers — with weekly demos and handoff in repos clients own.</p></details>
+        <details><summary>Does Ram work on contract engagements?</summary><p>Yes. Contract work includes fixed-scope builds (agents, copilots, APIs) and ongoing retainers for production ownership, deploys, and MCP integrations.</p></details>
+        <details><summary>Can Ram build AI agents?</summary><p>Yes. Ram builds supervisor-led multi-agent systems with specialist delegation, custom MCP tools, eval hooks, and production APIs — not one-off prompt demos.</p></details>
+        <details><summary>Can Ram build MCP servers?</summary><p>Yes. Ram builds Model Context Protocol servers and tool integrations so Claude, Cursor, and custom agents can call your APIs and internal systems with structured schemas.</p></details>
+        <details><summary>Can Ram build RAG applications?</summary><p>Yes. Ram builds grounded Q&amp;A over docs, ledgers, Slack, and tickets with ingestion pipelines, tool-routed retrieval, citations, and team-facing UIs.</p></details>
+        <details><summary>Can Ram build Python and FastAPI backends?</summary><p>Yes. Ram ships FastAPI and Flask services with auth, rate limits, structured logging, SSE streams, and deployment-ready packaging.</p></details>
+        <details><summary>Can Ram help build an AI product from an idea?</summary><p>Yes. Engagements start with a short scope call and written milestone; Ram delivers working software in your repo with docs and deploy paths — typical fit is an AI MVP or first production slice.</p></details>
+        <details><summary>Does Ram work remotely?</summary><p>Yes. Ram is based in Hyderabad, Telangana, India and works remotely with US, EU, and India timezones.</p></details>
+        <details><summary>Is Ram available for fractional AI engineering?</summary><p>Yes. Fractional / part-time embedding covers architecture reviews, agent debugging, and shipping the next milestone alongside your team.</p></details>
+        <details><summary>What technologies does Ram use?</summary><p>Python, FastAPI, Flask, CrewAI, LangGraph, LangChain, MCP, OpenAI and other LLM APIs, FAISS, Streamlit, Docker, Kubernetes, AWS/GCP/Azure, and standard data tooling depending on the project.</p></details>
+        <details><summary>How can I contact Ram?</summary><p>Email <a href="mailto:itsrambikkina@gmail.com">itsrambikkina@gmail.com</a>, call +91 70958 38715, or use the contact form below. GitHub: <a href="https://github.com/Ramc26">github.com/Ramc26</a>.</p></details>
+      </div>
     </section>
 
     <section class="fl-section fl-contact-section fl-reveal" id="contact">
       <header class="fl-section-head">
         <p class="fl-section-index">05</p>
         <div>
-          <p class="fl-contact-eyebrow" id="flContactEyebrow"></p>
-          <h2 id="flContactTitle"></h2>
-          <p id="flContactNote"></p>
+          <p class="fl-contact-eyebrow" id="flContactEyebrow">Next step</p>
+          <h2 id="flContactTitle">Tell me what you're trying to ship.</h2>
+          <p id="flContactNote">I read every note. Typical reply within one business day. For a faster start, include stack, deadline, and whether this is a sprint or an ongoing seat.</p>
         </div>
       </header>
 
@@ -195,7 +392,17 @@
           </label>
           <label class="fl-field">
             <span>What do you need?</span>
-            <select name="interest" id="flInterest"></select>
+            <select name="interest" id="flInterest">
+              <option value="Multi-agent system">Multi-agent system</option>
+              <option value="RAG / copilot">RAG / copilot</option>
+              <option value="API / MCP tools">API / MCP tools</option>
+              <option value="Logistics automation">Logistics automation</option>
+              <option value="Architecture / microservices">Architecture / microservices</option>
+              <option value="E-commerce">E-commerce</option>
+              <option value="Web experience">Web experience</option>
+              <option value="Fractional / part-time">Fractional / part-time</option>
+              <option value="Something else">Something else</option>
+            </select>
           </label>
           <label class="fl-field fl-field-full">
             <span>Project notes</span>
@@ -216,6 +423,7 @@
     <span>Ram Bikkina · Hyderabad · Remote</span>
     <span class="fl-foot-links">
       <a href="./">Portfolio</a>
+      <a href="./services/ai-agent-development">Services</a>
       <a href="./?mode=tech">Zen Shell</a>
       <a href="mailto:itsrambikkina@gmail.com">Email</a>
     </span>
